@@ -1,0 +1,196 @@
+@entity_x = 0
+@entity_y = -20
+#eternal starbase
+Drift_megastructure_starbase_platfrom = {
+	entity = "construction_platform_entity"
+	construction_entity = "construction_platform_entity"
+	portrait = "GFX_megastructure_construction_background"	
+	place_entity_on_planet_plane = no
+	show_galactic_map_icon = yes	
+	build_time = 1080	
+	upgrade_desc = hide	
+	entity_offset = { x = @entity_x y = @entity_y }
+	resources = {
+		category = megastructures
+		cost = { alloys = 305000 }		
+	}
+	potential = { has_global_flag = kuat_extramonster_all_over }
+	possible = {
+		custom_tooltip = {
+			fail_text = "requires_inside_border"
+			is_inside_border = from
+		}		
+		custom_tooltip = {
+			fail_text = "requires_surveyed_system"
+			NOT = {
+				any_system_planet = {
+					is_surveyed = {
+						who = prev.from
+						status = no
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			fail_text = "requires_no_binary_trinary"
+			NOR = {
+				is_star_class = sc_binary_1
+				is_star_class = sc_binary_2
+				is_star_class = sc_binary_3
+				is_star_class = sc_binary_4
+				is_star_class = sc_binary_5
+				is_star_class = sc_binary_6
+				is_star_class = sc_binary_7
+				is_star_class = sc_binary_8
+				is_star_class = sc_binary_9
+				is_star_class = sc_binary_10
+				is_star_class = sc_trinary_1
+				is_star_class = sc_trinary_2
+				is_star_class = sc_trinary_3
+				is_star_class = sc_trinary_4
+			}
+		}
+		custom_tooltip = {
+			fail_text = "kuat_requires_no_existing_station"
+			from = {
+				count_owned_megastructure = {
+					limit = { OR = {
+						is_megastructure_type = Drift_megastructure_starbase_skeletion
+						is_megastructure_type = Drift_megastructure_starbase_platfrom
+						is_megastructure_type = Drift_megastructure_starbase
+					} }
+					count < 2
+				}
+				count_owned_fleet = { limit = { is_ship_size = Drift_megastructure_starbase } count < 2 }
+			}
+		}
+	}
+	placement_rules = {
+		planet_possible = {
+			custom_tooltip = {
+				fail_text = "must_build_around_star"
+				is_star = yes
+			}
+			custom_tooltip = {
+				fail_text = "requires_no_anomaly"
+				has_anomaly = no
+			}
+			custom_tooltip = {
+				fail_text = "kuat_requires_exe_construction_section"
+				NOT = { has_carrier_flag = has_exe_starbase }
+			}
+		}
+	}
+	
+	on_build_start = { }
+	on_build_cancel = { }
+	on_build_complete = {
+		fromfrom.planet = { set_carrier_flag = has_exe_starbase }
+		fromfrom = { upgrade_megastructure_to = Drift_megastructure_starbase_skeletion }
+	}
+	construction_blocks_and_blocked_by = self_type
+	ai_weight = { weight = 0 }
+}
+
+Drift_megastructure_starbase_skeletion = {
+	entity = "Drft_starbase_megastructure_entity"
+	construction_entity = "Drft_starbase_megastructure_entity"
+	portrait = "GFX_megastructure_construction_background"	
+	place_entity_on_planet_plane = no
+	show_galactic_map_icon = yes
+	build_time = 3090	
+	upgrade_desc = hide	
+	entity_offset = { x = 0 y = 0 }	
+	upgrade_from = { Drift_megastructure_starbase_platfrom }	
+	resources = {
+		category = megastructures
+		cost = { alloys = 0 }
+	}	
+	potential = { has_global_flag = kuat_extramonster_all_over }
+	possible = {
+		custom_tooltip = {
+			fail_text = "kuat_requires_no_existing_station"
+			from = { count_owned_fleet = { limit = { is_ship_size = Drift_megastructure_starbase } count < 2 } }
+		}
+	}	
+	placement_rules = {}	
+	on_build_start = {}
+	on_build_cancel = {}
+	on_build_complete = {
+		fromfrom.planet = { set_planet_size = 18 }
+		fromfrom = { upgrade_megastructure_to = Drift_megastructure_starbase }
+	}
+	construction_blocks_and_blocked_by = self_type	
+	ai_weight = { weight = 5000 }
+}
+
+Drift_megastructure_starbase = {
+	entity = "Drft_starbase_main_entity"
+	construction_entity = "Drft_starbase_main_entity"
+	portrait = "GFX_megastructure_construction_background"	
+	place_entity_on_planet_plane = no
+	show_galactic_map_icon = no	
+	show_in_outliner = no
+	build_time = 15	
+	upgrade_desc = hide	
+	entity_offset = { x = 0 y = 0 }	
+	upgrade_from = { Drift_megastructure_starbase_skeletion }	
+	resources = {
+		category = megastructures
+		cost = {
+			alloys = 500000
+		}
+	}	
+	potential = { has_global_flag = kuat_extramonster_all_over }
+	possible = {
+		custom_tooltip = {
+			fail_text = "kuat_requires_no_existing_station"
+			from = { count_owned_fleet = { limit = { is_ship_size = Drift_megastructure_starbase } count < 2 } }
+		}
+	}	
+	placement_rules = {}	
+	on_build_start = {}
+	on_build_cancel = {}
+	on_build_complete = {
+		fromfrom.planet = {
+			remove_carrier_flag = has_exe_starbase
+			set_planet_size = 18
+		}
+		add_threat = { who = from amount = 50 }
+		create_fleet = {
+			name = "Drift_megastructure_starbase"
+			settings = { spawn_debris = no can_disband = no }
+			effect = {
+				set_fleet_flag = kuat_station_player
+				set_fleet_flag = kuat_station_drift_megasturcture
+				set_owner = from
+				create_ship = {
+					design = "NAME_DRFT_STARBASE_MEGASTRUCTURE_SECTION"
+					effect = { 
+						set_variable = { which = STARBASE_HEALTH_VAR value = 0 }
+						kuat_battle_disable_ship_at_health = { 
+							FLAG = enable_disable_starbase 
+							Disable_health = 0.01 
+							WHICH = STARBASE_HEALTH_VAR 
+							HEALTH = value:kuat_dynamic_exist_life_times 
+						}
+					}
+				}
+				from = { save_global_event_target_as = kuat_station_player }
+				set_location = { target = fromfrom distance = -1 angle = 0 }
+			}
+		}
+		from = {
+			every_owned_ship = {
+				limit = { is_ship_size = Drift_megastructure_starbase }
+				starbase? = {
+					set_ship_construction_type = starbase_shipyard
+				}
+				colony? = { kuat_automatic_ai_colony = yes }
+			}
+		}
+		remove_megastructure = fromfrom
+	}
+	construction_blocks_and_blocked_by = self_type	
+	ai_weight = { weight = 5000 }
+}
