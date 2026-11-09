@@ -1,0 +1,128 @@
+ship_section_template = {
+	key = "Drift_Flagship_BOW"
+	ship_size = Drift_Flagship
+	fits_on_slot = bow
+	entity = "drift_customed_ed_eve_reflagship_entity"
+	icon = "GFX_ship_part_core_bow"
+	component_slot = { name = "T_GUN_01" 	 template = "invisible_titanic_fixed"	 	 locatorname = "L_06" }
+	component_slot = { name = "LARGE_GUN_01" template = "Drft_extramonster_large_gun"	 locatorname = "L_01" }
+	component_slot = { name = "LARGE_GUN_02" template = "Drft_extramonster_large_gun"	 locatorname = "L_02" }
+	component_slot = { name = "LARGE_GUN_03" template = "Drft_extramonster_large_gun"	 locatorname = "L_03" }
+	component_slot = { name = "LARGE_GUN_04" template = "Drft_extramonster_large_gun"	 locatorname = "L_04" }
+	component_slot = { name = "LARGE_GUN_05" template = "Drft_extramonster_large_gun"	 locatorname = "L_05" }
+	component_slot = { name = "LARGE_GUN_06" template = "Drft_extramonster_large_gun"	 locatorname = "L_06" }
+	component_slot = { name = "LARGE_GUN_07" template = "Drft_extramonster_large_gun"	 locatorname = "L_07" }
+	component_slot = { name = "LARGE_GUN_08" template = "Drft_extramonster_large_gun"	 locatorname = "L_08" }
+	component_slot = { name = "LARGE_GUN_09" template = "Drft_extramonster_large_gun"	 locatorname = "L_09" }
+	component_slot = { name = "LARGE_GUN_10" template = "Drft_extramonster_large_gun"	 locatorname = "L_10" }
+	component_slot = { name = "LARGE_GUN_11" template = "Drft_extramonster_large_gun"	 locatorname = "L_11" }
+	component_slot = { name = "LARGE_GUN_12" template = "Drft_extramonster_large_gun"	 locatorname = "L_12" }
+	component_slot = { name = "LARGE_GUN_13" template = "Drft_extramonster_large_gun"	 locatorname = "L_13" }
+	component_slot = { name = "LARGE_GUN_14" template = "Drft_extramonster_large_gun"	 locatorname = "L_14" }
+	component_slot = { name = "LARGE_GUN_15" template = "Drft_extramonster_large_gun"	 locatorname = "L_15" }
+	component_slot = { name = "LARGE_GUN_16" template = "Drft_extramonster_large_gun"	 locatorname = "L_16" }
+	component_slot = { name = "LARGE_GUN_17" template = "Drft_extramonster_large_gun"	 locatorname = "L_17" }
+	component_slot = { name = "LARGE_GUN_18" template = "Drft_extramonster_large_gun"	 locatorname = "L_18" }
+	component_slot = { name = "LARGE_GUN_19" template = "Drft_extramonster_large_gun"	 locatorname = "L_19" }
+	component_slot = { name = "LARGE_GUN_20" template = "Drft_extramonster_large_gun"	 locatorname = "L_20" }
+	aux_utility_slots = 5
+}
+
+ship_section_template = {
+	key = "Drift_Battleship_BOW"
+	ship_size = Drift_Battleship
+	fits_on_slot = bow
+	entity = "drift_Battleship_section_entity"
+	icon = "GFX_ship_part_core_bow"
+	component_slot = { name = "LARGE_GUN_01" template = "Drft_extramonster_large_gun"	 locatorname = "L01" }
+	component_slot = { name = "LARGE_GUN_02" template = "Drft_extramonster_large_gun"	 locatorname = "L02" }
+	component_slot = { name = "LARGE_GUN_03" template = "Drft_extramonster_large_gun"	 locatorname = "L03" }
+	component_slot = { name = "LARGE_GUN_04" template = "Drft_extramonster_large_gun"	 locatorname = "L04" }
+	component_slot = { name = "LARGE_GUN_05" template = "Drft_extramonster_large_gun"	 locatorname = "L05" }
+	component_slot = { name = "LARGE_GUN_06" template = "Drft_extramonster_large_gun"	 locatorname = "L06" }
+	component_slot = { name = "LARGE_GUN_07" template = "Drft_extramonster_large_gun"	 locatorname = "L07" }
+	component_slot = { name = "LARGE_GUN_08" template = "Drft_extramonster_large_gun"	 locatorname = "L08" }
+	component_slot = { name = "LARGE_GUN_09" template = "Drft_extramonster_large_gun"	 locatorname = "L09" }
+	component_slot = { name = "LARGE_GUN_10" template = "Drft_extramonster_large_gun"	 locatorname = "L10" }
+	component_slot = { name = "LARGE_GUN_11" template = "Drft_extramonster_large_gun"	 locatorname = "L11" }
+	component_slot = { name = "LARGE_GUN_12" template = "Drft_extramonster_large_gun"	 locatorname = "L12" }
+	component_slot = { name = "LARGE_GUN_13" template = "Drft_extramonster_large_gun"	 locatorname = "L13" }
+	aux_utility_slots = 5
+}
+
+ship_section_template = {
+	key = "Drift_crusier_BOW"
+	ship_size = Drift_Crusier
+	fits_on_slot = bow
+	entity = "drift_Crusier_section_entity"
+	icon = "GFX_ship_part_core_bow"
+	component_slot = { name = "LARGE_GUN_01" template = "Drft_extramonster_large_gun"	 locatorname = "L01" }
+	component_slot = { name = "LARGE_GUN_02" template = "Drft_extramonster_large_gun"	 locatorname = "L02" }
+	component_slot = { name = "LARGE_GUN_03" template = "Drft_extramonster_large_gun"	 locatorname = "L03" }
+	component_slot = { name = "LARGE_GUN_04" template = "Drft_extramonster_large_gun"	 locatorname = "L04" }
+	component_slot = { name = "LARGE_GUN_05" template = "Drft_extramonster_large_gun"	 locatorname = "L05" }
+	component_slot = { name = "LARGE_GUN_06" template = "Drft_extramonster_large_gun"	 locatorname = "L06" }
+	component_slot = { name = "LARGE_GUN_07" template = "Drft_extramonster_large_gun"	 locatorname = "L07" }
+	component_slot = { name = "LARGE_GUN_08" template = "Drft_extramonster_large_gun"	 locatorname = "L08" }
+	component_slot = { name = "LARGE_GUN_09" template = "Drft_extramonster_large_gun"	 locatorname = "L09" }
+	component_slot = { name = "LARGE_GUN_10" template = "Drft_extramonster_large_gun"	 locatorname = "L10" }
+	component_slot = { name = "LARGE_GUN_11" template = "Drft_extramonster_large_gun"	 locatorname = "L11" }
+	component_slot = { name = "LARGE_GUN_12" template = "Drft_extramonster_large_gun"	 locatorname = "L12" }
+	aux_utility_slots = 5
+}
+
+ship_section_template = {
+	key = "DRFT_STARBASE_MEGASTRUCTURE_SECTION"
+	ship_size = Drift_megastructure_starbase
+	fits_on_slot = mid
+	entity = "Drft_starbase_main_entity"
+	icon = "GFX_ship_part_core_stern"
+	component_slot = { name = "EXTRA_LARGE_01" template = "Drft_extramonster_large_gun"	locatorname = "L01" }
+	component_slot = { name = "EXTRA_LARGE_02" template = "Drft_extramonster_large_gun"	locatorname = "L02" }
+	component_slot = { name = "EXTRA_LARGE_03" template = "Drft_extramonster_large_gun"	locatorname = "L03" }
+	component_slot = { name = "EXTRA_LARGE_04" template = "Drft_extramonster_large_gun"	locatorname = "L04" }
+	component_slot = { name = "EXTRA_LARGE_05" template = "Drft_extramonster_large_gun"	locatorname = "L05" }
+	component_slot = { name = "EXTRA_LARGE_06" template = "Drft_extramonster_large_gun"	locatorname = "L06" }
+	component_slot = { name = "EXTRA_LARGE_07" template = "Drft_extramonster_large_gun"	locatorname = "L07" }
+	component_slot = { name = "EXTRA_LARGE_08" template = "Drft_extramonster_large_gun"	locatorname = "L08" }
+	component_slot = { name = "EXTRA_LARGE_09" template = "Drft_extramonster_large_gun"	locatorname = "L09" }
+	component_slot = { name = "EXTRA_LARGE_10" template = "Drft_extramonster_large_gun"	locatorname = "L10" }
+	component_slot = { name = "EXTRA_LARGE_11" template = "Drft_extramonster_large_gun"	locatorname = "L11" }
+	component_slot = { name = "EXTRA_LARGE_12" template = "Drft_extramonster_large_gun"	locatorname = "L12" }
+	component_slot = { name = "EXTRA_LARGE_13" template = "Drft_extramonster_large_gun"	locatorname = "L13" }
+	component_slot = { name = "EXTRA_LARGE_14" template = "Drft_extramonster_large_gun"	locatorname = "L14" }
+	component_slot = { name = "EXTRA_LARGE_15" template = "Drft_extramonster_large_gun"	locatorname = "L15" }
+	component_slot = { name = "EXTRA_LARGE_16" template = "Drft_extramonster_large_gun"	locatorname = "L16" }
+	component_slot = { name = "EXTRA_LARGE_17" template = "Drft_extramonster_large_gun"	locatorname = "L17" }
+	component_slot = { name = "EXTRA_LARGE_18" template = "Drft_extramonster_large_gun"	locatorname = "L18" }
+	component_slot = { name = "EXTRA_LARGE_19" template = "Drft_extramonster_large_gun"	locatorname = "L19" }
+	component_slot = { name = "EXTRA_LARGE_20" template = "Drft_extramonster_large_gun"	locatorname = "L20" }
+	component_slot = { name = "EXTRA_LARGE_21" template = "Drft_extramonster_large_gun"	locatorname = "L21" }
+	component_slot = { name = "EXTRA_LARGE_22" template = "Drft_extramonster_large_gun"	locatorname = "L22" }
+	component_slot = { name = "EXTRA_LARGE_23" template = "Drft_extramonster_large_gun"	locatorname = "L23" }
+	component_slot = { name = "EXTRA_LARGE_24" template = "Drft_extramonster_large_gun"	locatorname = "L24" }
+	component_slot = { name = "EXTRA_LARGE_25" template = "Drft_extramonster_large_gun"	locatorname = "L25" }
+	component_slot = { name = "EXTRA_LARGE_26" template = "Drft_extramonster_large_gun"	locatorname = "L26" }
+	component_slot = { name = "EXTRA_LARGE_27" template = "Drft_extramonster_large_gun"	locatorname = "L27" }
+	component_slot = { name = "EXTRA_LARGE_28" template = "Drft_extramonster_large_gun"	locatorname = "L28" }
+	component_slot = { name = "EXTRA_LARGE_29" template = "Drft_extramonster_large_gun"	locatorname = "L29" }
+	component_slot = { name = "EXTRA_LARGE_30" template = "Drft_extramonster_large_gun"	locatorname = "L30" }
+	component_slot = { name = "EXTRA_LARGE_31" template = "Drft_extramonster_large_gun"	locatorname = "L31" }
+	component_slot = { name = "EXTRA_LARGE_32" template = "Drft_extramonster_large_gun"	locatorname = "L32" }
+	component_slot = { name = "EXTRA_LARGE_33" template = "Drft_extramonster_large_gun"	locatorname = "L33" }
+	component_slot = { name = "EXTRA_LARGE_34" template = "Drft_extramonster_large_gun"	locatorname = "L34" }
+	component_slot = { name = "EXTRA_LARGE_35" template = "Drft_extramonster_large_gun"	locatorname = "L35" }
+	component_slot = { name = "EXTRA_LARGE_36" template = "Drft_extramonster_large_gun"	locatorname = "L36" }
+	component_slot = { name = "EXTRA_LARGE_37" template = "Drft_extramonster_large_gun"	locatorname = "L37" }
+	component_slot = { name = "EXTRA_LARGE_38" template = "Drft_extramonster_large_gun"	locatorname = "L38" }
+	component_slot = { name = "EXTRA_LARGE_39" template = "Drft_extramonster_large_gun"	locatorname = "L39" }
+	component_slot = { name = "EXTRA_LARGE_40" template = "Drft_extramonster_large_gun"	locatorname = "L40" }
+	component_slot = { name = "EXTRA_LARGE_41" template = "Drft_extramonster_large_gun"	locatorname = "L41" }
+	component_slot = { name = "EXTRA_LARGE_42" template = "Drft_extramonster_large_gun"	locatorname = "L42" }
+	component_slot = { name = "EXTRA_LARGE_43" template = "Drft_extramonster_large_gun"	locatorname = "L43" }
+	component_slot = { name = "EXTRA_LARGE_44" template = "Drft_extramonster_large_gun"	locatorname = "L44" }
+	component_slot = { name = "EXTRA_LARGE_45" template = "Drft_extramonster_large_gun"	locatorname = "L45" }
+	component_slot = { name = "EXTRA_LARGE_46" template = "Drft_extramonster_large_gun"	locatorname = "L46" }
+	component_slot = { name = "EXTRA_LARGE_47" template = "Drft_extramonster_large_gun"	locatorname = "L47" }
+	component_slot = { name = "EXTRA_LARGE_48" template = "Drft_extramonster_large_gun"	locatorname = "L48" }
+}
