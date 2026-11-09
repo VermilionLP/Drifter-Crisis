@@ -1,0 +1,2456 @@
+namespace = kuat_post_apocalyptic_legacy
+country_event = {
+	id = kuat_post_apocalyptic_legacy.1
+	title = "kuat_post_apocalyptic_legacy.1.title"
+	desc = "kuat_post_apocalyptic_legacy.1.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = { 
+		is_ai = no 
+		kuat_is_enable_post_apocalyptic_origin = yes 
+	}
+	immediate = {
+		set_global_flag = has_origin_post_apocalyptic
+		set_country_flag = kuat_fallen_empire_player
+		if = {
+			limit = { 
+				has_country_flag = has_origin_post_apocalyptic_kuat
+				NOT = { has_origin = origin_post_apocalyptic_kuat }
+			}
+			random_owned_planet = {
+				limit = { is_capital = yes }
+				set_name = "Name_Post_Kuat_capital"
+				solar_system? = { set_name = "Name_Post_Kuat_System" }
+			}
+		}
+		else_if = {
+			limit = { 
+				has_origin = origin_post_apocalyptic_kuat 
+				NOT = { has_country_flag = has_origin_post_apocalyptic_kuat }
+			}
+			random_owned_planet = {
+				limit = { has_carrier_flag = kuat_shadow_planet_started }
+				set_carrier_flag = kuat_initial_colony_planet
+				solar_system? = { generate_home_system_resources = yes }
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+				kuat_automatic_ai_colony = yes
+				set_name = "Name_Post_Kuat_capital"
+				solar_system? = { set_name = "Name_Post_Kuat_System" }
+			}
+		}
+		change_country_flag = {
+			icon = {
+				category = "Kuat"
+				file = "Kuat_flags_01.dds"
+			}
+			background = {
+				category = "backgrounds"
+				file = "00_solid.dds"
+			}
+			colors = { "blue" "blue" "null" "null" }
+		}
+		create_country = {
+			name = "Name_Kuat_Post_Support"
+			type = kuat_support
+			flag = {
+				icon = {
+					category = "Kuat"
+					file = "flag_swep_1.dds"
+				}
+				background = {
+					category = "backgrounds"
+					file = "circle.dds"
+				}
+				colors = { "red" "black" "null" "null" }
+			}
+			effect = { 
+				establish_communications_no_message = root
+				set_faction_hostility = {
+					target = root
+					set_hostile = no set_friendly = yes
+				}
+				set_subject_of = {
+					who = root
+					preset = preset_vassal
+					allow_instant_negotiation = yes
+					use_demanded_terms = no
+				}
+				set_country_flag = protected_from_queen_storm
+				save_global_event_target_as = kuat_post_support_country 
+			}
+		}
+		create_exe_invasion_fleet = {
+			is_boss = no
+			can_disband = no
+			is_composition = no
+			uses_naval_capacity = no
+			Fleet_owner = event_target:kuat_post_support_country
+			bombardment = indiscriminate
+			Eclipse = @kuat_invasion_flagship_num_T1
+			Tyrant = @kuat_invasion_flagship_num_T2
+			Resugrant = @kuat_invasion_Battleship_num_T5
+			Cavelry = @kuat_invasion_BattleCruser_num_T5
+			DIFF = BOSS
+			modifier = kuat_fleet_power
+			Location = prev.capital_scope
+		}
+	}
+	option = { 
+		name = "kuat_post_apocalyptic_legacy.1.a" 
+		start_situation = { type = situation_legacy_pretext_action target = this }
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.2
+	title = "kuat_post_apocalyptic_legacy.2.title"
+	desc = {
+		trigger = {
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.2.0.desc"
+				NOT = { has_country_flag = kuat_post_apocalyptic_legacy.2.setp.1 }
+			}
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.2.1.desc"
+				has_country_flag = kuat_post_apocalyptic_legacy.2.setp.1
+			}
+		}
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	location = event_target:kuat_post_support_country
+	is_triggered_only = yes
+	diplomatic = yes
+	
+	trigger = { 
+		kuat_is_enable_post_apocalyptic_origin = yes 
+		exists = event_target:kuat_post_support_country
+		OR = {
+			NOT = { has_active_event = { kuat_post_apocalyptic_legacy.2 kuat_post_apocalyptic_legacy.18 } }
+			from? = { is_same_value = root }
+		}
+		OR = {
+			from? = { is_same_value = event_target:kuat_post_support_country }
+			from? = { is_same_value = root }
+		}
+	}
+
+	option = {
+		name = kuat_post_apocalyptic_legacy.18.a
+		hidden_effect = { country_event = { id = kuat_post_apocalyptic_legacy.18 } }
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.18.b
+		trigger = { 
+			has_country_flag = Kuat_D_facility_area_over 
+			count_owned_leader = {
+				count < 1
+				limit = { has_leader_flag = kuat_post_shadow_leader }
+			}
+		}
+		hidden_effect = { 
+			create_kuat_post_shadow_leader_effects = { CLASS = commander }
+			set_country_flag = kuat_post_apocalyptic_legacy.2.setp.1
+		}
+		response_text = kuat_post_apocalyptic_legacy.18.b.res
+	}
+
+	option = { name = kuat_shipyard.exit default_hide_option = yes }
+
+	after = { remove_country_flag = kuat_post_apocalyptic_legacy.2.setp.1 }
+}
+
+#找A区
+country_event = {
+	id = kuat_post_apocalyptic_legacy.3
+	title = "kuat_post_apocalyptic_legacy.3.title"
+	desc = "kuat_post_apocalyptic_legacy.3.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	mean_time_to_happen = { months = 2 }
+	trigger = { 
+		kuat_is_enable_post_apocalyptic_origin = yes 
+		has_country_flag = start_discoveryancientkuat_post_apocalyptic 
+		NOT = { has_country_flag = start_discoveryancientkuat_post_apocalyptic_fired}
+	}
+	immediate = {
+		set_country_flag = start_discoveryancientkuat_post_apocalyptic_fired
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.3.a 
+		hidden_effect = { enable_special_project = {
+			name = kuat_post_apocalyptic_legacy_3_find_A_facility
+			location = root.capital_scope owner = root
+		} }
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.4
+	title = "kuat_post_apocalyptic_legacy.4.title"
+	desc = "kuat_post_apocalyptic_legacy.4.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = { 
+		kuat_is_enable_post_apocalyptic_origin = yes 
+		has_country_flag = start_discoveryancientkuat_post_apocalyptic 
+	}
+	immediate = {
+		begin_event_chain = { event_chain = ag_legacy_invasion_chain }
+		set_country_flag = fire_the_legacy_kuat_stage_4
+		add_timeline_event = {
+			type = timeline_origin
+			override_id = timeline_event_kuat_leagacy_03
+			override_tooltip = "TIMELINE_EVENT_KUAT_LEGACY_03_TOOLTIP"
+			override_types = { }
+			override_text = { "text:TIMELINE_EVENT_KUAT_LEGACY_03" }
+			override_texture = { "background:GFX_evt_ship_in_orbit_3" }
+			targets = { }
+		}		
+		kuat_create_toasto_message = { KEY = kuat_find_memory_cluds TARGET = this RECIPIENT = this }
+		save_event_target_as = interesting_country
+		set_spawn_system_batch = begin
+		random_system_within_border = {
+			limit = { is_capital_system = yes }
+			spawn_system = { initializer = myst_system_1 hyperlane = no }
+		}
+		set_spawn_system_batch = end
+	}
+	option = { name = kuat_post_apocalyptic_legacy.4.a }
+}
+
+#找B区
+country_event = {
+	id = kuat_post_apocalyptic_legacy.5
+	title = "kuat_post_apocalyptic_legacy.5.title"
+	desc = "kuat_post_apocalyptic_legacy.5.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = { 
+		kuat_is_enable_post_apocalyptic_origin = yes 
+		has_country_flag = fire_the_legacy_kuat_stage_5 
+	}
+	immediate = {
+		save_event_target_as = interesting_country
+		random_system_within_border = {
+			limit = { is_capital_system = yes }
+			spawn_system = { initializer = myst_system_2 hyperlane = no }
+		}
+	}
+	option = { name = kuat_post_apocalyptic_legacy.5.a }
+}
+
+#找C区
+country_event = {
+	id = kuat_post_apocalyptic_legacy.6
+	title = "kuat_post_apocalyptic_legacy.6.title"
+	desc = "kuat_post_apocalyptic_legacy.6.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = { 
+		kuat_is_enable_post_apocalyptic_origin = yes 
+		has_country_flag = fire_the_legacy_kuat_stage_6 
+	}
+	immediate = {
+		save_event_target_as = interesting_country
+		random_system_within_border = {
+			limit = { is_capital_system = yes }
+			spawn_system = { initializer = myst_system_3 hyperlane = no }
+		}
+	}
+	option = { name = kuat_post_apocalyptic_legacy.6.a }
+}
+
+#A区远古之影
+country_event= {
+	id = kuat_post_apocalyptic_legacy.7
+	title = "kuat_post_apocalyptic_legacy.7.title"
+	desc = "kuat_post_apocalyptic_legacy.7.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes 
+		is_ai = no has_country_flag = fire_the_legacy_kuat_stage_5
+	}
+	option = { 
+		name = "kuat_post_apocalyptic_legacy.7.a" 
+		event_target:ancient_shadow_place = { 
+			carrier_event = { id = kuat_post_apocalyptic_legacy.8 days = 15 random = 15 } 
+		}
+	}
+}
+
+carrier_event = {
+	id = kuat_post_apocalyptic_legacy.8
+	title = "kuat_post_apocalyptic_legacy.8.title"
+	desc = "kuat_post_apocalyptic_legacy.8.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = {
+		solar_system? = {
+			exists = space_owner
+			space_owner? = {
+				has_country_flag = fire_the_legacy_kuat_stage_5
+				kuat_is_enable_post_apocalyptic_origin = yes 
+			}
+		}
+		is_same_value = event_target:ancient_shadow_place
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.8.a
+		event_target:ancient_shadow_place = { create_archaeological_site = kuat_lagacy_41 }
+	}
+}
+
+#B区远古之影
+country_event = {
+	id = kuat_post_apocalyptic_legacy.9
+	title = "kuat_post_apocalyptic_legacy.9.title"
+	desc = "kuat_post_apocalyptic_legacy.9.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes 
+		is_ai = no has_country_flag = fire_the_legacy_kuat_stage_6
+	}
+	option = { 
+		name = "kuat_post_apocalyptic_legacy.9.a" 
+		owner? = { event_target:ancient_shadow_place_B = { carrier_event = { id = kuat_post_apocalyptic_legacy.10 days = 15 random = 15 } } }
+	}
+}
+
+carrier_event = {
+	id = kuat_post_apocalyptic_legacy.10
+	title = "kuat_post_apocalyptic_legacy.10.title"
+	desc = "kuat_post_apocalyptic_legacy.10.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = {
+		solar_system? = {
+			exists = space_owner
+			space_owner? = {
+				has_country_flag = fire_the_legacy_kuat_stage_6
+				kuat_is_enable_post_apocalyptic_origin = yes 
+			}
+		}
+		is_same_value = event_target:ancient_shadow_place_B
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.10.a
+		event_target:ancient_shadow_place_B = { create_archaeological_site = kuat_lagacy_51 }
+	}
+}
+
+#找D区
+country_event = {
+	id = kuat_post_apocalyptic_legacy.11
+	title = "kuat_post_apocalyptic_legacy.11.title"
+	desc = "kuat_post_apocalyptic_legacy.11.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes 
+		is_ai = no has_country_flag = fire_the_legacy_kuat_stage_7
+	}
+	immediate = {
+		country_event = { id = kuat_post_apocalyptic_legacy.12 days = 1 }
+	}
+	option = { name = "kuat_post_apocalyptic_legacy.11.a" }
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.12
+	title = "kuat_post_apocalyptic_legacy.12.title"
+	desc = "kuat_post_apocalyptic_legacy.12.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = { 
+		kuat_is_enable_post_apocalyptic_origin = yes 
+		has_country_flag = fire_the_legacy_kuat_stage_7 
+	}
+	immediate = {
+		save_event_target_as = interesting_country
+		set_country_flag = Kuat_C_facility_area_over
+		add_timeline_event = {
+			type = timeline_origin
+			override_id = timeline_event_kuat_leagacy_07
+			override_tooltip = "TIMELINE_EVENT_KUAT_LEGACY_07_TOOLTIP"
+			override_types = { }
+			override_text = { "text:TIMELINE_EVENT_KUAT_LEGACY_07" }
+			override_texture = { "background:GFX_evt_ship_in_orbit_3" }
+			targets = { }
+		}			
+		kuat_create_toasto_message = { KEY = kuat_find_memory_cluds TARGET = this RECIPIENT = this }
+		random_system_within_border = {
+			limit = { is_capital_system = yes }
+			spawn_system = { initializer = myst_system_4 hyperlane = no }
+		}
+	}
+	option = { name = kuat_post_apocalyptic_legacy.12.a }
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.13
+	title = "kuat_post_apocalyptic_legacy.13.title"
+	desc = "kuat_post_apocalyptic_legacy.13.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes 
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.13.a 
+		hidden_effect = {
+			set_country_flag = can_restore_the_black_hole
+			country_event = { id = kuat_post_apocalyptic_legacy.14 days = 15 random = 30 }
+		}
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.14
+	title = "kuat_post_apocalyptic_legacy.14.title"
+	desc = "kuat_post_apocalyptic_legacy.14.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes 
+	}
+	immediate = {  
+		enable_special_project = {
+			name = kuat_post_apocalyptic_kuat_starkillerbase
+			location = event_target:mysst_system_star_location
+			owner = root
+		}
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.14.a 
+		hidden_effect = { set_country_flag = can_have_starbase_country }
+		give_technology = { tech = tech_kuat_starbase }
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.15
+	title = "kuat_post_apocalyptic_legacy.15.title"
+	desc = "kuat_post_apocalyptic_legacy.15.desc"
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes 
+	}
+	immediate = {
+		set_country_flag = Kuat_D_facility_area_over 
+		add_timeline_event = {
+			type = timeline_origin
+			override_id = timeline_event_kuat_leagacy_12
+			override_tooltip = "TIMELINE_EVENT_KUAT_LEGACY_12_TOOLTIP"
+			override_types = { }
+			override_text = { "text:TIMELINE_EVENT_KUAT_LEGACY_12" }
+			override_texture = { "background:GFX_evt_ship_in_orbit_3" }
+			targets = { }
+		}			
+		kuat_create_toasto_message = { KEY = kuat_find_memory_cluds TARGET = this RECIPIENT = this }
+		set_spawn_system_batch = begin
+		random_system_within_border = {
+			limit = { is_capital_system = yes }
+			spawn_system = { initializer = starkiller_base hyperlane = no }
+		}
+		set_spawn_system_batch = end
+		set_global_flag = starkillerbase_not_passed
+		every_playable_country = {
+			limit = { is_ai = no }
+			establish_communications_no_message = event_target:kuat_firebase_country
+		}
+		country_event = { id = kuat_post_apocalyptic_legacy.16 days = 15 random = 15 } 
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.15.a 
+		custom_tooltip = "kuat_post_apocalyptic_kuat_origin_give_all_ship_and_tech"
+		hidden_effect = { 
+			kuat_origin_give_all_ship_and_tech = yes 
+			event_target:kuat_post_support_country = {
+				every_owned_fleet = { set_owner = root }
+			}
+			create_kuat_post_shadow_leader_effects = { CLASS = commander }
+		}
+	}
+}
+
+#基地
+country_event = {
+	id = kuat_post_apocalyptic_legacy.16
+	title = "kuat_post_apocalyptic_legacy.16.title"
+	desc = "kuat_post_apocalyptic_legacy.16.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:kuat_player_target_species
+		graphical_culture = event_target:kuat_player_target_country
+		city_level = event_target:kuat_player_target_country
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes
+		has_global_flag = starkillerbase_not_passed
+		exists = event_target:kuat_firebase_country
+	}
+	immediate = {
+		set_global_flag = starkillerbase_contact
+	}
+	option = {
+		#你们这群走狗，竟然敢来这里！
+		name = "kuat_post_apocalyptic_legacy.16.who"
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.16.who.response
+	}
+	option = {
+		#话不投机半句多，开战！
+		name = "kuat_post_apocalyptic_legacy.16.what"
+		hidden_effect = {
+			set_country_flag = kuat_legacy_87_continue
+			every_system_within_border = {
+				limit = { is_capital_system = yes }
+				every_system_planet = {
+					limit = { is_star = yes }
+					set_carrier_flag = starkiller_attack_built_target
+					prev? = { spawn_megastructure = {
+						type = kuat_starkiller_marker_0
+						owner = event_target:kuat_firebase_country coords_from = prev
+						init_effect = { set_megastructure_flag = kuat_starkiller_marker_0_upgrade_@event_target:kuat_firebase_country }
+					} }
+				}
+			}
+			event_target:kuat_firebase_country = {
+				set_country_type = kuat_fire_base_hositle
+				random_owned_megastructure = {
+					limit = { is_megastructure_type = kuat_starkillerbase_1 }
+					upgrade_megastructure_to = kuat_starkillerbase_15
+					finish_upgrade = yes
+				}
+				random_owned_megastructure = {
+					limit = { is_megastructure_type = kuat_starkillerbase_15 }
+					upgrade_megastructure_to = kuat_starkillerbase_a
+					finish_upgrade = yes
+				}
+				country_event = { id = kuat_starkiller.1 }
+			}
+		}
+		response_text = kuat_post_apocalyptic_legacy.16.what.response
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.17
+	title = "kuat_post_apocalyptic_legacy.17.title"
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = kuat_post_apocalyptic_legacy.17.setp.1 }
+		}
+		text = "kuat_post_apocalyptic_legacy.17.0.desc"
+	}
+	desc = {
+		trigger = {
+			has_country_flag = kuat_post_apocalyptic_legacy.17.setp.1
+		}
+		text = "kuat_post_apocalyptic_legacy.17.1.desc"
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = galactic_custodian_room
+	}
+	is_triggered_only = yes
+	diplomatic = yes
+	
+	trigger = { 
+		kuat_is_enable_post_apocalyptic_origin = yes 
+	}
+
+	immediate = {
+		set_global_flag = kuat_post_origin_cover_the_starkiller
+	}
+
+	option = { #who are you
+		name = kuat_post_apocalyptic_legacy.17.a
+		is_dialog_only = yes
+		hidden_effect = { 
+			set_country_flag = kuat_post_apocalyptic_legacy.17.setp.1
+		}
+		response_text = kuat_post_apocalyptic_legacy.17.a.res
+	}
+	option = { #where am I
+		name = kuat_post_apocalyptic_legacy.17.b
+		is_dialog_only = yes
+		hidden_effect = { 
+			set_country_flag = kuat_post_apocalyptic_legacy.17.setp.1
+		}
+		response_text = kuat_post_apocalyptic_legacy.17.b.res
+	}
+	option = { #what happened here
+		name = kuat_post_apocalyptic_legacy.17.c
+		is_dialog_only = yes
+		hidden_effect = { 
+			set_country_flag = kuat_post_apocalyptic_legacy.17.setp.1
+		}
+		response_text = kuat_post_apocalyptic_legacy.17.c.res
+	}
+	option = { #why are you doing this
+		name = kuat_post_apocalyptic_legacy.17.d
+		is_dialog_only = yes
+		hidden_effect = { 
+			set_country_flag = kuat_post_apocalyptic_legacy.17.setp.1
+		}
+		response_text = kuat_post_apocalyptic_legacy.17.d.res
+	}
+	option = { #how to do
+		name = kuat_post_apocalyptic_legacy.17.e
+		hidden_effect = { 
+			set_country_flag = kuat_post_apocalyptic_legacy.17.setp.1
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.17.e.res
+	}
+
+	option = { 
+		name = kuat_post_apocalyptic_legacy.17.f 
+		hidden_effect = {
+			remove_country_flag = kuat_post_apocalyptic_legacy.17.setp.1
+			remove_global_flag = starkillerbase_not_passed		
+			random_system = {
+				limit = { has_star_flag = starkiller_system	}
+				remove_star_flag = ag_no_jump_in_system
+			}
+			event_target:kuat_firebase_country = {
+				destroy_country = yes
+				every_megastructure = {
+					limit = { is_megastructure_type = kuat_starkillerbase_1 }
+					remove_megastructure = this
+				}
+			}
+			set_country_flag = fighting_won_with_facility
+			event_target:starkiller_sun_target_system = { spawn_megastructure = {
+				type = kuat_starkillerbase_1
+				coords_from = event_target:starkillerbase_location
+				owner = root
+			} }
+			remove_global_flag = kuat_system_selector_1_opened
+			country_event = { id = kuat_post_apocalyptic_legacy.19 days = 5 }
+		}
+		response_text = kuat_post_apocalyptic_legacy.17.f.res
+		default_hide_option = yes 
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.18
+	title = "kuat_post_apocalyptic_legacy.2.title"
+	desc = {
+		trigger = {
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.2.0.desc"
+				NOT = { has_country_flag = kuat_post_apocalyptic_legacy.2.setp.1 }
+			}
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.2.1.desc"
+				has_country_flag = kuat_post_apocalyptic_legacy.2.setp.1
+			}
+		}
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	location = event_target:kuat_post_support_country
+	is_triggered_only = yes
+	diplomatic = yes
+	
+	trigger = { 
+		kuat_is_enable_post_apocalyptic_origin = yes 
+		exists = event_target:kuat_post_support_country
+	}
+
+	option = { #who are you
+		name = kuat_post_apocalyptic_legacy.2.a
+		hidden_effect = { 
+			set_country_flag = kuat_post_apocalyptic_legacy.2.setp.1
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.2.a.res
+	}
+	option = { #where am I
+		name = kuat_post_apocalyptic_legacy.2.b
+		hidden_effect = { 
+			set_country_flag = kuat_post_apocalyptic_legacy.2.setp.1
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.2.b.res
+	}
+	option = { #what happened here
+		name = kuat_post_apocalyptic_legacy.2.c
+		hidden_effect = { 
+			set_country_flag = kuat_post_apocalyptic_legacy.2.setp.1
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.2.c.res
+	}
+	option = { #why are you doing this
+		name = kuat_post_apocalyptic_legacy.2.d
+		hidden_effect = { 
+			set_country_flag = kuat_post_apocalyptic_legacy.2.setp.1
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.2.d.res
+	}
+	option = { #how to do
+		name = kuat_post_apocalyptic_legacy.2.e
+		hidden_effect = { 
+			set_country_flag = kuat_post_apocalyptic_legacy.2.setp.1
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.2.e.res
+	}
+
+	option = { #how to do
+		name = kuat_post_apocalyptic_legacy.2.f
+		trigger = {
+			has_global_flag = kuat_post_origin_cover_the_starkiller
+		}
+		hidden_effect = { 
+			set_country_flag = kuat_post_apocalyptic_legacy.2.setp.1
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.2.f.res
+	}		
+
+	option = { name = kuat_shipyard.exit default_hide_option = yes }
+
+	after = { remove_country_flag = kuat_post_apocalyptic_legacy.2.setp.1 }
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.19
+	title = "kuat_post_apocalyptic_legacy.19.title"
+	desc = "kuat_post_apocalyptic_legacy.19.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:kuat_player_target_species
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes 
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.19.a 
+		response_text = kuat_post_apocalyptic_legacy.19.a.res
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.20
+	title = "kuat_post_apocalyptic_legacy.20.title"
+	desc = "kuat_post_apocalyptic_legacy.20.desc"
+	diplomatic = yes
+	picture_event_data = { 
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room 
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes 
+	}
+	immediate = {
+		set_country_flag = start_discoveryancientkuat_post_apocalyptic 
+	}
+	option = { name = kuat_post_apocalyptic_legacy.20.a }
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.21
+	title = "kuat_post_apocalyptic_legacy.21.name"
+	desc = {
+		trigger = {
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.21.4.desc"
+				NOR = {
+					has_country_flag = kuat_legacy_discovery0
+					has_country_flag = kuat_legacy_discovery1
+					has_country_flag = kuat_legacy_discovery2
+					has_country_flag = kuat_legacy_discovery3
+				}
+			}
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.21.0.desc"
+				has_country_flag = kuat_legacy_discovery0
+			}
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.21.1.desc"
+				has_country_flag = kuat_legacy_discovery1
+			}
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.21.2.desc"
+				has_country_flag = kuat_legacy_discovery2
+			}
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.21.3.desc"
+				has_country_flag = kuat_legacy_discovery3
+			}
+		}
+	}
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = { has_country_flag = enable_the_F_system_line }
+	option = {
+		name = kuat_post_apocalyptic_legacy.21.a
+		hidden_effect = {
+			remove_country_flag = kuat_legacy_discovery1
+			remove_country_flag = kuat_legacy_discovery2
+			remove_country_flag = kuat_legacy_discovery3
+			set_country_flag = kuat_legacy_discovery0
+			country_event = { id = kuat_post_apocalyptic_legacy.21 }
+		}
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.21.b
+		hidden_effect = {
+			remove_country_flag = kuat_legacy_discovery0
+			remove_country_flag = kuat_legacy_discovery2
+			remove_country_flag = kuat_legacy_discovery3
+			set_country_flag = kuat_legacy_discovery1
+			country_event = { id = kuat_post_apocalyptic_legacy.21 }
+		}
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.21.c
+		hidden_effect = {
+			remove_country_flag = kuat_legacy_discovery0
+			remove_country_flag = kuat_legacy_discovery1
+			remove_country_flag = kuat_legacy_discovery3
+			set_country_flag = kuat_legacy_discovery2
+			country_event = { id = kuat_post_apocalyptic_legacy.21 }
+		}
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.21.d
+		hidden_effect = {
+			remove_country_flag = kuat_legacy_discovery0
+			remove_country_flag = kuat_legacy_discovery2
+			remove_country_flag = kuat_legacy_discovery1
+			set_country_flag = kuat_legacy_discovery3
+			country_event = { id = kuat_post_apocalyptic_legacy.21 }
+		}
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.21.e
+		hidden_effect = {
+			capital_scope? = {
+				set_spawn_system_batch = begin
+				owner? = { save_event_target_as = interesting_country }
+				spawn_system = { initializer = myst_system_5 hyperlane = no }
+				set_spawn_system_batch = end
+			}
+		}
+		default_hide_option = yes
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.22
+	title = "kuat_legacy.103.title"
+	desc = {
+		trigger = {
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.22.0.desc"
+				NOR = {
+					has_country_flag = kuat_post_apocalyptic_legacy.22.setp.1
+					has_country_flag = kuat_post_apocalyptic_legacy.22.setp.2
+				}
+			}
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.22.1.desc"
+				has_country_flag = kuat_post_apocalyptic_legacy.22.setp.1
+			}
+			success_text = {
+				text = "kuat_post_apocalyptic_legacy.22.2.desc"
+				has_country_flag = kuat_post_apocalyptic_legacy.22.setp.2
+			}
+		}
+	}
+	picture_event_data = { room = astral_rift_bleached_planet_2_room }
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	location = event_target:kuat_contractor_country
+	is_triggered_only = yes
+	diplomatic = yes
+	trigger = { 
+		kuat_is_enable_post_apocalyptic_origin = yes
+		has_country_flag = enable_the_F_system_contractor
+		exists = event_target:kuat_contractor_country
+		OR = {
+			NOT = { has_active_event = { kuat_post_apocalyptic_legacy.22 } }
+			from? = { is_same_value = root }
+		}
+		OR = {
+			from? = { is_country_type = kuat_contractor }
+			from? = { is_same_value = root }
+		}
+	}
+
+	#被亚空间能量封锁的星系是什么
+	option = {
+		name = kuat_post_apocalyptic_legacy.22.l
+		trigger = {
+			has_country_flag = enable_the_F_system_line_stage_13_PH1
+			NOT = { has_country_flag = enable_the_F_system_line_stage_13_PH2 }
+		}
+		hidden_effect = {
+			set_country_flag = enable_the_F_system_line_stage_13_PH2
+			get_action_for_contrator_kuat_plague_alert = yes
+			enable_special_project = {
+				name = exe_enable_the_F_system_line_stage_13
+				owner = root location = root.capital_scope
+			}
+		}
+		response_text = "kuat_post_apocalyptic_legacy.22.l.res"
+	}
+
+	#F星域中的护盾星球里隐藏着什么
+	option = {
+		name = kuat_post_apocalyptic_legacy.22.j
+		trigger = {
+			has_country_flag = enable_the_F_system_line_stage_1
+			NOT = { has_country_flag = enable_the_F_system_line_stage_1_ph1 }
+		}
+		hidden_effect = {
+			set_country_flag = enable_the_F_system_line_stage_1_ph1
+			get_action_for_contrator_kuat_plague_alert = yes
+		}
+		response_text = "kuat_post_apocalyptic_legacy.22.j.res"
+	}
+
+	#要如何才能解除这个护盾
+	option = {
+		name = kuat_post_apocalyptic_legacy.22.k
+		trigger = {
+			has_country_flag = enable_the_F_system_line_stage_1_ph1
+			NOT = { has_country_flag = enable_the_F_system_line_stage_1_ph2 }
+		}
+		hidden_effect = {
+			set_country_flag = enable_the_F_system_line_stage_1_ph2
+			enable_special_project = {
+				name = exe_enable_F_system_databank_stage_1
+				owner = root location = root.capital_scope
+			}
+			get_action_for_contrator_kuat_plague_alert = yes
+		}
+		response_text = "kuat_post_apocalyptic_legacy.22.k.res"
+	}
+
+
+	# improve relation message
+	option = { #endodia
+		name = kuat_post_apocalyptic_legacy.22.a
+		hidden_effect = { 
+			remove_country_flag = kuat_post_apocalyptic_legacy.22.setp.2
+			set_country_flag = kuat_post_apocalyptic_legacy.22.setp.1
+			get_action_for_contrator_kuat_plague_alert = yes
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.22.a.res
+	}
+	option = { #kuat
+		name = kuat_post_apocalyptic_legacy.22.b
+		hidden_effect = { 
+			remove_country_flag = kuat_post_apocalyptic_legacy.22.setp.2
+			set_country_flag = kuat_post_apocalyptic_legacy.22.setp.1
+			get_action_for_contrator_kuat_plague_alert = yes
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.22.b.res
+	}
+	option = { #eternal fleet
+		name = kuat_post_apocalyptic_legacy.22.c
+		hidden_effect = { 
+			remove_country_flag = kuat_post_apocalyptic_legacy.22.setp.2
+			set_country_flag = kuat_post_apocalyptic_legacy.22.setp.1
+			get_action_for_contrator_kuat_plague_alert = yes
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.22.c.res
+	}
+	option = { #facility protector
+		name = kuat_post_apocalyptic_legacy.22.d
+		hidden_effect = { 
+			remove_country_flag = kuat_post_apocalyptic_legacy.22.setp.2
+			set_country_flag = kuat_post_apocalyptic_legacy.22.setp.1
+			get_action_for_contrator_kuat_plague_alert = yes
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.22.d.res
+	}
+
+	# futrue
+	option = { #eternal empire
+		name = kuat_post_apocalyptic_legacy.22.e
+		hidden_effect = { 
+			remove_country_flag = kuat_post_apocalyptic_legacy.22.setp.1
+			set_country_flag = kuat_post_apocalyptic_legacy.22.setp.2
+			get_action_for_contrator_kuat_plague_alert = yes
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.22.e.res
+	}
+	option = { #infinite empire
+		name = kuat_post_apocalyptic_legacy.22.f
+		hidden_effect = { 
+			remove_country_flag = kuat_post_apocalyptic_legacy.22.setp.1
+			set_country_flag = kuat_post_apocalyptic_legacy.22.setp.2
+			get_action_for_contrator_kuat_plague_alert = yes
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.22.f.res
+	}
+	option = { #our future
+		name = kuat_post_apocalyptic_legacy.22.g
+		hidden_effect = { 
+			remove_country_flag = kuat_post_apocalyptic_legacy.22.setp.1
+			set_country_flag = kuat_post_apocalyptic_legacy.22.setp.2
+			get_action_for_contrator_kuat_plague_alert = yes
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.22.g.res
+	}
+	option = { #what are you
+		name = kuat_post_apocalyptic_legacy.22.h
+		hidden_effect = { 
+			remove_country_flag = kuat_post_apocalyptic_legacy.22.setp.1
+			set_country_flag = kuat_post_apocalyptic_legacy.22.setp.2
+			get_action_for_contrator_kuat_plague_alert = yes
+		}
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.22.h.res
+	}
+
+	# inform and alert the plague
+	option = {
+		name = kuat_post_apocalyptic_legacy.22.i
+		hidden_effect = {
+			remove_country_flag = kuat_post_apocalyptic_legacy.22.setp.1
+			set_country_flag = kuat_post_apocalyptic_legacy.22.setp.2
+			get_action_for_contrator_kuat_plague_alert = yes
+		}
+		response_text = kuat_post_apocalyptic_legacy.22.i.res
+	}
+
+	option = { name = kuat_shipyard.exit default_hide_option = yes }
+
+	after = { hidden_effect = {  
+		if = {
+			limit = { NOT = { has_country_flag = Kuat_F_facility_area_over } }
+			set_country_flag = Kuat_F_facility_area_over
+			add_timeline_event = {
+				type = timeline_origin
+				override_id = timeline_event_kuat_leagacy_04
+				override_tooltip = "TIMELINE_EVENT_KUAT_LEGACY_04_TOOLTIP"
+				override_types = { }
+				override_text = { "text:TIMELINE_EVENT_KUAT_LEGACY_04" }
+				override_texture = { "background:GFX_evt_ship_in_orbit_3" }
+				targets = { }
+			}
+			kuat_create_toasto_message = { KEY = kuat_find_memory_cluds TARGET = this RECIPIENT = this }
+		}
+	} }
+}
+
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.23
+	title = "kuat_post_apocalyptic_legacy.23.title"
+	desc = "kuat_post_apocalyptic_legacy.23.desc"
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = galactic_custodian_room
+	}
+	mean_time_to_happen = { years = 3 }
+	diplomatic = yes
+	
+	trigger = { 
+		kuat_is_enable_post_apocalyptic_origin = yes 
+		has_global_flag = kuat_extramonster_all_over
+		NOT = { has_country_flag = kuat_post_apocalyptic_legacy.23.fired }
+	}
+
+	immediate = {
+		set_country_flag = kuat_post_apocalyptic_legacy.23.fired
+	}
+
+	option = { 
+		name = kuat_post_apocalyptic_legacy.23.a
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.23.a.res
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.23.b
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.23.b.res
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.23.c
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.23.c.res
+	}
+
+	option = { 
+		name = kuat_post_apocalyptic_legacy.23.f 
+		hidden_effect = {
+			create_country = {
+				name = "Name_Eternal_Support"
+				type = eternal_support
+				name_list = Eternal_Fleet_1
+				flag = {
+					icon = {
+						category = "exe_invasion"
+						file = "ge_o.dds"
+					}
+					background = {
+						category = "backgrounds"
+						file = "00_solid.dds"
+					}
+					colors = { "yellow" "black" "null" "null" }
+				}
+				effect = { 
+					set_country_flag = protected_from_queen_storm
+					save_global_event_target_as = eternal_support_country 
+					add_modifier = { modifier = Elternal_creating }
+					establish_communications_no_message = root
+				}
+			}		
+		}
+		response_text = kuat_post_apocalyptic_legacy.23.f.res
+		default_hide_option = yes 
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.24
+	title = "kuat_post_apocalyptic_legacy.24.title"
+	desc = "kuat_post_apocalyptic_legacy.24.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_wind_ruins
+	is_triggered_only = yes
+	trigger = {
+		has_established_contact = event_target:eternal_support_country
+		exists = event_target:eternal_support_country
+		OR = {
+			post_eternal_support_diplo_event_active = no
+			from? = { is_same_value = root }
+		}
+		kuat_is_enable_post_apocalyptic_origin = yes
+		OR = {
+			from? = { is_same_value = event_target:eternal_support_country }
+			from? = { is_same_value = root }
+		}
+		has_global_flag = kuat_extramonster_all_over
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.25.a
+		hidden_effect = { country_event = { id = kuat_post_apocalyptic_legacy.25 } }
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.25.b
+		hidden_effect = { country_event = { id = kuat_post_apocalyptic_legacy.26 } }
+	}
+	option = {
+		name = kuat_shipyard.exit
+		default_hide_option = yes
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.25
+	title = "kuat_post_apocalyptic_legacy.25.title"
+	desc = "kuat_post_apocalyptic_legacy.25.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_wind_ruins
+	is_triggered_only = yes
+	trigger = {
+		exists = event_target:eternal_support_country
+		kuat_is_enable_post_apocalyptic_origin = yes
+		has_global_flag = kuat_extramonster_all_over
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.24.a
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.24.a.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.24.b
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.24.b.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.24.c
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.24.c.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.24.d
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.24.d.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.24.e
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.24.e.res
+	}		
+
+	option = {
+		name = kuat_shipyard.exit
+		hidden_effect = { set_country_flag = kuat_post_apocalyptic_enable_eternalthrone_tech }
+		default_hide_option = yes
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.26
+	title = "kuat_post_apocalyptic_legacy.26.title"
+	desc = "kuat_post_apocalyptic_legacy.26.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = {
+		has_global_flag = kuat_extramonster_all_over
+		kuat_is_enable_post_apocalyptic_origin = yes
+		count_owned_leader = {
+			count < 1
+			limit = { has_leader_flag = kuat_eternal_leader }
+		}
+	}
+	option = { 
+		name = kuat_facility_return_invasion.25.b.commander 
+		hidden_effect = { create_kuat_eternal_leader_effects = { CLASS = commander } }
+	}
+	option = { 
+		name = kuat_facility_return_invasion.25.b.official 
+		hidden_effect = { create_kuat_eternal_leader_effects = { CLASS = official } }
+	}
+	option = { 
+		name = kuat_facility_return_invasion.25.b.scientist 
+		hidden_effect = { create_kuat_eternal_leader_effects = { CLASS = scientist } }
+	}
+}
+
+#双子座告诉玩家：按计划袭击监督者控制的夸特要塞
+country_event = {
+	id = kuat_post_apocalyptic_legacy.27
+	title = "kuat_post_apocalyptic_legacy.27.title"
+	desc = "kuat_post_apocalyptic_legacy.27.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	mean_time_to_happen = { months = 3 }
+	trigger = {
+		exists = event_target:eternal_support_country
+		kuat_is_enable_post_apocalyptic_origin = yes
+		has_country_flag = kuat_post_apocalyptic_enable_eternalthrone_tech
+		NOT = { has_country_flag = kuat_post_apocalyptic_legacy.27_fired }
+	}
+	immediate = {
+		set_country_flag = kuat_post_apocalyptic_legacy.27_fired
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.27.a
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.27.a.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.27.b
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.27.b.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.27.c
+		enable_special_project = {
+			name = kuat_post_apocalyptic_find_center_kuat_cluster
+			location = root.capital_scope owner = root
+		}
+	}
+}
+
+#经过特殊计划，成功定位被暗能量隐蔽的夸特基地星团
+country_event = {
+	id = kuat_post_apocalyptic_legacy.28
+	title = "kuat_post_apocalyptic_legacy.28.title"
+	desc = "kuat_post_apocalyptic_legacy.28.desc"	
+	diplomatic = yes
+	picture_event_data = { room = astral_rift_entangled_dark_matter_2_room }
+	custom_gui = "kuat_event_window"
+	custom_gui_option = "kuat_event_option"
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes
+	}
+	immediate = {
+		create_post_apocalptic_kuat_country = yes
+		kuat_military_base_system_initial = yes
+		create_sol_kuat_military_gateway = { NUM = 8 }
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.28.a 
+		hidden_effect = { 
+			country_event = { id = kuat_post_apocalyptic_legacy.29 days = 90 random = 180 } 
+			establish_communications_no_message = event_target:fallen_empire_kuat
+		}
+	}
+}
+
+#监督者议会发现夸特，第一阶段战争开始
+country_event = {
+	id = kuat_post_apocalyptic_legacy.29
+	title = "kuat_post_apocalyptic_legacy.29.title"
+	desc = "kuat_post_apocalyptic_legacy.29.desc"	
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:kuat_player_target_species
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = {
+		exists = event_target:fallen_empire_kuat
+		kuat_is_enable_post_apocalyptic_origin = yes
+	}
+	after = {
+		event_target:fallen_empire_kuat = { 
+			declare_war = {
+				target = root
+				name = "Name_kuat_war"
+				attacker_war_goal = Kuat_total_war
+			} 
+		}
+	}	
+	option = { 
+		name = kuat_post_apocalyptic_legacy.29.a 
+		custom_tooltip = kuat_post_apocalyptic_legacy.29.a.tooltip
+		hidden_effect = {
+			every_megastructure = { 
+				limit = { has_megastructure_flag = can_active_gateway } 
+				activate_gateway = this 
+			}
+			kuat_unlock_all_gateway = yes
+		}
+		response_text = kuat_post_apocalyptic_legacy.29.a.res
+	}
+}
+
+#监督者一阶段被玩家击败
+country_event = {
+	id = kuat_post_apocalyptic_legacy.30
+	title = "kuat_post_apocalyptic_legacy.30.title"
+	desc = "kuat_post_apocalyptic_legacy.30.desc"	
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:kuat_player_target_species
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes
+		exists = from
+		from? = { 
+			is_country_type = kuat_center_cluster_gurdian 
+			count_owned_ship = {
+				count < 1
+				limit = { NOT = { is_same_value = root.fromfromfrom } }
+			}
+		}
+	}
+	immediate = {
+		set_global_flag = kuat_post_apocalyptic_Overseer_Council_defeated_first
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.30.a 
+		hidden_effect = {
+			country_event = {
+				id = kuat_post_apocalyptic_legacy.33 
+				days = 45 random = 90
+			}
+		}
+		response_text = kuat_post_apocalyptic_legacy.30.a.res
+	}
+	after = { event_target:fallen_empire_kuat = { destroy_country = yes } }
+}
+
+#其他人击败也是玩家进行事件
+country_event = {
+	id = kuat_post_apocalyptic_legacy.32
+	title = "kuat_post_apocalyptic_legacy.32.title"
+	desc = "kuat_post_apocalyptic_legacy.32.desc"	
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:kuat_player_target_species
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.30.a 
+		hidden_effect = {
+			country_event = {
+				id = kuat_post_apocalyptic_legacy.33 
+				days = 45 random = 90
+			}
+		}
+		response_text = kuat_post_apocalyptic_legacy.30.a.res
+	}	
+}
+
+#双子座告知玩家，监督者议会的增援信号已传达
+country_event = {
+	id = kuat_post_apocalyptic_legacy.33
+	title = "kuat_post_apocalyptic_legacy.33.title"
+	desc = "kuat_post_apocalyptic_legacy.33.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = {
+		exists = event_target:eternal_support_country
+		kuat_is_enable_post_apocalyptic_origin = yes
+		has_global_flag = kuat_post_apocalyptic_Overseer_Council_defeated_first
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.33.a
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.33.a.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.33.b
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.33.b.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.33.c
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.33.c.res
+	}
+	immediate = { set_global_flag = fire_facility_return }
+	option = { name = kuat_shipyard.exit default_hide_option = yes }
+}
+
+#战中口嗨
+country_event = {
+	id = kuat_post_apocalyptic_legacy.34
+	title = kuat_post_apocalyptic_legacy.34.title
+	desc = kuat_post_apocalyptic_legacy.34.desc
+	picture_event_data = {
+		portrait = event_target:kuat_player_target_species
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	location = root.capital_scope
+	is_triggered_only = yes
+	diplomatic = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes
+		from? = { is_country_type = kuat_center_cluster_gurdian }
+	}
+	option = { name = kuat_shipyard.exit default_hide_option = yes }
+}
+
+#双子座：协助击败监督者议会二阶段
+country_event = {
+	id = kuat_post_apocalyptic_legacy.35
+	title = "kuat_post_apocalyptic_legacy.35.title"
+	desc = "kuat_post_apocalyptic_legacy.35.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_wind_ruins
+	is_triggered_only = yes
+	trigger = { kuat_is_enable_post_apocalyptic_origin = yes }
+	#What about the Eternal Fleet
+	option = { 
+		name = kuat_post_apocalyptic_legacy.35.a 
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.35.a.resp 
+	}
+	#Can you control them?
+	option = { 
+		name = kuat_post_apocalyptic_legacy.35.b 
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.35.b.resp 
+	}
+	#What can i do for you
+	option = { 
+		name = kuat_post_apocalyptic_legacy.35.c 
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.35.c.resp 
+	}
+	#双子座协助
+	option = { 
+		name = kuat_post_apocalyptic_legacy.35.d 
+		response_text = kuat_post_apocalyptic_legacy.35.d.resp 
+		hidden_effect = { set_country_flag = kuat_post_apocalyptic_Gemini_ennded_A }
+		add_modifier = { modifier = kuat_eternal_support_A }
+		add_monthly_resource_mult = { resource = unity value = 12 }
+	}
+	#双子座不协助
+	option = { 
+		name = kuat_post_apocalyptic_legacy.35.e 
+		response_text = kuat_post_apocalyptic_legacy.35.e.resp 
+		hidden_effect = { set_country_flag = kuat_post_apocalyptic_Gemini_ennded_B }
+		add_modifier = { modifier = kuat_eternal_support_B }
+		add_monthly_resource_mult = { resource = unity value = 12 }
+	}
+}
+
+#后裔给出选择，白羊座的复活与否
+country_event = {
+	id = kuat_post_apocalyptic_legacy.36
+	title = "kuat_post_apocalyptic_legacy.36.title"
+	desc = "kuat_post_apocalyptic_legacy.36.desc"
+	diplomatic = yes
+	picture_event_data = { room = astral_rift_bleached_planet_2_room }
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_wind_ruins
+	is_triggered_only = yes
+	trigger = { has_global_flag = kuat_post_apocalyptic_enable_dam_of_the_galatic_empire }
+	#What about the Eternal Fleet
+	option = { 
+		name = kuat_post_apocalyptic_legacy.36.a 
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.36.a.resp 
+	}
+	#Can you control them?
+	option = { 
+		name = kuat_post_apocalyptic_legacy.36.b 
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.36.b.resp 
+	}
+	#What can i do for you
+	option = { 
+		name = kuat_post_apocalyptic_legacy.36.c 
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.36.c.resp 
+	}
+	#接受复活白羊座
+	option = { 
+		name = kuat_post_apocalyptic_legacy.36.d 
+		response_text = kuat_post_apocalyptic_legacy.36.d.resp 
+		hidden_effect = { 
+			set_global_flag = kuat_post_apocalyptic_Aries_ended_A
+			enable_special_project = {
+				name = kuat_post_apocalyptic_Gemini_ennded_A
+				location = root.capital_scope owner = root
+			}
+		}
+	}
+	#拒绝复活白羊座
+	option = { 
+		name = kuat_post_apocalyptic_legacy.36.e 
+		response_text = kuat_post_apocalyptic_legacy.36.e.resp 
+		hidden_effect = { set_global_flag = kuat_post_apocalyptic_Aries_ended_B }
+	}
+}
+
+#打完永恒回归，双子座的影响
+country_event = {
+	id = kuat_post_apocalyptic_legacy.37
+	title = "kuat_post_apocalyptic_legacy.37.title"
+	desc = "kuat_post_apocalyptic_legacy.37.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_wind_ruins
+	is_triggered_only = yes
+	#Final fire
+	option = { 
+		name = kuat_post_apocalyptic_legacy.37.a 
+		trigger = { has_country_flag = kuat_post_apocalyptic_Gemini_ennded_A }
+		response_text = kuat_post_apocalyptic_legacy.37.a.resp 
+	}
+	#Final fire
+	option = { 
+		name = kuat_post_apocalyptic_legacy.37.b 
+		trigger = { has_country_flag = kuat_post_apocalyptic_Gemini_ennded_B }
+		response_text = kuat_post_apocalyptic_legacy.37.b.resp 
+	}
+}
+
+#后裔：接受数据
+country_event = {
+	id = kuat_post_apocalyptic_legacy.38
+	title = "kuat_post_apocalyptic_legacy.38.title"
+	desc = {
+		trigger = {
+			has_country_flag = kuat_post_apocalyptic_Gemini_ennded_A
+		}
+		text = "kuat_post_apocalyptic_legacy.38.a.desc"
+	}
+	desc = {
+		trigger = {
+			has_country_flag = kuat_post_apocalyptic_Gemini_ennded_B
+		}
+		text = "kuat_post_apocalyptic_legacy.38.b.desc"
+	}	
+	diplomatic = yes
+	picture_event_data = { room = astral_rift_bleached_planet_2_room }
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_wind_ruins
+	is_triggered_only = yes
+	option = { 
+		name = kuat_post_apocalyptic_legacy.38.a 
+		hidden_effect = {
+			country_event = { id = kuat_post_apocalyptic_legacy.39 days = 15 }
+		}
+		add_monthly_resource_mult = { resource = unity value = 12 }
+	}
+}
+
+#双子座：上传数据的文本的反应
+country_event = {
+	id = kuat_post_apocalyptic_legacy.39
+	title = "kuat_post_apocalyptic_legacy.39.title"
+	desc = {
+		trigger = {
+			has_country_flag = kuat_post_apocalyptic_Gemini_ennded_A
+		}
+		text = "kuat_post_apocalyptic_legacy.39.a.desc"
+	}
+	desc = {
+		trigger = {
+			has_country_flag = kuat_post_apocalyptic_Gemini_ennded_B
+		}
+		text = "kuat_post_apocalyptic_legacy.39.b.desc"
+	}	
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = {
+		exists = event_target:eternal_support_country
+		kuat_is_enable_post_apocalyptic_origin = yes
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.39.a
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.39.a.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.39.b
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.39.b.res
+	}
+	option = { name = kuat_shipyard.exit default_hide_option = yes }
+}
+
+#索伦元帅的部队发现了进一步的踪迹
+country_event = {
+	id = kuat_post_apocalyptic_legacy.40
+	title = "kuat_post_apocalyptic_legacy.40.title"
+	desc = "kuat_post_apocalyptic_legacy.40.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	mean_time_to_happen = { years = 2 }
+	trigger = {
+		exists = event_target:kuat_post_support_country
+		kuat_is_enable_post_apocalyptic_origin = yes
+		has_global_flag = kuat_post_apocalyptic_enable_dam_of_the_galatic_empire
+		NOT = { has_country_flag = kuat_kuat_post_apocalyptic_legacy.40_fired }
+	}
+	immediate = {
+		set_country_flag = kuat_kuat_post_apocalyptic_legacy.40_fired
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.40.a
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.40.a.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.40.b
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.40.b.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.40.c
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.40.c.res
+	}
+	option = { 
+		name = kuat_shipyard.exit 
+		hidden_effect = {
+			set_global_flag = kuat_Overseen_Council_crisis_enable
+			if = {
+				limit = { exists = event_target:Kuat_F_Area_Guardian }
+				event_target:Kuat_F_Area_Guardian = { destroy_country = yes }
+			}
+			country_event = { id = kuat_post_apocalyptic_legacy.41 days = 15 random = 30 }
+		}
+		default_hide_option = yes 
+	}
+}
+
+#索伦元帅告知进一步的计划
+country_event = {
+	id = kuat_post_apocalyptic_legacy.41
+	title = kuat_post_apocalyptic_legacy.41.title
+	desc = kuat_post_apocalyptic_legacy.41.desc
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_default
+	is_triggered_only = yes
+	diplomatic = yes
+	trigger = {
+		exists = event_target:kuat_post_support_country
+		kuat_is_enable_post_apocalyptic_origin = yes
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.41.a
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.41.a.res
+	}
+	option = { name = kuat_shipyard.exit default_hide_option = yes }
+	after = { country_event = { id = kuat_galatic_empire_ge_invasion.104 days = 45 random = 120 } }
+}
+
+#索伦元帅告知，接下来要做的
+country_event = {
+	id = kuat_post_apocalyptic_legacy.42
+	title = kuat_post_apocalyptic_legacy.42.title
+	desc = kuat_post_apocalyptic_legacy.42.desc
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_default
+	is_triggered_only = yes
+	diplomatic = yes
+	trigger = {
+		exists = event_target:kuat_post_support_country
+		kuat_is_enable_post_apocalyptic_origin = yes
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.42.a
+		response_text = kuat_post_apocalyptic_legacy.42.a.res
+	}	
+}
+
+#双子座告知：必须要万分小心
+country_event = {
+	id = kuat_post_apocalyptic_legacy.43
+	title = "kuat_post_apocalyptic_legacy.43.title"
+	desc = "kuat_post_apocalyptic_legacy.43.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_wind_ruins
+	is_triggered_only = yes
+	option = { 
+		name = kuat_post_apocalyptic_legacy.43.a 
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.43.a.resp 
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.43.c 
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.43.c.resp 
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.43.e
+		response_text = kuat_post_apocalyptic_legacy.43.e.resp 
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.44
+	title = "kuat_post_apocalyptic_legacy.44.name"
+	desc = "kuat_post_apocalyptic_legacy.44.desc"
+	picture_event_data = {
+		portrait = event_target:kuat_player_target_species
+		room = galactic_custodian_room
+	}
+	show_sound = event_default
+	location = root.capital_scope
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = kuat_post_apocalyptic_Overseer_Council_defeated_final
+	}
+
+	option = {
+		name = "kuat_post_apocalyptic_legacy.44.a"
+		is_dialog_only = yes
+		response_text = "kuat_post_apocalyptic_legacy.44.a.response"
+	}
+	option = {
+		name = "kuat_post_apocalyptic_legacy.44.b"
+		is_dialog_only = yes
+		response_text = "kuat_post_apocalyptic_legacy.44.b.response"
+	}
+	option = {
+		name = "kuat_post_apocalyptic_legacy.44.c"
+		is_dialog_only = yes
+		response_text = "kuat_post_apocalyptic_legacy.44.c.response"
+	}
+
+	option = {
+		name = kuat_shipyard.exit
+		enable_special_project = {
+			name = kuat_post_apocalyptic_Overseer_Council_defeated_final_reward
+			location = root.capital_scope owner = root
+		}
+		default_hide_option = yes
+	}
+}
+
+#双子座告知科技已成功应用
+country_event = {
+	id = kuat_post_apocalyptic_legacy.45
+	title = "kuat_post_apocalyptic_legacy.45.name"
+	desc = "kuat_post_apocalyptic_legacy.45.desc"
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	show_sound = event_default
+	location = root.capital_scope
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	immediate = {
+		set_global_flag = kuat_post_apocalyptic_end_initial
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.45.a
+		hidden_effect = { 
+			kuat_origin_give_all_eternal_fleet_data = yes 
+			country_event = { id = kuat_post_apocalyptic_legacy.46 days = 30 random = 60 }
+		}
+		response_text = kuat_post_apocalyptic_legacy.45.a.res
+	}
+}
+
+#后裔：白羊座的消息
+country_event = {
+	id = kuat_post_apocalyptic_legacy.46
+	title = "kuat_post_apocalyptic_legacy.46.title"
+	desc = "kuat_post_apocalyptic_legacy.46.desc"
+	diplomatic = yes
+	picture_event_data = { room = astral_rift_bleached_planet_2_room }
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_wind_ruins
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes
+		has_global_flag = kuat_post_apocalyptic_end_initial
+	}
+	#你们到底是什么
+	option = {
+		name = kuat_post_apocalyptic_legacy.46.a.final
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.46.a.final.res
+	}
+	#恩多迪亚的预言是真的假的
+	option = {
+		name = kuat_post_apocalyptic_legacy.46.b.final
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.46.b.final.res
+	}
+	#监督者议会说的到底是不是真的
+	option = {
+		name = kuat_post_apocalyptic_legacy.46.c.final
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.46.c.final.res
+	}	
+	#我们就是你们利用的工具吗
+	option = {
+		name = kuat_post_apocalyptic_legacy.46.d.final
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.46.d.final.res
+	}	
+
+
+	option = {
+		name = kuat_post_apocalyptic_legacy.46.a
+		enable_special_project = {
+			name = kuat_post_apocalyptic_Ended_RED
+			location = root.capital_scope owner = root
+		}		
+	}
+
+	option = {
+		name = kuat_post_apocalyptic_legacy.46.c
+		enable_special_project = {
+			name = kuat_post_apocalyptic_Ended_BLUE
+			location = root.capital_scope owner = root
+		}
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.47
+	title = "kuat_post_apocalyptic_legacy.47.title"
+	desc = {
+		trigger = {
+			has_country_flag = kuat_post_apocalyptic_Gemini_ennded_A
+		}
+		text = "kuat_post_apocalyptic_legacy.47.a.desc"
+	}
+	desc = {
+		trigger = {
+			has_country_flag = kuat_post_apocalyptic_Gemini_ennded_B
+		}
+		text = "kuat_post_apocalyptic_legacy.47.b.desc"
+	}	
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_wind_ruins
+	is_triggered_only = yes	
+	immediate = {
+		if = {
+			limit = { has_country_flag = kuat_post_apocalyptic_Gemini_ennded_A }
+			country_event = { id = kuat_post_apocalyptic_legacy.48 }
+		}
+		else = {
+			country_event = { id = kuat_post_apocalyptic_legacy.49 }
+		}
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.47.a 
+		trigger = { has_country_flag = kuat_post_apocalyptic_Gemini_ennded_A }
+		response_text = kuat_post_apocalyptic_legacy.47.a.res
+	}
+	option = { 
+		name = kuat_post_apocalyptic_legacy.47.b 
+		trigger = { has_country_flag = kuat_post_apocalyptic_Gemini_ennded_B }
+		response_text = kuat_post_apocalyptic_legacy.47.a.res
+	}
+}
+
+#$Name_Eternal_Aries_Support$
+country_event = {
+	id = kuat_post_apocalyptic_legacy.48
+	title = "kuat_post_apocalyptic_legacy.48.name"
+	desc = "kuat_post_apocalyptic_legacy.48.desc"
+	picture_event_data = {
+		portrait = event_target:UTS02_LEADER
+		room = Eternal_Empire_room
+	}
+	show_sound = event_default
+	location = root.capital_scope
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	#
+	option = {
+		name = kuat_post_apocalyptic_legacy.48.a
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.48.a.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.48.b
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.48.b.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.48.c
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.48.c.res
+	}
+	option = { name = kuat_shipyard.exit default_hide_option = yes }
+	after = {
+		create_country = {
+			name = "Name_Eternal_Aries_Support"
+			type = eternal_support
+			name_list = Eternal_Fleet_1
+			flag = {
+				icon = {
+					category = "exe_invasion"
+					file = "ge_o.dds"
+				}
+				background = {
+					category = "backgrounds"
+					file = "00_solid.dds"
+				}
+				colors = { "yellow" "black" "null" "null" }
+			}
+			effect = { 
+				set_country_flag = protected_from_queen_storm
+				save_global_event_target_as = eternal_support_1_country 
+				add_modifier = { modifier = Elternal_creating }
+				establish_communications_no_message = root
+			}
+		}		
+	}
+}
+
+#$Name_Eternal_Aries_Support$
+country_event = {
+	id = kuat_post_apocalyptic_legacy.49
+	title = "kuat_post_apocalyptic_legacy.49.name"
+	desc = "kuat_post_apocalyptic_legacy.49.desc"
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	show_sound = event_default
+	location = root.capital_scope
+	diplomatic = yes
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	#
+	option = {
+		name = kuat_post_apocalyptic_legacy.49.a
+		hidden_effect = {
+			create_kuat_eternal_Aries_leader_effects = { CLASS = commander }
+		}
+		response_text = kuat_post_apocalyptic_legacy.49.a.res
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.50
+	title = "kuat_post_apocalyptic_legacy.50.title"
+	desc = "kuat_post_apocalyptic_legacy.50.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS02_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_wind_ruins
+	is_triggered_only = yes
+	trigger = {
+		has_established_contact = event_target:eternal_support_1_country
+		exists = event_target:eternal_support_1_country
+		OR = {
+			post_eternal_support_1_diplo_event_active = no
+			from? = { is_same_value = root }
+		}
+		kuat_is_enable_post_apocalyptic_origin = yes
+		OR = {
+			from? = { is_same_value = event_target:eternal_support_1_country }
+			from? = { is_same_value = root }
+		}
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.51.a
+		hidden_effect = { country_event = { id = kuat_post_apocalyptic_legacy.51 } }
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.51.b
+		hidden_effect = { country_event = { id = kuat_post_apocalyptic_legacy.52 } }
+	}
+	option = {
+		name = kuat_shipyard.exit
+		tooltip = { win = yes }
+		hidden_effect = { win = yes }
+		default_hide_option = yes
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.51
+	title = "kuat_post_apocalyptic_legacy.51.title"
+	desc = "kuat_post_apocalyptic_legacy.51.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS02_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_wind_ruins
+	is_triggered_only = yes
+	trigger = {
+		exists = event_target:eternal_support_1_country
+		kuat_is_enable_post_apocalyptic_origin = yes
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.50.a
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.50.a.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.50.b
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.50.b.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.50.c
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.50.c.res
+	}
+	option = {
+		name = kuat_post_apocalyptic_legacy.50.d
+		is_dialog_only = yes
+		response_text = kuat_post_apocalyptic_legacy.50.d.res
+	}
+	option = {
+		name = kuat_shipyard.exit
+		tooltip = { win = yes }
+		hidden_effect = { win = yes }
+		default_hide_option = yes
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.52
+	title = "kuat_post_apocalyptic_legacy.52.title"
+	desc = "kuat_post_apocalyptic_legacy.52.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS02_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_post_apocalyptic_origin = yes
+		count_owned_leader = {
+			count < 1
+			limit = { has_leader_flag = kuat_eternal_leader_1 }
+		}
+	}
+	option = { 
+		name = kuat_facility_return_invasion.25.b.commander 
+		hidden_effect = { create_kuat_eternal_Aries_leader_effects = { CLASS = commander } }
+	}
+	option = { 
+		name = kuat_facility_return_invasion.25.b.official 
+		hidden_effect = { create_kuat_eternal_Aries_leader_effects = { CLASS = official } }
+	}
+	option = { 
+		name = kuat_facility_return_invasion.25.b.scientist 
+		hidden_effect = { create_kuat_eternal_Aries_leader_effects = { CLASS = scientist } }
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.53
+	title = "kuat_post_apocalyptic_legacy.53.title"
+	desc = "kuat_post_apocalyptic_legacy.53.desc"
+	diplomatic = yes
+	picture_event_data = { room = astral_rift_vortex_room }
+	custom_gui = "kuat_event_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_airlock
+	is_triggered_only = yes
+
+	option = {
+		name = crisis.7516.a
+		tooltip = { win = yes }
+		hidden_effect = { country_event = { id = kuat_post_apocalyptic_legacy.54 days = 5 } }
+		custom_tooltip = crisis.7516.tt
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.54
+	title = "kuat_post_apocalyptic_legacy.54.title"
+	desc = "kuat_post_apocalyptic_legacy.54.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:UTS01_LEADER
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_airlock
+	is_triggered_only = yes
+	option = { 
+		name = kuat_post_apocalyptic_legacy.54.a  
+		hidden_effect = { country_event = { id = kuat_post_apocalyptic_legacy.55 days = 5 } }
+	}
+}
+
+country_event = {
+	id = kuat_post_apocalyptic_legacy.55
+	title = "kuat_post_apocalyptic_legacy.55.title"
+	desc = "kuat_post_apocalyptic_legacy.55.desc"
+	diplomatic = yes
+	picture_event_data = {
+		portrait = event_target:ETERNAL_LEADER
+		room = galactic_custodian_room
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_airlock
+	is_triggered_only = yes
+	option = { 
+		name = kuat_post_apocalyptic_legacy.55.a 
+		tooltip = { win = yes }
+	}
+	after = {
+		hidden_effect = {
+			make_fallen_empire = yes
+			if = {
+				limit = { galaxy_size = tiny }
+				while = { #Destroy ~10% random stars, for good measure
+					count = 18
+					random_system = {
+						limit = {
+							NOR = {
+								is_star_class = sc_black_hole
+								any_system_planet = { pop_amount > 0 }
+							}
+						}
+						kuat_destroy_star_system = yes
+					}
+				}
+			}
+			else_if = {
+				limit = { galaxy_size = small }
+				while = { #Destroy ~10% random stars, for good measure
+					count = 36
+					random_system = {
+						limit = {
+							NOR = {
+								is_star_class = sc_black_hole
+								any_system_planet = { pop_amount > 0 }
+							}
+						}
+						kuat_destroy_star_system = yes
+					}
+				}
+			}
+			else_if = {
+				limit = { galaxy_size = medium }
+				while = { #Destroy ~10% random stars, for good measure
+					count = 52
+					random_system = {
+						limit = {
+							NOR = {
+								is_star_class = sc_black_hole
+								any_system_planet = { pop_amount > 0 }
+							}
+						}
+						kuat_destroy_star_system = yes
+					}
+				}
+			}
+			else_if = {
+				limit = { galaxy_size = large }
+				while = { #Destroy ~10% random stars, for good measure
+					count = 70
+					random_system = {
+						limit = {
+							NOR = {
+								is_star_class = sc_black_hole
+								any_system_planet = { pop_amount > 0 }
+							}
+						}
+						kuat_destroy_star_system = yes
+					}
+				}
+			}
+			else_if = {
+				limit = { galaxy_size = huge }
+				while = { #Destroy ~10% random stars, for good measure
+					count = 88
+					random_system = {
+						limit = {
+							NOR = {
+								is_star_class = sc_black_hole
+								any_system_planet = { pop_amount > 0 }
+							}
+						}
+						kuat_destroy_star_system = yes
+					}
+				}
+			}
+			date_distortion = yes
+			event_target:kuat_post_support_country = { destroy_country = yes }
+			event_target:eternal_support_country = { destroy_country = yes }
+			event_target:zakuul_system = {
+				set_star_class = sc_a
+				system_star? = { change_pc = pc_g_star change_planet_size = 16 }
+			}
+			event_target:global_event_country = { country_event = { id = crisis.7519 days = 30 } }
+		}
+		win = yes
+	}
+}

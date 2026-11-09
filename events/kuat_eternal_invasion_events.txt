@@ -1,0 +1,2119 @@
+namespace = exe_invasion
+#Gatekeeper, fire when Kuat destroyed. 
+event = {
+	id = exe_invasion.1
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_eternal_invasion = yes
+		NOT = { has_global_flag = exe_invasion_seed }
+	}
+	immediate = {
+		set_timed_global_flag = { flag = exe_invasion_signs_cooldown days = 360 }
+		random_system = {
+			limit = { has_star_flag = Kuat_system }
+			every_playable_country = { country_event = { id = exe_invasion.2 days = 1 random = 2 } }
+		} 
+		set_global_flag = exe_invasion_seed
+	}
+}
+
+#Notification: Tachyon signal. 
+country_event = {
+	id = exe_invasion.2
+	title = "exe_invasion.2.name"
+	desc = "exe_invasion.2.desc"
+	diplomatic = yes
+	picture_event_data = { room = satellite_in_orbit_room }
+	custom_gui = "kuat_event_m_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_sensor_ping
+	location = root.capital_scope
+	is_triggered_only = yes
+	immediate = { set_country_flag = exe_invasion_2_fired }
+	option = { name = "exe_invasion.2.a" }
+}
+
+#Energy readings. 
+event = {
+	id = exe_invasion.3
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_eternal_invasion = yes
+
+		has_global_flag = exe_invasion_seed
+		NOT = { has_global_flag = exe_invasion_signs_cooldown }
+		NOT = { has_global_flag = exe_invasion_3_fired }
+	}
+	immediate = {
+		set_global_flag = exe_invasion_3_fired
+		set_timed_global_flag = { flag = exe_invasion_signs_cooldown days = 360 }
+		every_playable_country = { country_event = { id = exe_invasion.4 days = 1 random = 2 } }
+	}
+}
+
+#Notification: Energy readings. 
+country_event = {
+	id = exe_invasion.4
+	title = "exe_invasion.4.name"
+	desc = {
+		trigger = { has_country_flag = exe_invasion_2_fired }
+		text = "exe_invasion.4.a.desc"
+	}
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = exe_invasion_2_fired }
+		}
+		text = "exe_invasion.4.b.desc"
+	}
+	diplomatic = yes
+	picture_event_data = {
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_m_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_yellow_alert
+	location = root.capital_scope
+	is_triggered_only = yes
+	option = { name = "exe_invasion.4.a" }
+}
+
+#Hyperspace echo. 
+event = {
+	id = exe_invasion.5
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_eternal_invasion = yes
+
+		has_global_flag = exe_invasion_3_fired
+		NOT = { has_global_flag = exe_invasion_signs_cooldown }
+		NOT = { has_global_flag = exe_invasion_5_fired }
+	}
+	immediate = {
+		set_global_flag = exe_invasion_5_fired
+		set_timed_global_flag = { flag = exe_invasion_signs_cooldown days = 360 }
+		every_playable_country = {
+			country_event = { id = exe_invasion.6 days = 1 random = 2 }
+			if = {
+				limit = {
+					any_system_within_border = {
+						NOR = {
+							has_star_flag = Kuat_system
+							has_star_flag = Kuat_system_1
+							has_star_flag = Kuat_system_2
+							has_star_flag = Kuat_system_3
+						}
+						any_system_megastructure = { is_megastructure_type = exe_outer_gate }
+					}
+				}
+				country_event = { id = exe_invasion.41 days = 4 random = 2 }
+			}
+		}
+	}
+}
+
+#Notification: Hyperspace echo. 
+country_event = {
+	id = exe_invasion.6
+	title = "exe_invasion.6.name"
+	desc = "exe_invasion.6.desc"
+	diplomatic = yes
+	picture_event_data = { room = Eternal_Empire2_room }
+	custom_gui = "kuat_event_m_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_sensor_ping
+	location = root.capital_scope
+	is_triggered_only = yes
+	option = { name = "exe_invasion.6.a" }
+}
+
+#Approaching rim system. 
+event = {
+	id = exe_invasion.7
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_eternal_invasion = yes
+
+		has_global_flag = exe_invasion_5_fired
+		NOT = { has_global_flag = exe_invasion_signs_cooldown }
+		NOT = { has_global_flag = exe_invasion_7_fired }
+	}
+	immediate = {
+		set_global_flag = exe_invasion_7_fired
+		set_timed_global_flag = { flag = exe_invasion_signs_cooldown days = 360 }
+		every_playable_country = { country_event = { id = exe_invasion.8 days = 1 random = 2 } }
+	}
+}
+
+#Notification: Approaching rim system. 
+country_event = {
+	id = exe_invasion.8
+	title = "exe_invasion.8.name"
+	desc = "exe_invasion.8.desc"
+	diplomatic = yes
+	picture_event_data = { room = Eternal_Empire5_room }
+	custom_gui = "kuat_event_m_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_yellow_alert
+	location = root.capital_scope
+	is_triggered_only = yes
+	option = { name = "exe_invasion.8.a" }
+	after = { if = {
+		limit = { any_country = { 
+			is_fallen_empire = yes 
+			has_communications = root
+		}  }
+		random_country = {
+			limit = {
+				is_fallen_empire = yes 
+				has_communications = root
+			}
+			root? = { country_event = { 
+				id = kuat_fallen_mission_reaction.5 
+				days = 1 random = 2 
+				scopes = { from = prev } 
+			} }
+		}
+	} }
+}
+
+#Invasion begin. 
+event = {
+	id = exe_invasion.9
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_enable_eternal_invasion = yes
+		
+		has_global_flag = exe_invasion_7_fired
+		NOT = { has_global_flag = exe_invasion_signs_cooldown }
+		NOT = { has_global_flag = exe_invasion_begin }
+	}
+	immediate = {
+		set_crisis_sound = kuat_eternal_invasion_kotor_endar_spire
+		set_update_modifiers_batch = begin
+		set_global_flag = eternal_spawnd
+		set_global_flag = exe_invasion_begin
+		create_country = {
+			name = "Name_Eternal_fleet"
+			name_list = Eternal_Fleet_1
+			type = eternal_fleet_country
+			flag = {
+				icon = {
+					category = "exe_invasion"
+					file = "ge_o.dds"
+				}
+				background = {
+					category = "backgrounds"
+					file = "00_solid.dds"
+				}
+				colors = { "yellow" "black" "null" "null" }
+			}
+			ignore_initial_colony_error = yes
+		}
+		last_created_country = { 
+			if = {
+				limit = { exists = event_target:return_kuat_awakening_country }
+				set_faction_hostility = {
+					target = event_target:return_kuat_awakening_country
+					set_hostile = no set_friendly = yes
+				} 
+			}
+			set_country_flag = protected_from_queen_storm
+			save_global_event_target_as = eternal_fleet_country
+			set_country_flag = eternal_fleet_country
+			set_global_flag = has_eternal_fleet_country
+			set_graphical_culture = fallen_empire_kuat_01
+			create_ship_design = { design = "NAME_EXE_Starbase" }
+			add_ship_design = last_created_design
+			create_ship_design = { design = "NAME_EXE_Starbase_Construction" }
+			add_ship_design = last_created_design
+			add_modifier = { modifier = Elternal_creating }
+			activate_fog_machine = eternal_invasion_dust
+		}
+		every_system = {
+			limit = { 
+				has_star_flag = Kuat_empire_system
+				NOR = { 
+					has_star_flag = Kuat_system_int_4 
+					has_star_flag = Kuat_empire_system_temple
+				}
+			}
+			every_fleet_in_system = { destroy_fleet = { target = this destroy_template = yes kill_leader = yes } }
+			create_eternal_defensive_fleet = yes
+			set_timed_star_flag = { flag = Kuat_empire_system_temple days = 1 }
+		}
+		set_global_flag = eternal_fleet_debug_check
+		random_system = {
+			limit = { has_star_flag = Kuat_system }
+			system_star? = {
+				carrier_event = { id = exe_invasion.11 days = 30 }
+				carrier_event = { id = exe_invasion.11 days = 40 }
+				carrier_event = { id = exe_invasion.11 days = 50 }
+
+				carrier_event = { id = exe_invasion.11 days = 70 }
+				carrier_event = { id = exe_invasion.11 days = 80 }
+				carrier_event = { id = exe_invasion.11 days = 90 }
+
+				carrier_event = { id = exe_invasion.11 days = 110 }
+				carrier_event = { id = exe_invasion.11 days = 120 }
+				carrier_event = { id = exe_invasion.11 days = 130 }
+
+				carrier_event = { id = exe_invasion.11 days = 150 }
+				carrier_event = { id = exe_invasion.11 days = 160 }
+				carrier_event = { id = exe_invasion.11 days = 170 }
+
+				carrier_event = { id = exe_invasion.11 days = 190 }
+				carrier_event = { id = exe_invasion.11 days = 200 }
+				carrier_event = { id = exe_invasion.11 days = 210 }
+					
+				carrier_event = { id = exe_invasion.11 days = 240 }
+			}
+		}
+		every_country = {
+			limit = { is_eternal_faction = no }
+			establish_communications_no_message = event_target:eternal_fleet_country
+			country_event = { id = exe_invasion.10 }
+		}
+		every_country = {
+			limit = { has_special_project = exe_invasion_lock_outer_gate }
+			abort_special_project = { type = exe_invasion_lock_outer_gate }
+		}
+		if = {
+			limit = {
+				NOT = { any_system = {
+					NOR = {
+						has_star_flag = Kuat_system
+						has_star_flag = Kuat_system_1
+						has_star_flag = Kuat_system_2
+						has_star_flag = Kuat_system_3
+					}
+					any_system_megastructure = { is_megastructure_type = exe_outer_gate }
+				} }
+			}
+			random_system = {
+				limit = {
+					NOR = {
+						has_star_flag = guardian
+						has_star_flag = lcluster
+						AND = {
+							exists = space_owner
+							space_owner? = {
+								is_country_type = fallen_empire
+								is_country_type = awakened_fallen_empire
+								is_ai = no
+							}
+						}
+						any_neighbor_system = { OR = {
+							AND = {
+								exists = space_owner
+								space_owner? = { OR = {
+									is_country_type = fallen_empire
+									is_country_type = awakened_fallen_empire
+									is_ai = no
+								} }
+							}
+							has_star_flag = guardian
+						} }
+					}
+				}
+				save_event_target_as = exe_invasion_outer_gate_spawn_system
+			}
+			if = {
+				limit = { exists = event_target:exe_invasion_outer_gate_spawn_system }
+				kuat_exe_spawn_outer_gate_fallback = yes
+			} 
+			else = { random_system = {
+				limit = { NOR = {
+					has_star_flag = guardian
+					has_star_flag = lcluster
+					AND = {
+						exists = space_owner
+						space_owner? = {
+							is_country_type = fallen_empire
+							is_country_type = awakened_fallen_empire
+							is_ai = no
+						}
+					}
+				} }
+				save_event_target_as = exe_invasion_outer_gate_spawn_system
+			}
+			if = {
+				limit = { exists = event_target:exe_invasion_outer_gate_spawn_system }
+				kuat_exe_spawn_outer_gate_fallback = yes
+			} 
+			else = { random_system = {
+				limit = { NOR = {
+					has_star_flag = guardian
+					has_star_flag = lcluster
+					AND = {
+						exists = space_owner
+						space_owner? = { is_ai = no }
+					}
+				} }
+				save_event_target_as = exe_invasion_outer_gate_spawn_system
+			}
+			if = {
+				limit = { exists = event_target:exe_invasion_outer_gate_spawn_system }
+				kuat_exe_spawn_outer_gate_fallback = yes
+			} 
+			else = {
+				random_system = {
+					limit = { 	NOR = {
+						has_star_flag = guardian
+						has_star_flag = lcluster
+					} }
+					save_event_target_as = exe_invasion_outer_gate_spawn_system
+				}
+				if = {
+					limit = { exists = event_target:exe_invasion_outer_gate_spawn_system }
+					kuat_exe_spawn_outer_gate_fallback = yes
+				} 
+				else = { random_system = { kuat_exe_spawn_outer_gate_fallback = yes } }
+			} } }
+		}
+		set_update_modifiers_batch = end
+	}
+}
+
+#Notification: Invasion begin. 
+country_event = {
+	id = exe_invasion.10
+	title = "exe_invasion.10.name"
+	desc = "exe_invasion.10.a.desc"
+	diplomatic = yes
+	picture_event_data = { room = Eternal_Empire4_room }
+	custom_gui = "kuat_event_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_red_alert
+	location = root.capital_scope
+	is_triggered_only = yes
+	immediate = {
+	}
+	option = {
+		name = "exe_invasion.10.a"
+		hidden_effect = { 
+			if = {
+				limit = { NOT = { has_global_flag = exe_second_invasion_begin } }
+				country_event = { id = exe_invasion.101 days = 1 }
+			}
+			else_if = {
+				limit = { has_global_flag = exe_second_invasion_begin }
+				country_event = { id = exe_invasion.102 days = 1 }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = exe_invasion.101
+	title = "exe_invasion.101.name"
+	desc = { trigger = {
+		success_text = {
+			NOR = {
+				has_country_flag = fired_exe_invasion.101.b
+				has_country_flag = fired_exe_invasion.101.c
+			}
+			text = "exe_invasion.101.desc"
+		}
+		success_text = {
+			has_country_flag = fired_exe_invasion.101.b
+			text = "exe_invasion.101.b.desc"
+		}
+		success_text = {
+			has_country_flag = fired_exe_invasion.101.c
+			text = "exe_invasion.101.c.desc"
+		}
+	} }
+	diplomatic = yes
+	picture_event_data = { 
+		room = Eternal_Empire_room
+		portrait = event_target:UTS02_LEADER
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_red_alert
+	location = root.capital_scope
+	is_triggered_only = yes
+	immediate = {  
+		if = {
+			limit = { NOT = { has_event_chain = ag_exe_invasion_chain } }
+			begin_event_chain = { event_chain = ag_exe_invasion_chain }
+		}
+	}
+	option = {
+		name = exe_invasion.101.b
+		hidden_effect = { 
+			set_country_flag = fired_exe_invasion.101.b
+			remove_country_flag = fired_exe_invasion.101.c
+			country_event = { id = exe_invasion.101 } 
+		}
+	}
+	option = {
+		name = exe_invasion.101.c
+		hidden_effect = { 
+			set_country_flag = fired_exe_invasion.101.c
+			remove_country_flag = fired_exe_invasion.101.b
+			country_event = { id = exe_invasion.101 } 
+		}
+	}
+	option = { name = exe_invasion.101.a ai_chance = { weight = 100 } }
+}
+
+country_event = {
+	id = exe_invasion.102
+	title = "exe_invasion.102.name"
+	desc = { trigger = {
+		success_text = {
+			NOR = {
+				has_country_flag = fired_exe_invasion.102.b
+				has_country_flag = fired_exe_invasion.102.c
+			}
+			text = "exe_invasion.102.desc"
+		}
+		success_text = {
+			has_country_flag = fired_exe_invasion.102.b
+			text = "exe_invasion.102.b.desc"
+		}
+		success_text = {
+			has_country_flag = fired_exe_invasion.102.c
+			text = "exe_invasion.102.c.desc"
+		}
+	} }
+	diplomatic = yes
+	picture_event_data = { 
+		room = Eternal_Empire_room
+		portrait = event_target:UTS02_LEADER
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	show_sound = event_red_alert
+	location = root.capital_scope
+	is_triggered_only = yes
+	immediate = {  
+		if = {
+			limit = { NOT = { has_event_chain = ag_exe_invasion_chain } }
+			begin_event_chain = { event_chain = ag_exe_invasion_chain }
+		}
+	}
+	option = {
+		name = exe_invasion.102.b
+		hidden_effect = { 
+			set_country_flag = fired_exe_invasion.102.b
+			remove_country_flag = fired_exe_invasion.102.c
+			country_event = { id = exe_invasion.102 } 
+		}
+	}
+	option = {
+		name = exe_invasion.102.c
+		hidden_effect = { 
+			set_country_flag = fired_exe_invasion.102.c
+			remove_country_flag = fired_exe_invasion.102.b
+			country_event = { id = exe_invasion.102 } 
+		}
+	}
+	option = { name = exe_invasion.102.a ai_chance = { weight = 100 } }
+}
+
+#on entering system but starbase not enable 
+fleet_event = {
+	id = exe_invasion.103
+	title = "exe_return_invasion.333.name"
+	desc = "exe_return_invasion.333.desc"
+	diplomatic = yes
+	picture_event_data = { room = star_neutron_room }
+	custom_gui = "kuat_event_m_window"
+	custom_gui_option = "kuat_event_option"
+	is_triggered_only = yes
+
+	trigger = { 
+		exists = owner
+		owner? = { is_invisable_faction = no }
+		has_global_flag = exe_invasion_begin
+		OR = {
+			is_ship_class = shipclass_military
+			is_ship_class = shipclass_military_special
+		}
+		NOR = { 
+			has_global_flag = exe_invasion_ended 
+			has_global_flag = kuat_set_forcetrigger_order_enable_crisis_eve_system
+		}
+		from? = { has_star_flag = Kuat_empire_system }
+	}
+
+	option = {
+		name = "exe_return_invasion.333.a"
+		hidden_effect = {  
+			if = {
+				limit = { 
+					exists = owner owner? = { is_ai = no } 
+					solar_system? = { is_capital_system = no } 
+				}
+				set_location = owner.capital_star
+			}
+			else_if = {
+				limit = { can_go_mia = yes }
+				clear_orders = yes clear_fleet_actions = this set_mia = mia_return_home 
+			}
+			else = { destroy_fleet = { target = this destroy_template = yes kill_leader = yes } }
+		}
+		ai_chance = { weight = 100 }
+		default_hide_option = yes
+	}
+}
+
+country_event = {
+	id = exe_invasion.127
+	title = "exe_invasion.127.name"
+	desc = "exe_invasion.127.desc"
+	diplomatic = yes
+	picture_event_data = { room = black_hole_room }
+	custom_gui = "kuat_event_m_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_red_alert
+	is_triggered_only = yes
+	trigger = {
+		has_global_flag = exe_invasion_begin
+		NOT = { has_global_flag = exe_return_invasion_begin }
+		fromfromfrom? = {
+			is_ship_size = exe_megastructure_starbase
+			solar_system? = { has_star_flag = eternal_starbase_megastructure_in_system }
+		}
+	}
+	immediate = {
+		fromfromfrom.solar_system? = {
+			remove_star_flag = eternal_starbase_megastructure_in_system
+			set_star_class = sc_black_hole
+			create_kuat_starbase_expolde_boom = yes
+			star = { change_pc = pc_black_hole set_planet_size = 18 }
+		}
+	}
+	option = { name = exe_invasion.127.a }
+}
+
+#Invasion fleet arrived. 
+carrier_event = {
+	id = exe_invasion.11
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		has_global_flag = exe_invasion_begin
+		NOT = { has_global_flag = exe_invasion_ended }
+	}
+	immediate = {
+		event_target:eternal_fleet_country = { change_variable = { which = ag_kuat_invasion_fleet_arrived value = 1 } }
+		create_exe_invasion_fleet_detail = yes
+		every_country = {
+			limit = { has_event_chain = ag_exe_invasion_chain }
+			add_event_chain_counter = { event_chain = ag_exe_invasion_chain counter = ag_exe_invasion_fleet amount = 1 }
+		}
+		event_target:eternal_fleet_country = { if = {
+			limit = { check_variable = { which = ag_kuat_invasion_fleet_arrived value = 16 } }
+			every_owned_fleet = {
+				limit = { has_fleet_flag = ag_kuat_invasion_fleet is_fleet_idle = yes }
+				fleet_event = { id = exe_invasion.12 days = 1 random = 2 }
+			}
+			country_event = { id = exe_invasion.111 days = 30 }
+			set_global_flag = kuat_eternal_invasion_can_win_the_fleet
+		} }
+	}
+}
+
+country_event = {
+	id = exe_invasion.111
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { exists = event_target:eternal_fleet_country }
+	immediate = {
+		if = {
+			limit = {
+				NOT = { any_owned_fleet = { has_fleet_flag = ag_kuat_invasion_fleet } } 
+			}
+			random_system = {
+				limit = { has_star_flag = Kuat_system }
+				system_star? = { create_exe_invasion_fleet_detail = yes }
+			}
+			every_country = {
+				limit = { has_event_chain = ag_exe_invasion_chain }
+				add_event_chain_counter = {	event_chain = ag_exe_invasion_chain counter = ag_exe_invasion_fleet amount = 1 }
+			}
+		}
+		country_event = { id = exe_invasion.111 days = 5 }
+	}
+}
+
+#Invasion fleet action. 
+fleet_event = {
+	id = exe_invasion.12
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { 
+		exists = this 
+		has_global_flag = exe_invasion_begin
+		NOT = { has_global_flag = exe_invasion_ended }
+	}
+	immediate = { kuat_exe_invasion_fleet_action = { TYPE = ag_kuat OWNER = eternal_fleet_country } }
+}
+
+#Invasion fleet action on win a space battle. 
+country_event = {
+	id = exe_invasion.13
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		has_global_flag = exe_invasion_begin
+		NOT = { has_global_flag = exe_invasion_ended }
+		is_eternal_faction = yes
+		fromfrom? = { fleet = { has_fleet_flag = ag_kuat_invasion_fleet } }
+		fromfromfrom? = {
+			OR = {
+				is_ship_class = shipclass_starbase
+				is_ship_class = shipclass_military
+			}
+		}
+	}
+	immediate = {
+		fromfrom? = {
+			clear_orders = yes
+			clear_fleet_actions = this
+			kuat_exe_invasion_fleet_action = { TYPE = ag_kuat OWNER = eternal_fleet_country }
+		}
+	}
+}
+
+#Invasion fleet action on orbit planet. 
+country_event = {
+	id = exe_invasion.14
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		has_global_flag = exe_invasion_begin
+		NOT = { has_global_flag = exe_invasion_ended }
+		is_eternal_faction = yes
+		from? = { has_fleet_flag = ag_kuat_invasion_fleet }
+		fromfrom? = { OR = { is_star = yes NOT = { exists = owner } } }
+	}
+	immediate = {
+		from? = {
+			clear_orders = yes
+			clear_fleet_actions = this
+			kuat_exe_invasion_fleet_action = { TYPE = ag_kuat OWNER = eternal_fleet_country }
+		}
+	}
+}
+
+#Reset invasion fleet action if two fleet in same system. 
+fleet_event = {
+	id = exe_invasion.15
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		has_global_flag = exe_invasion_begin
+		NOT = { has_global_flag = exe_invasion_ended }
+		has_fleet_flag = ag_kuat_invasion_fleet
+		from? = {
+			NOR = {
+				kuat_is_kuat_system = yes
+				has_star_flag = kuat_military_core_home
+				has_star_flag = kuat_military_sublocal_home
+			}
+			any_fleet_in_system = {
+				NOT = { is_same_value = root }
+				has_fleet_flag = ag_kuat_invasion_fleet
+			}
+		}
+	}
+	immediate = {
+		clear_orders = yes
+		clear_fleet_actions = this
+		from? = { random_neighbor_system = {
+			system_star? = { root? = { auto_move_to_planet = {
+				target = prev
+				clear_auto_move_on_arrival = yes
+			} } }
+		} }
+	}
+}
+
+#Check every month to prevent bugs.
+event = {
+	id = exe_invasion.16
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		has_global_flag = exe_invasion_begin
+		NOT = { has_global_flag = exe_invasion_ended }
+		exists = event_target:eternal_fleet_country
+		event_target:eternal_fleet_country = {
+			any_owned_fleet = {
+				exists = this
+				is_fleet_idle = yes
+				has_fleet_flag = ag_kuat_invasion_fleet
+				NAND = {
+					exists = orbit
+					orbit = {
+						NOT = { is_star = yes }
+						exists = owner
+						owner? = { is_hostile = event_target:eternal_fleet_country }
+						exists = controller
+						controller? = { is_hostile = event_target:eternal_fleet_country }
+					}
+				}
+			}
+		}
+	}
+	immediate = {
+		event_target:eternal_fleet_country = {
+			every_owned_fleet = {
+				limit = {
+					exists = this
+					is_fleet_idle = yes
+					has_fleet_flag = ag_kuat_invasion_fleet
+					NAND = {
+						exists = orbit
+						orbit = {
+							NOT = { is_star = yes }
+							exists = owner
+							owner? = { is_hostile = event_target:eternal_fleet_country }
+							exists = controller
+							controller? = { is_hostile = event_target:eternal_fleet_country }
+						}
+					}
+				}
+				clear_orders = yes
+				clear_fleet_actions = this
+				kuat_exe_invasion_fleet_action = { TYPE = ag_kuat OWNER = eternal_fleet_country }
+			}
+		}
+	}
+}
+
+#Invasion fleet bombard a planet. 
+carrier_event = {
+	id = exe_invasion.21
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		exists = owner
+		has_global_flag = exe_invasion_begin
+		NOT = { has_global_flag = exe_invasion_ended }
+		planet_devastation = 100
+		from? = { is_eternal_faction = yes }
+	}
+	immediate = {
+		if = {
+			limit = { exists = owner }
+			owner? = { country_event = { id = exe_invasion.34 } }
+		}
+		kuat_destroy_colony = { PC = pc_broken }
+		every_country = {
+			limit = {
+				NOT = { is_same_value = event_target:eternal_fleet_country }
+				has_event_chain = ag_exe_invasion_chain
+			}
+			add_event_chain_counter = {
+				event_chain = "ag_exe_invasion_chain"
+				counter = "ag_exe_invasion_planet_destroyed"
+				amount = 1
+			}
+		}
+		solar_system? = {
+			every_fleet_in_system = {
+				limit = {
+					exists = owner
+					owner? = { is_eternal_faction = yes }
+					has_fleet_flag = ag_kuat_invasion_fleet
+					OR = {
+						AND = { exists = orbit orbit = { is_same_value = root } }
+						AND = {
+							is_fleet_idle = yes
+							NAND = {
+								exists = orbit
+								orbit = {
+									NOT = { is_star = yes }
+									exists = owner
+									owner? = { is_hostile = event_target:eternal_fleet_country }
+								}
+							}
+						}
+					}
+				}
+				clear_orders = yes
+				clear_fleet_actions = this
+				fleet_event = { id = exe_invasion.12 days = 5 random = 15 }
+			}
+		}	
+	}
+}
+
+country_event = {
+	id = exe_invasion.34
+	title = "exe_invasion.21.name"
+	desc = {
+		trigger = { from? = { kuat_is_event_borderment_ringworld = no } }
+		text = "exe_invasion.21.a.desc"
+	}
+	desc = {
+		trigger = { from? = { is_ringworld = yes } }
+		text = "exe_invasion.21.b.desc"
+	}
+	desc = {
+		trigger = { from? = { is_planet_class = pc_habitat } }
+		text = "exe_invasion.21.c.desc"
+	}
+	desc = {
+		trigger = { from? = { kuat_is_holy_world_planet = yes } }
+		text = "exe_invasion.21.d.desc"
+	}
+	diplomatic = yes
+	picture_event_data = { room = nuclear_explosion_room }
+	custom_gui = "kuat_event_m_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_super_explosion
+	is_triggered_only = yes
+	option = { name = "exe_invasion.21.a" ai_chance = { weight = 100 } }
+}
+
+#Invasion fleet killed counter. 
+country_event = {
+	id = exe_invasion.22
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		NOT = { has_global_flag = exe_return_invasion_begin }
+		is_eternal_faction = yes
+	}
+	immediate = {
+		from? = {
+			add_event_chain_counter = {
+				event_chain = ag_exe_invasion_chain
+				counter = ag_exe_invasion_ship_kill_by_us
+				amount = 1
+			}
+		}
+		every_country = {
+			limit = {
+				has_event_chain = ag_exe_invasion_chain
+				NOT = { is_same_value = from }
+			}
+			add_event_chain_counter = {
+				event_chain = ag_exe_invasion_chain
+				counter = ag_exe_invasion_ship_kill_by_other
+				amount = 1
+			}
+		}
+	}
+}
+
+#Invasion fleet victim counter.
+country_event = {
+	id = exe_invasion.23
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		NOT = { has_global_flag = exe_return_invasion_begin }
+		is_eternal_faction = yes
+		from? = { is_eternal_faction = no }
+	}
+	immediate = {
+		every_country = {
+			limit = {
+				NOT = { is_same_value = event_target:eternal_fleet_country }
+				has_event_chain = ag_exe_invasion_chain
+			}
+			add_event_chain_counter = {
+				event_chain = ag_exe_invasion_chain
+				counter = ag_exe_invasion_victim
+				amount = 1
+			}
+		}
+	}
+}
+
+#An invasion fleet has been destroyed. 
+country_event = {
+	id = exe_invasion.31
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		NOT = { has_global_flag = exe_return_invasion_begin }
+		from? = { is_eternal_faction = yes }
+		fromfromfrom? = { has_fleet_flag = ag_kuat_invasion_fleet }
+	}
+	immediate = {
+		fromfromfrom? = { if = {
+			limit = { NOT = { has_fleet_flag = fire_only_once_temple } }
+			set_timed_fleet_flag = { flag = fire_only_once_temple days = 1 }
+			every_country = {
+				limit = { has_event_chain = ag_exe_invasion_chain }
+				add_event_chain_counter = { event_chain = ag_exe_invasion_chain counter = ag_exe_invasion_fleet amount = -1 }
+			}
+			event_target:global_event_country = { change_variable = { which = var_eternal_fleet_defeated value = 1 } }
+		} }
+	}
+}
+
+#All invasion fleet destroyed, invasion end. 
+country_event = {
+	id = exe_invasion.32
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		NOT = { has_global_flag = exe_return_invasion_begin }
+		from? = {
+			is_eternal_faction = yes
+			count_owned_fleet = {
+				limit = {
+					has_fleet_flag = ag_kuat_invasion_fleet
+					NOT = { is_same_value = root.fromfromfrom }
+				}
+				count = 0
+			}
+		}
+		fromfromfrom? = { has_fleet_flag = ag_kuat_invasion_fleet }
+		has_global_flag = kuat_eternal_invasion_can_win_the_fleet
+		event_target:global_event_country = { check_variable = { which = var_eternal_fleet_defeated value >= 16 } }
+	}
+	immediate = {
+		every_country = {
+			limit = { NOR = { 
+				is_same_value = event_target:eternal_fleet_country 
+				has_country_flag = trigger_ended_event_temple
+				is_same_value = root
+			} }
+			set_timed_country_flag = { flag = trigger_ended_event_temple days = 1 }
+			country_event = { id = exe_invasion.35 scopes = { from = root } }
+		}
+		if = {
+			limit = { is_ai = no NOT = { has_country_flag = trigger_ended_event_temple_1 } }
+			country_event = { id = exe_invasion.36 }
+			set_timed_country_flag = { flag = trigger_ended_event_temple_1 days = 1 }
+			add_timeline_event = {
+				type = timeline_origin
+				override_id = timeline_eternal_invasion_destroyed
+				override_tooltip = "TIMELINE_EVENT_ETERNAL_INVASION_TOOLTIP"
+				override_types = { }
+				override_text = { "text:TIMELINE_EVENT_ETERNAL_INVASION" }
+				override_texture = { "background:GFX_evt_ringworld" }
+				targets = { }
+			}
+			kuat_create_toasto_message = { KEY = kuat_find_memory_cluds TARGET = this RECIPIENT = this }
+			if = {
+				limit = { 
+					NOT = { has_global_flag = special_exe_invasion }
+					kuat_is_enable_apocalyptic_origin = yes 
+				}
+				country_event = { id = kuat_diplomatic.16 days = 10 random = 20 }
+			}
+			else_if = {
+				limit = {  
+					has_global_flag = special_exe_invasion
+					kuat_is_enable_apocalyptic_origin = yes
+				}
+				country_event = { id = kuat_diplomatic.19 days = 10 random = 20 }
+			}
+		}
+		add_threat = { who = root amount = 50 }
+		set_global_flag = exe_invasion_ended
+		remove_global_flag = eternal_fleet_debug_check
+		remove_global_flag = ai_fighting_with_player_against_eternal
+		stop_crisis_sound = yes
+		from? = { destroy_country = yes }
+	}
+}
+
+#Notification: Invasion end. 
+country_event = {
+	id = exe_invasion.35
+	title = "exe_invasion.33.name"
+	desc = "exe_invasion.36.desc"
+	diplomatic = yes
+	picture_event_data = {
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_space_battle
+	is_triggered_only = yes
+	immediate = { if = {
+		limit = { from? = { is_ai = no } }
+		random_country = {
+			limit = { is_ai = no }
+			if = {
+				limit = { has_global_flag = special_exe_invasion }
+				end_event_chain = ag_exe_invasion_chain
+			}
+			else = {
+				if = {
+					limit = { kuat_is_enable_shadow_origin = yes }
+					set_global_flag = fire_the_kuat_return
+				}
+				end_event_chain = ag_exe_invasion_chain
+			}
+		}
+	} }
+	option = { name = "exe_invasion.33.b" }
+}
+
+#Notification: Invasion end. 
+country_event = {
+	id = exe_invasion.36
+	title = "exe_invasion.33.name"
+	desc = {
+		trigger = {
+			success_text = {
+				has_global_flag = special_exe_invasion
+				text = "exe_invasion.35.desc"
+			}
+			success_text = {
+				NOT = { has_global_flag = special_exe_invasion }
+				text = "exe_invasion.33.desc"
+			}
+		}
+	}
+	diplomatic = yes
+	picture_event_data = {
+		room = Eternal_Empire_room
+	}
+	custom_gui = "kuat_event_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_space_battle
+	is_triggered_only = yes
+	immediate = { 
+		if = {
+			limit = { NOT = { has_global_flag = special_exe_invasion } }
+			remove_global_flag = eternal_fleet_debug_check 
+			remove_global_flag = ai_fighting_with_player_against_eternal
+		}
+	}
+	option = {
+		name = "exe_invasion.33.b"
+		trigger = {
+			has_global_flag = special_exe_invasion
+		}
+		hidden_effect = {
+			end_event_chain = ag_exe_invasion_chain
+			enable_special_project = {
+				name = exe_invasion_lock_the_eclipse
+				location = this.capital_scope
+			}
+		}
+	}
+	option = {
+		name = "exe_invasion.33.a"
+		trigger = {
+			NOT = { has_global_flag = special_exe_invasion }
+		}
+		hidden_effect = {
+			if = {
+				limit = { kuat_is_enable_shadow_origin = yes }
+				set_global_flag = fire_the_kuat_return
+			}
+			end_event_chain = ag_exe_invasion_chain
+		}
+	}
+}
+
+event = {
+	id = exe_invasion.37
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		has_global_flag = eternal_fleet_debug_check
+		NOT = { exists = event_target:eternal_fleet_country }
+		has_global_flag = exe_invasion_begin
+		NOT = { has_global_flag = exe_invasion_ended }
+	}
+	immediate = {
+		remove_global_flag = exe_invasion_begin
+		remove_global_flag = kuat_eternal_invasion_can_win_the_fleet
+		remove_global_flag = eternal_fleet_debug_check
+		remove_global_flag = ai_fighting_with_player_against_eternal
+		remove_global_flag = exe_invasion_signs_cooldown
+		set_global_flag = exe_invasion_7_fired
+	}
+}
+
+#Special project to lock an outer gate. (if no outer gate, invasion will create a new outer gate. )
+country_event = {
+	id = exe_invasion.41
+	title = "exe_invasion.41.name"
+	desc = "exe_invasion.41.desc"
+	diplomatic = yes
+	picture_event_data = { room = drifting_gateway_room }
+	custom_gui = "kuat_event_m_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_mystic_reveal
+	is_triggered_only = yes
+	immediate = {
+		random_system_within_border = {
+			limit = {
+				NOR = {
+					kuat_is_kuat_system = yes
+					has_star_flag = kuat_military_base_system_home
+				}
+				any_system_megastructure = { is_megastructure_type = exe_outer_gate }
+			}
+			random_system_megastructure = {
+				limit = { is_megastructure_type = exe_outer_gate }
+				save_global_event_target_as = exe_outer_gate_to_lock
+			}
+		}
+	}
+	option = {
+		name = "exe_invasion.41.a"
+		enable_special_project = {
+			name = exe_invasion_lock_outer_gate
+			location = event_target:exe_outer_gate_to_lock owner = root
+		}
+	}
+	option = {
+		name = "exe_invasion.41.b"
+		add_resource = { influence = 50 }
+	}
+}
+
+#Locked an outer gate. 
+ship_event = {
+	id = exe_invasion.42
+	title = "exe_invasion.42.name"
+	desc = "exe_invasion.42.desc"
+	diplomatic = yes
+	picture_event_data = { room = drifting_gateway_room }
+	custom_gui = "kuat_event_m_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_mystic_reveal
+	is_triggered_only = yes
+	trigger = { exists = event_target:exe_outer_gate_to_lock }
+	immediate = {
+		event_target:exe_outer_gate_to_lock = {
+			solar_system? = { spawn_megastructure = {
+				type = exe_outer_gate_locked
+				coords_from = prev
+			} }
+			remove_megastructure = this
+		}
+	}
+	option = { name = "exe_invasion.42.a" }
+}
+
+#Invasion happen or not? 
+country_event = {
+	id = exe_invasion.1000
+	title = "exe_invasion.1000.name"
+	desc = {
+		trigger = {
+			success_text = {
+				kuat_is_enable_shadow_origin = yes
+				text = "exe_invasion.1000.shadow.desc"
+			}
+			success_text = {
+				kuat_is_enable_eternal_origin = yes
+				text = "exe_invasion.1000.eternal.desc"
+			}
+			success_text = {
+				kuat_is_enable_apocalyptic_origin = yes
+				text = "exe_invasion.1000.apocalyptic.desc"
+			}
+			success_text = {
+				kuat_is_enable_post_apocalyptic_origin = yes
+				text = "exe_invasion.1000.post_apocalyptic.desc"
+			}
+			success_text = {
+				NOR = {
+					kuat_is_enable_eternal_origin = yes
+					kuat_is_enable_shadow_origin = yes
+					kuat_is_enable_apocalyptic_origin = yes
+					kuat_is_enable_post_apocalyptic_origin = yes
+				}
+				text = "exe_invasion.1000.none.desc"
+			}
+			success_text = {
+				NOT = { has_global_flag = kuat_settings_first_fired }
+				text = "exe_invasion.1000.desc"
+			}
+			success_text = {
+				has_global_flag = kuat_settings_first_fired
+				text = "exe_invasion.1000.succes.desc"
+			}
+		}
+	}
+	picture_event_data = { room = ancient_AI_room }
+	show_sound = event_mystic_reveal
+	diplomatic = yes
+	custom_gui = "kuat_mod_settings_window"
+	custom_gui_option = "kuat_mod_settings_option"
+	is_triggered_only = yes
+	trigger = { kuat_is_player_country = yes }
+	immediate = { if = {
+		limit = { NOT = { has_global_flag = kuat_settings_first_fired } }
+		set_global_flag = easy_exe_invasion 
+		set_global_flag = disable_animal_trigger
+		set_global_flag = kuat_impulse_mod_settings_disable
+		set_global_flag = enable_ftl_ship_animation
+		event_target:global_event_country = { set_variable = { which = kuat_dynamic_modifier_var value = 1 } }
+	} }
+	option = {
+		name = "exe_invasion.1000.a"
+		default_hide_option = yes
+		hidden_effect = { if = {
+			limit = { NOT = { has_global_flag = kuat_settings_first_fired } }
+			event_target:global_event_country = { country_event = { id = executor_build.0 } }
+			set_global_flag = kuat_settings_first_fired
+			kuat_generate_animal_action = { SCOPE = this }
+		} }
+	}
+}
+
+country_event = {
+	id = exe_invasion.1003
+	title = "exe_invasion.1003.name"
+	desc = "exe_invasion.1003.desc"
+	diplomatic = yes
+	picture_event_data = { room = fallen_empire_room }
+	custom_gui = "kuat_event_window"
+	custom_gui_option = "kuat_event_option"
+	is_triggered_only = yes
+	immediate = { 
+		set_country_flag = chossen_the_eternal_path 
+		reset_return_eternal_fleet = yes
+	}
+	option = { 
+		name = exe_invasion.1003.a 
+		hidden_effect = { capital_scope? = { carrier_event = { id = kuat_situation.9999 } } }
+	}
+}
+
+country_event = {
+	id = exe_invasion.1004
+	hide_window = no
+	is_triggered_only = yes
+	title = executor_build.808.title
+	desc = {
+		trigger = {
+			success_text = {
+				NOR = {
+					has_country_flag = exe_invasion.1004.A.1
+					has_country_flag = exe_invasion.1004.A.2
+					has_country_flag = exe_invasion.1004.A.3
+					has_country_flag = exe_invasion.1004.A.4
+				}
+				text = exe_invasion.1004.desc
+			}
+			success_text = {
+				has_country_flag = exe_invasion.1004.A.1
+				text = exe_invasion.1004.1.desc
+			}
+			success_text = {
+				has_country_flag = exe_invasion.1004.A.2
+				text = exe_invasion.1004.2.desc
+			}
+			success_text = {
+				has_country_flag = exe_invasion.1004.A.3
+				text = exe_invasion.1004.3.desc
+			}
+			success_text = {
+				has_country_flag = exe_invasion.1004.A.4
+				text = exe_invasion.1004.4.desc
+			}
+		}
+	}
+	diplomatic = yes
+	picture_event_data = { 
+		room = fallen_empire_room 
+		portrait = root.ruler
+	}
+	custom_gui = "kuat_event_diplomacy_window"
+	custom_gui_option = "kuat_event_diplomacy_option"
+	trigger = { NOT = { has_country_flag = fire_once_setting } }
+	immediate = { every_playable_country = { if = {
+		limit = { NOT = { has_event_chain = kuat_mission_6_chain } }
+		begin_event_chain = { event_chain = kuat_mission_6_chain target = this }
+	} } }
+	option = {
+		name = exe_invasion.1004.A
+		hidden_effect = { 
+			remove_country_flag = exe_invasion.1004.A.1
+			remove_country_flag = exe_invasion.1004.A.2
+			remove_country_flag = exe_invasion.1004.A.3
+			remove_country_flag = exe_invasion.1004.A.4			
+			country_event = { id = exe_invasion.1004 } 
+		}
+	}
+	option = {
+		name = exe_invasion.1004.A.1
+		hidden_effect = { 
+			remove_country_flag = exe_invasion.1004.A.2
+			remove_country_flag = exe_invasion.1004.A.3
+			remove_country_flag = exe_invasion.1004.A.4
+			set_country_flag = exe_invasion.1004.A.1
+			country_event = { id = exe_invasion.1004 } 
+		}
+	}
+	option = {
+		name = exe_invasion.1004.A.2
+		hidden_effect = { 
+			remove_country_flag = exe_invasion.1004.A.1
+			remove_country_flag = exe_invasion.1004.A.3
+			remove_country_flag = exe_invasion.1004.A.4
+			set_country_flag = exe_invasion.1004.A.2
+			country_event = { id = exe_invasion.1004 } 
+		}
+	}
+	option = {
+		name = exe_invasion.1004.A.3
+		hidden_effect = { 
+			remove_country_flag = exe_invasion.1004.A.1
+			remove_country_flag = exe_invasion.1004.A.2
+			remove_country_flag = exe_invasion.1004.A.4
+			set_country_flag = exe_invasion.1004.A.3
+			country_event = { id = exe_invasion.1004 } 
+		}
+	}
+	option = {
+		name = exe_invasion.1004.A.4
+		hidden_effect = { 
+			remove_country_flag = exe_invasion.1004.A.1
+			remove_country_flag = exe_invasion.1004.A.2
+			remove_country_flag = exe_invasion.1004.A.3
+			set_country_flag = exe_invasion.1004.A.4
+			country_event = { id = exe_invasion.1004 } 
+		}
+	}
+	option = {
+		name = exe_invasion.1004.B
+		hidden_effect = { set_country_flag = fire_once_setting }
+	}
+}
+
+#flagship protection difficult
+country_event = {
+	id = exe_invasion.116
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		exists = fromfrom
+		fromfrom? = {
+			NOT = { has_fleet_flag = kuat_fleet_checkpoint }
+			kuat_fleet_anyone_has_validable_flagship_system = yes
+			kuat_fleet_anyone_not_has_validable_flagship_system = yes
+		} 
+		OR = { is_invisable_faction = yes kuat_is_player_country = yes }
+	}
+	immediate = {
+		fromfrom? = {  
+			# flagship tag
+			if = {
+				limit = { kuat_fleet_is_flagship_size = { SIZE = Drift_Flagship } }
+				set_fleet_flag = kuat_has_Drift_Flagship_fleet
+			}
+			if = {
+				limit = { kuat_fleet_is_flagship_size = { SIZE = Spt_Flagship } }
+				set_fleet_flag = kuat_has_Spt_Flagship_fleet
+			}
+			if = {
+				limit = { kuat_fleet_is_flagship_size = { SIZE = eternal_flagship } }
+				set_fleet_flag = kuat_has_Eternal_Flagship_fleet
+			}
+			if = {
+				limit = { kuat_fleet_is_flagship_size = { SIZE = Infinite_Mothership } }
+				set_fleet_flag = kuat_has_Infinite_Flagship_fleet
+			}
+			if = {
+				limit = { OR = {
+					kuat_fleet_is_flagship_size = { SIZE = Airpernia_titan }
+					kuat_fleet_is_flagship_size = { SIZE = Kandosii }
+				} }
+				set_fleet_flag = kuat_has_Airpernia_Flagship_fleet
+			}
+			if = {
+				limit = { kuat_fleet_is_flagship_size = { SIZE = Venator_modifier_III } }
+				set_fleet_flag = kuat_has_Edodiara_Flagship_fleet
+			}
+			if = {
+				limit = { OR = {
+					kuat_fleet_is_flagship_size = { SIZE = kuat_impellor }
+					kuat_fleet_is_flagship_size = { SIZE = kuat_eclipse }
+					kuat_fleet_is_flagship_size = { SIZE = kuat_compellor }
+				} }
+				set_fleet_flag = kuat_has_Imperial_Flagship_fleet
+			}
+			if = {
+				limit = {
+					kuat_fleet_anyone_has_validable_standard_flagship_system = yes
+					kuat_fleet_anyone_has_validable_sub_flagship_system = yes
+					is_within_borders_of = owner
+				}
+				set_fleet_flag = kuat_has_Upgrade_Flagship_fleet
+			}
+			# weapon tag
+			if = {
+				limit = { OR = {
+					AND = {
+						kuat_fleet_is_flagship_modifier = { VALUE = 2 TYPE = artellary }
+						kuat_fleet_is_flagship_modifier = { VALUE = 1 TYPE = artellary }
+					}
+					kuat_fleet_is_flagship_modifier = { VALUE = 3 TYPE = artellary }
+				} }
+				set_fleet_flag = kuat_has_artellary_Flagship_fleet
+			}
+			if = {
+				limit = { OR = {
+					AND = {
+						kuat_fleet_is_flagship_modifier = { VALUE = 2 TYPE = missle }
+						kuat_fleet_is_flagship_modifier = { VALUE = 1 TYPE = missle }
+					}
+					kuat_fleet_is_flagship_modifier = { VALUE = 3 TYPE = missle }
+				} }
+				set_fleet_flag = kuat_has_Missle_Flagship_fleet
+			}
+			if = {
+				limit = { OR = {
+					AND = {
+						kuat_fleet_is_flagship_modifier = { VALUE = 2 TYPE = strikecraft }
+						kuat_fleet_is_flagship_modifier = { VALUE = 1 TYPE = strikecraft }
+					}
+					kuat_fleet_is_flagship_modifier = { VALUE = 3 TYPE = strikecraft }
+				} }
+				set_fleet_flag = kuat_has_stricraft_Flagship_fleet
+			}
+			every_owned_ship = {
+				limit = { kuat_is_kuat_ship = yes }
+				kuat_battle_eternal_increase_executor_power = yes
+				set_ship_flag = kuat_executor_checkpoint
+			}
+			set_fleet_flag = kuat_fleet_checkpoint
+			fleet_event = { id = exe_invasion.114 }
+		}
+	}
+}
+
+fleet_event = {
+	id = exe_invasion.114
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { has_fleet_flag = kuat_fleet_checkpoint }
+	immediate = {
+		if = {
+			limit = { 
+				kuat_fleet_anyone_has_validable_flagship_system = yes
+				kuat_fleet_anyone_not_has_validable_flagship_system = yes
+				is_in_combat = yes 
+			}
+			fleet_event = { id = exe_invasion.114 days = @kuat_global_dynamic_hitpoints }
+		}
+		else = { 
+			kuat_battle_remove_executor_power_fleet = yes 
+			every_owned_ship = { remove_ship_flag = kuat_executor_checkpoint } 
+			remove_fleet_flag = kuat_fleet_checkpoint 
+			#fleet tag
+			remove_fleet_flag = kuat_has_Spt_Flagship_fleet
+			remove_fleet_flag = kuat_has_Eternal_Flagship_fleet
+			remove_fleet_flag = kuat_has_Drift_Flagship_fleet
+			remove_fleet_flag = kuat_has_Infinite_Flagship_fleet
+			remove_fleet_flag = kuat_has_Imperial_Flagship_fleet
+			remove_fleet_flag = kuat_has_Upgrade_Flagship_fleet
+			remove_fleet_flag = kuat_has_Airpernia_Flagship_fleet
+			remove_fleet_flag = kuat_has_Edodiara_Flagship_fleet
+			#weapon tag
+			remove_fleet_flag = kuat_has_artellary_Flagship_fleet
+			remove_fleet_flag = kuat_has_Missle_Flagship_fleet
+			remove_fleet_flag = kuat_has_stricraft_Flagship_fleet
+		}
+	}
+}
+
+#exe_invasion.121
+country_event = {
+	id = exe_invasion.121
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		exists = fromfromfrom
+		fromfromfrom? = { has_ship_flag = kuat_battle_disable_ship_at_health }
+	}
+	immediate = { if = { limit = { exists = fromfromfrom }
+		fromfromfrom? = {
+			save_event_target_as = kuat_battle_disable_ship_at_health_ship
+			if = { 
+				limit = { is_ship_class = shipclass_military }
+				fleet = { create_ship = {
+					fleet_cache_recalc = no
+					name = event_target:kuat_battle_disable_ship_at_health_ship
+					design = event_target:kuat_battle_disable_ship_at_health_ship 
+					effect = { 
+						copy_flags_and_variables_from = event_target:kuat_battle_disable_ship_at_health_ship 
+						kuat_battle_disable_ship_at_health = { FLAG = enable_kuat_ship_inital Disable_health = 0.01 WHICH = KUAT_SHIP_HEALTH_VAR HEALTH = value:kuat_dynamic_exist_life_times }
+					}
+				} }
+			}
+			else_if = {
+				limit = { is_ship_class = shipclass_starbase }
+				root.from? = {
+					create_fleet = {
+						name = event_target:kuat_battle_disable_ship_at_health_ship.fleet
+						settings = { spawn_debris = no can_disband = no }
+						effect = {
+							set_owner = prev
+							copy_flags_and_variables_from = event_target:kuat_battle_disable_ship_at_health_ship.fleet
+							create_ship = {
+								name = event_target:kuat_battle_disable_ship_at_health_ship
+								design = event_target:kuat_battle_disable_ship_at_health_ship
+								effect = {
+									copy_flags_and_variables_from = event_target:kuat_battle_disable_ship_at_health_ship
+									kuat_battle_disable_ship_at_health = { FLAG = enable_disable_starbase Disable_health = 0.01 WHICH = STARBASE_HEALTH_VAR HEALTH = value:kuat_dynamic_exist_life_times }
+								}
+							}
+							set_location = { target = event_target:kuat_battle_disable_ship_at_health_ship distance = 0 angle = random }
+							kuat_set_timed_event_locked = { DAYS = 5 }
+						}
+					}
+				}
+			}
+		}
+	} }
+}
+
+ship_event = {
+	id = exe_invasion.122
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { has_ship_flag = kuat_executor_checkpoint }
+	immediate = {  
+		if = {
+			limit = { 
+				is_in_combat = yes 
+				solar_system? = { any_fleet_in_system = {
+					kuat_fleet_anyone_has_validable_standard_flagship_system = yes
+					owner? = { is_same_value = prevprevprev.owner } 
+				} } 
+			}
+			repair_ship = yes 
+			repair_shield_percentage = 100 
+			repair_armor_percentage = 100
+			ship_event = { id = exe_invasion.122 days = @kuat_global_dynamic_days_pule }
+		}
+		else = {
+			remove_ship_flag = kuat_executor_checkpoint
+			kuat_battle_remove_executor_power = yes
+		}
+	}
+}
+
+country_event = {
+	id = exe_invasion.123
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_player_country = yes
+		fromfrom? = { 
+			any_owned_ship = { kuat_fleet_is_starbase = yes }
+			solar_system? = { any_fleet_in_system = {
+				kuat_fleet_anyone_has_validable_standard_flagship_system = yes
+				owner? = { is_same_value = prevprevprev.owner } 
+			} } 
+		}
+		NOT = { has_global_flag = kuat_set_forcetrigger_order_enable_crisis_eve_system }
+	}
+	immediate = {
+		fromfrom? = {  
+			random_owned_ship = {
+				limit = { kuat_fleet_is_starbase = yes }
+				kuat_battle_eternal_increase_executor_hp_power = { DAYS = -1 lock = yes }
+				set_ship_flag = kuat_executor_checkpoint
+				ship_event = { id = exe_invasion.122 days = @kuat_global_dynamic_days_pule }
+			}
+		}
+	}
+}
+
+#debug for special component weapon destroyed
+ship_event = {
+	id = exe_invasion.124
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { OR = {
+		AND = { 
+			exists = from.owner
+			from.owner? = { is_invisable_faction = yes } 
+			is_ship_class = shipclass_habitat_station 
+		}
+		has_ship_flag = kuat_battle_disable_ship_at_health
+	} }
+	immediate = { 
+		if = {
+			limit = { 
+				exists = from.owner
+				from.owner? = { is_invisable_faction = yes } 
+				is_ship_class = shipclass_habitat_station 
+			}
+			kuat_battle_kuat_remove_starbase_station = yes
+		}
+		else_if = {
+			limit = { has_ship_flag = enable_disable_starbase }
+			if = {
+				limit = { kuat_exist_disable_type = no }
+				kuat_battle_clear_ship_at_health = { REPAIR = yes INVERT_DISABLE = set_disabled }
+			}
+			else_if = { 
+				limit = { kuat_exist_disable_type = yes check_variable = { which = STARBASE_HEALTH_VAR value > 0 } } 
+				reroll_random = yes
+				random_list = {
+					1 = { kuat_battle_clear_ship_at_health = { REPAIR = yes INVERT_DISABLE = set_disabled WHICH = STARBASE_HEALTH_VAR } }
+					2 = { kuat_battle_clear_ship_at_health = { REPAIR = yes INVERT_DISABLE = set_disabled } }
+				}
+			} 
+			else = { kuat_battle_clear_ship_at_health = { REPAIR = yes INVERT_DISABLE = set_disabled Disable_health = -1 } }
+		}
+		else_if = {
+			limit = { has_ship_flag = enable_kuat_ship_inital }
+			if = {
+				limit = { kuat_exist_disable_type = no }
+				kuat_battle_clear_ship_at_health = { REPAIR = yes INVERT_DISABLE = set_disabled }
+			}
+			else_if = {
+				limit = {  
+					kuat_ship_is_flagship = yes
+					exists = fleet fleet = { kuat_fleet_anyone_not_has_validable_flagship_system = yes }
+				}
+				reroll_random = yes
+				random_list = {
+					1 = { 
+						if = {
+							limit = { check_variable = { which = KUAT_SHIP_HEALTH_VAR value > 0 } }
+							kuat_battle_clear_ship_at_health = { REPAIR = yes INVERT_DISABLE = set_disabled WHICH = KUAT_SHIP_HEALTH_VAR } 
+						}
+						else = { kuat_battle_clear_ship_at_health = { REPAIR = yes INVERT_DISABLE = set_disabled Disable_health = -1 } }
+					}
+					2 = { kuat_battle_clear_ship_at_health = { REPAIR = yes INVERT_DISABLE = set_disabled } }
+				}
+			}
+			else_if = { 
+				limit = { kuat_exist_disable_type = yes check_variable = { which = KUAT_SHIP_HEALTH_VAR value > 0 } } 
+				kuat_battle_clear_ship_at_health = { REPAIR = yes INVERT_DISABLE = set_disabled WHICH = KUAT_SHIP_HEALTH_VAR }
+			} 
+			else = { kuat_battle_clear_ship_at_health = { REPAIR = yes INVERT_DISABLE = set_disabled Disable_health = -1 } }
+		}
+		else = { kuat_battle_clear_ship_at_health = { REPAIR = yes INVERT_DISABLE = set_disabled Disable_health = -1 } }
+	}
+}
+
+#debug check modifier in eternal fleet FROMFROM
+country_event = {
+	id = exe_invasion.130
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { 
+		is_invisable_faction = yes 
+		fromfrom? = { NAND = { 
+			root? = { OR = { 
+				is_eternal_faction = yes 
+				is_first_galatic_empire_faction = yes 
+			} } 
+			is_ship_size = exe_starbase 
+		} }
+	}
+	immediate = {
+		if = {
+			limit = { 
+				is_infinite_faction = yes 
+				fromfrom? = { 
+					OR = {
+						has_fleet_flag = Kuat_Rakata_crisis_fleet_and_admiral
+						has_fleet_flag = Kuat_Rakata_crisis_greater_fleet
+						has_fleet_flag = Kuat_Worldship_Rakata_crisis_greater_fleet
+					}
+					NOT = { has_fleet_flag = kuat_infinite_fleet_created_agained } 
+				}
+			}
+			kuat_infinite_create_clone_fleet_effect = yes
+		}
+		if = {
+			limit = { OR = {
+				has_global_flag = kuat_non_legacy_0_router_eternal_return
+				has_global_flag = kuat_non_legacy_1_router_eternal_return
+			} }
+			fromfromfrom = { every_owned_ship = {
+				limit = { NOT = { has_ship_flag = kuat_runing_kuat_non_legacy_trigger_eternal_return } }
+				set_ship_flag = kuat_runing_kuat_non_legacy_trigger_eternal_return
+				kuat_battle_clear_ship_repeatable_modifier = { multiply = -12 DAYS = 360 }
+			}  }
+		}
+		#旗舰标识
+		fromfromfrom = { kuat_battle_flagship_intial = yes }
+		#动态引入
+		if = {
+			limit = { is_invisable_faction = yes }
+			fromfrom = { if = {  
+				limit = { NOT = { has_fleet_flag = is_modifiering_fleet } }
+				set_fleet_flag = is_modifiering_fleet
+				fleet_event = { id = exe_invasion.144 }
+			} }
+			if = {
+				limit = { from? = { is_invisable_faction = no } }
+				fromfromfrom = { if = {
+					limit = {
+						ROOT? = { is_invisable_faction = yes }
+						NOT = { has_fleet_flag = is_modifiering_fleet }
+					}
+					set_fleet_flag = is_modifiering_fleet
+					fleet_event = { id = exe_invasion.142 }
+				} }
+			}
+		}
+		#补给区
+		if = {
+			limit = { 
+				fromfrom? = { OR = {
+					is_ship_class = shipclass_military
+					is_ship_class = shipclass_starbase
+				} }
+				OR = {
+					has_global_flag = difficult_exe_invasion
+					has_global_flag = ban_exe_invasion
+				}
+				from? = { is_invisable_faction = no }
+				fromfromfrom? = { is_ship_class = shipclass_military }
+				NOT = { has_global_flag = kuat_set_forcetrigger_order_enable_crisis_eve_system }
+			}
+			country_event = {
+				id = exe_invasion.132
+				scopes = { from = root.from fromfrom = root.fromfrom fromfromfrom = root.fromfromfrom }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = exe_invasion.132
+	hide_window = yes
+	is_triggered_only = yes
+	immediate = {
+		fromfrom? = { random_owned_ship = { save_event_target_as = kuat_support_ship_target } }
+		fromfromfrom? = { if = {
+			limit = { NOT = { has_fleet_flag = random_list_flagship_checksum_placeholder } }
+			if = {
+				limit = { 
+					kuat_fleet_anyone_has_validable_flagship_system = yes
+					kuat_fleet_anyone_not_has_validable_flagship_system = yes
+					solar_system? = { has_kuat_support_modifier_star_flag = yes }
+				}
+				#初始化检查
+				solar_system = { if = {
+					limit = { NOT = { is_variable_set = kuat_support_battle_add_variable } }
+					set_variable = { which = kuat_support_battle_add_variable value = value:kuat_system_support_variable } 
+					prev = { 
+						every_owned_ship = { kuat_battle_remove_repetable_modifier_iep = yes }
+						kuat_battle_kuat_star_flagship_base_fleet_clear_calculation = { ID = 1 }
+						kuat_battle_kuat_star_flagship_base_fleet_clear_calculation = { ID = 2 }
+						kuat_battle_kuat_star_flagship_base_fleet_clear_calculation = { ID = 4 }
+					}
+					system_event = { id = exe_invasion.2502 days = @kuat_global_dynamic_days_pule }
+				} }
+				#运算
+				inline_script = { script = kuat_battle_event/kuat_exe_invasion_base_effect_checksum ID_3 = 4 ID_2 = 2 ID_1 = 1 }
+			}
+			else = {  
+				if = {
+					limit = { 
+						owner? = { is_ai = no } 
+						solar_system? = { is_capital_system = no } 
+					}
+					set_location = owner.capital_star
+				}
+				else_if = {
+					limit = { can_go_mia = yes }
+					clear_orders = yes clear_fleet_actions = this set_mia = mia_return_home 
+				}
+				else = { while = {
+					limit = { exists = this }
+					repair_shield_amount = -92000000000000
+					repair_armor_amount = -92000000000000
+					every_owned_ship = { kuat_battle_kuat_damage_hp_percent = { value = 100 source = event_target:kuat_support_ship_target } }
+				} }
+			}
+			set_timed_fleet_flag = { flag = random_list_flagship_checksum_placeholder days = 1 }
+		} }
+	}
+}
+
+country_event = {
+	id = exe_invasion.146
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { fromfrom? = { kuat_ship_is_flagship = yes } }
+	immediate = { fromfrom? = { 
+		if = {
+			limit = { 
+				is_ship_size = Drift_Flagship
+				fleet = { count_owned_ship = {
+					count = 0
+					limit = { NOT = { is_same_value = prevprev } is_ship_size = Drift_Flagship }
+				} }
+			}
+			fleet = { remove_fleet_flag = kuat_has_Drift_Flagship_fleet } 
+		}
+		if = {
+			limit = { 
+				is_ship_size = Spt_Flagship
+				fleet = { count_owned_ship = {
+					count = 0
+					limit = { NOT = { is_same_value = prevprev } is_ship_size = Spt_Flagship }
+				} }
+			}
+			fleet = { remove_fleet_flag = kuat_has_Spt_Flagship_fleet } 
+		}
+		if = {
+			limit = { 
+				is_ship_size = eternal_flagship
+				fleet = { count_owned_ship = {
+					count = 0
+					limit = { NOT = { is_same_value = prevprev } is_ship_size = eternal_flagship }
+				} }
+			}
+			fleet = { remove_fleet_flag = kuat_has_Eternal_Flagship_fleet } 
+		}
+		if = {
+			limit = { 
+				is_ship_size = Infinite_Mothership
+				fleet = { count_owned_ship = {
+					count = 0
+					limit = { NOT = { is_same_value = prevprev } is_ship_size = Infinite_Mothership }
+				} }
+			}
+			fleet = { remove_fleet_flag = kuat_has_Infinite_Flagship_fleet } 
+		}
+		if = {
+			limit = { 
+				OR = { is_ship_size = kuat_compellor is_ship_size = kuat_impellor is_ship_size = kuat_eclipse }
+				fleet = { count_owned_ship = {
+					count = 0
+					limit = { NOT = { is_same_value = prevprev } OR = { is_ship_size = kuat_compellor is_ship_size = kuat_impellor is_ship_size = kuat_eclipse } }
+				} }
+			}
+			fleet = { remove_fleet_flag = kuat_has_Imperial_Flagship_fleet } 
+		}
+		if = {
+			limit = { 
+				kuat_is_artilletry_flagship_type = yes
+				fleet = { count_owned_ship = {
+					count = 0
+					limit = { NOT = { is_same_value = prevprev } kuat_is_artilletry_flagship_type = yes }
+				} }
+			}
+			fleet = { remove_fleet_flag = kuat_has_artellary_Flagship_fleet } 
+		}
+		if = {
+			limit = { 
+				kuat_is_torpitor_flagship_type = yes
+				fleet = { count_owned_ship = {
+					count = 0
+					limit = { NOT = { is_same_value = prevprev } kuat_is_torpitor_flagship_type = yes }
+				} }
+			}
+			fleet = { remove_fleet_flag = kuat_has_Missle_Flagship_fleet } 
+		}
+		if = {
+			limit = { 
+				kuat_is_strikcrafet_flagship_type = yes
+				fleet = { count_owned_ship = {
+					count = 0
+					limit = { NOT = { is_same_value = prevprev } kuat_is_strikcrafet_flagship_type = yes }
+				} }
+			}
+			fleet = { remove_fleet_flag = kuat_has_stricraft_Flagship_fleet } 
+		}
+		if = {
+			limit = { OR = {
+				has_global_flag = difficult_exe_invasion
+				has_global_flag = ban_exe_invasion
+			} }
+			if = {
+				limit = { 
+					kuat_ship_is_sub_flagship = yes 
+					fleet = { count_owned_ship = {
+						count = 0
+						limit = { NOT = { is_same_value = prevprev } kuat_ship_is_sub_flagship = yes }
+					} }
+				}
+				fleet = { remove_fleet_flag = has_total_kuat_flagship_system remove_fleet_flag = has_super_kuat_flagship_system } 
+			}
+		}
+	} }
+}
+
+#dynamci check
+fleet_event = { inline_script = { 
+	script = kuat_battle_event/kuat_exe_invasion_battle_defender 
+	ID = exe_invasion.144 KEY = kuat_battle_set_kuat_legacy_crisis_fleet_dynamic_modifier 		
+} }
+fleet_event = { inline_script = { 
+	script = kuat_battle_event/kuat_exe_invasion_battle_attacker 
+	ID = exe_invasion.142 KEY = kuat_battle_set_kuat_legacy_crisis_fleet_dynamic_modifier 		
+} }
+
+#ORIGIN ETERNAL
+country_event = {
+	id = exe_invasion.135
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		has_global_flag = kuat_impulse_mod_settings
+		is_invisable_faction = yes
+		from? = { is_invisable_faction = no }
+	}
+	immediate = {
+		fromfromfrom? = { every_owned_ship = {
+			limit = { 
+				NOT = { has_ship_flag = enable_random_list_effect }
+				is_disabled = no is_in_combat = yes
+			}
+			set_timed_ship_flag = { flag = enable_random_list_effect days = 1 }
+			kuat_battle_kuat_invinciable_battle_random_effect = yes
+		} }
+	}
+}
+country_event = {
+	id = exe_invasion.139
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		has_global_flag = kuat_impulse_mod_settings
+		is_invisable_faction = yes
+		from? = { is_invisable_faction = no }
+	}
+	immediate = { 
+		fromfromfrom.fleet = { every_owned_ship = {
+			limit = { is_disabled = no is_in_combat = yes }
+			kuat_battle_kuat_invinciable_battle_random_effect = yes
+		} }
+	}
+}
+
+# message about leader clone
+country_event = {
+	id = exe_invasion.141
+	title = "exe_invasion.141.name"
+	desc = "exe_invasion.141.desc"
+	diplomatic = yes
+	picture_event_data = { room = ancient_AI_room }
+	custom_gui = "kuat_event_m_window"
+	custom_gui_option = "kuat_event_option"
+	show_sound = event_red_alert
+	is_triggered_only = yes
+	trigger = { NOT = { has_country_flag = fired_massege_leader } }
+	option = { name = exe_invasion.141.a }
+	option = { name = exe_invasion.141.b hidden_effect = { set_country_flag = fired_massege_leader } }
+}
+
+# Saving debug
+event = {
+	id = exe_invasion.9999
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { any_country = { has_country_flag = solarpunk_country } }
+	immediate = { every_country = { limit = { has_country_flag = solarpunk_country } destroy_country = yes } }
+}
+
+#leader skill
+country_event = {
+	id = exe_invasion.2500
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		kuat_is_player_country = yes
+		fromfrom? = { kuat_exist_fleet_leader = { 
+			TRUE_FLAG = SOP_eddy KEY = has_trait
+			TRAIT1 = leader_trait_commander_SOP_eddy_1
+			TRAIT2 = leader_trait_commander_SOP_eddy_2
+			TRAIT3 = leader_trait_commander_SOP_eddy_3
+		} }
+	}
+	immediate = {
+		fromfrom? = {  
+			if = {
+				limit = { kuat_exist_fleet_leader = { 
+					TRAIT = leader_trait_commander_SOP_eddy_1
+					FAIL_FLAG = kuat_level_improve_cool_down
+				} }
+				every_owned_ship = {
+					limit = { NOT = { has_ship_flag = kuat_runing_leader_trait_commander_SOP_eddy_1 } }
+					set_timed_ship_flag = { flag = kuat_runing_leader_trait_commander_SOP_eddy_1 days = 30 }
+					kuat_battle_clear_ship_repeatable_modifier = { multiply = -10 DAYS = 30 }
+				} 
+				leader? = { set_timed_leader_flag = { flag = kuat_level_improve_cool_down days = 30 } }
+			}
+			if = {
+				limit = { 
+					kuat_exist_fleet_leader = { 
+						TRUE_FLAG = SOP_eddy
+						TRAIT = leader_trait_commander_SOP_eddy_2 
+					}
+					kuat_fleet_anyone_has_validable_flagship_system = no
+					root.from? = { is_invisable_faction = no }
+				}
+				kuat_battle_increase_ship_hp_effect_hp = { DAYS = 30 }
+			}
+		}	
+	}
+}
+
+#FLEET INVISIABLE WITHOUT SPECIAL
+ship_event = {
+	id = exe_invasion.119
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { has_ship_flag = kuat_executor_checkpoint }
+	immediate = {
+		if = {
+			limit = { is_in_combat = yes }
+			kuat_battle_clear_ship_at_health = { REPAIR = yes }
+			ship_event = { id = exe_invasion.119 days = @kuat_global_dynamic_hitpoints }
+		}
+		else = { kuat_battle_remove_executor_power = yes remove_ship_flag = kuat_executor_checkpoint }
+	}
+}
+
+system_event = {
+	id = exe_invasion.2502
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { is_variable_set = kuat_support_battle_add_variable }
+	immediate = {
+		if = {
+			limit = { 
+				any_fleet_in_system = {
+					controller? = { is_ai = no }
+					is_in_combat = yes
+					kuat_fleet_anyone_has_validable_flagship_system = yes
+					kuat_fleet_anyone_not_has_validable_flagship_system = yes
+				}
+			}
+			system_event = { id = exe_invasion.2502 days = @kuat_global_dynamic_days_pule }
+			switch = {
+				trigger = has_star_flag
+				kuat_super_flagship_4_enough_support = { inline_script = { script = kuat_battle_event/kuat_exe_support_checksum ID = 4 } }
+				kuat_super_flagship_2_enough_support = { inline_script = { script = kuat_battle_event/kuat_exe_support_checksum ID = 2 } }
+				kuat_super_flagship_1_enough_support = { inline_script = { script = kuat_battle_event/kuat_exe_support_checksum ID = 1 } }
+			}
+		}
+		else = { kuat_battle_kuat_star_flagship_clear_all_caculation = yes }
+	}
+}
+
+fleet_event = {
+	id = exe_invasion.2503
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = { has_fleet_flag = Kuat_Rakata_crisis_fleet_clone }
+	immediate = {
+		if = {
+			limit = { is_in_combat = no }
+			destroy_fleet = { target = this destroy_template = yes }
+		}
+		else = { fleet_event = { id = exe_invasion.2503 days = @kuat_global_dynamic_hitpoints } }
+	}
+}

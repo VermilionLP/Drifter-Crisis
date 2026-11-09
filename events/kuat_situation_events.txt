@@ -1,0 +1,3644 @@
+namespace = kuat_situation
+
+carrier_event = {
+	id = kuat_situation.9999
+	title = kuat_situation.9999.name
+	desc = kuat_situation.9999.desc
+	picture_event_data = { room = astral_rift_riftworld_room }
+	custom_gui = "kuat_event_window"
+	custom_gui_option = "kuat_event_option"
+	diplomatic = yes
+	is_triggered_only = yes
+	show_sound = event_default
+
+	location = root
+
+	pre_triggers = {
+		has_owner = yes
+		is_capital = yes
+	}
+
+	trigger = {
+		NOT = { has_carrier_flag = fire_only_once_situation }
+		owner? = { has_country_flag = chossen_the_eternal_path }
+	}
+
+	immediate = { set_carrier_flag = fire_only_once_situation }
+
+	option = {
+		name = INTERESTING
+		owner? = { start_situation = { type = situation_unlocked_the_eternal_fleet target = this } }
+	}
+}
+
+#random event
+situation_event = {
+	id = kuat_situation.1
+	title = kuat_situation.1.name
+	desc = kuat_situation.1.desc
+	picture = GFX_evt_ship_in_orbit
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		current_situation_approach = situation_hositile_altitude
+		NOR = {
+			has_situation_flag = kuat_random_event_hositle
+			current_stage = stage_3
+		}
+	}
+
+	immediate = { set_situation_flag = kuat_random_event_hositle }
+
+	option = {
+		name = kuat_situation.1.A
+		custom_tooltip = kuat_situation.1.A.tooltip
+		hidden_effect = { set_situation_flag = kuat_very_hostile }
+	}
+	option = {
+		name = kuat_situation.1.B
+		custom_tooltip = kuat_situation.1.B.tooltip
+		hidden_effect = { set_situation_flag = kuat_hostile }
+		small_artifact_reward = yes
+	}
+}
+
+situation_event = {
+	id = kuat_situation.2
+	title = kuat_situation.2.name
+	desc = kuat_situation.2.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_activating_unknown_technology
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		current_situation_approach = situation_netural_altitude
+		NOR = {
+			has_situation_flag = kuat_random_event_netural
+			current_stage = stage_3
+		}
+	}
+
+	immediate = { set_situation_flag = kuat_random_event_netural }
+
+	option = {
+		name = kuat_situation.2.A
+		custom_tooltip = kuat_situation.2.A.tooltip
+		hidden_effect = { set_situation_flag = kuat_counrsey }
+	}
+	option = {
+		name = kuat_situation.2.B
+		custom_tooltip = kuat_situation.2.B.tooltip
+		small_artifact_reward = yes
+	}
+}
+
+situation_event = {
+	id = kuat_situation.3
+	title = kuat_situation.3.name
+	desc = kuat_situation.3.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		current_situation_approach = situation_friendly_altitude
+		NOR = {
+			has_situation_flag = kuat_random_event_friendly
+			current_stage = stage_3
+		}
+	}
+
+	immediate = { set_situation_flag = kuat_random_event_friendly }
+
+	option = {
+		name = kuat_situation.3.A
+		custom_tooltip = kuat_situation.3.A.tooltip
+		hidden_effect = { set_situation_flag = kuat_acception_ai }
+	}
+	option = {
+		name = kuat_situation.3.B
+		custom_tooltip = kuat_situation.3.B.tooltip
+		hidden_effect = { set_situation_flag = kuat_refuse_ai }
+		large_artifact_reward = yes
+	}
+}
+
+#50% event
+situation_event = {
+	id = kuat_situation.4
+	title = kuat_situation.4.name
+	desc = kuat_situation.4.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.4.A
+		custom_tooltip = kuat_situation.4.A.tooltip
+		set_situation_approach = situation_friendly_altitude
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 15
+	}
+	option = {
+		name = kuat_situation.4.B
+		custom_tooltip = kuat_situation.4.B.tooltip
+		set_situation_approach = situation_netural_altitude
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.4.C
+		custom_tooltip = kuat_situation.4.C.tooltip
+		set_situation_approach = situation_hositile_altitude
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = -15
+	}
+}
+
+#150% event
+situation_event = {
+	id = kuat_situation.5
+	title = kuat_situation.5.name
+	desc = kuat_situation.5.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.5.A
+		custom_tooltip = kuat_situation.5.A.tooltip
+		set_situation_approach = situation_friendly_altitude
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 15
+	}
+	option = {
+		name = kuat_situation.5.B
+		custom_tooltip = kuat_situation.5.B.tooltip
+		set_situation_approach = situation_netural_altitude
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.5.C
+		custom_tooltip = kuat_situation.5.C.tooltip
+		set_situation_approach = situation_hositile_altitude
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = -15
+	}
+}
+
+#end events #hositile
+situation_event = {
+	id = kuat_situation.6
+	title = kuat_situation.6.name
+	desc = kuat_situation.6.desc
+	picture = GFX_evt_em_war_4
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.6.A
+		custom_tooltip = kuat_situation.6.A.tooltip
+		hidden_effect = { 
+			large_artifact_reward = yes 
+		}
+	}
+	after = { destroy_situation = this }
+}
+
+#end events #neutral
+situation_event = {
+	id = kuat_situation.7
+	title = kuat_situation.7.name
+	desc = kuat_situation.7.desc
+	picture = GFX_evt_em_war_2
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.7.A
+		custom_tooltip = kuat_situation.7.A.tooltip
+		hidden_effect = { 
+			large_artifact_reward = yes 
+		}
+	}
+	option = {
+		name = kuat_situation.7.B
+		custom_tooltip = kuat_situation.7.B.tooltip
+		hidden_effect = { every_playable_country = {
+			limit = { is_ai = no NOT = { has_existing_ship_design = Annihilator } }
+			create_ship_design = { design = NAME_KUAT_Annihilator }
+			add_ship_design = last_created_design
+		} }
+	}
+	after = { destroy_situation = this }
+}
+
+#end events #friendly
+situation_event = {
+	id = kuat_situation.8
+	title = kuat_situation.8.name
+	desc = kuat_situation.8.desc
+	picture = GFX_evt_em_war_1
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.8.A
+		custom_tooltip = kuat_situation.8.A.tooltip
+		hidden_effect = { every_playable_country = {
+			limit = { is_ai = no NOT = { has_existing_ship_design = Annihilator } }
+			create_ship_design = { design = NAME_KUAT_Annihilator }
+			add_ship_design = last_created_design
+			set_global_flag = kuat_under_shadow_choose_eternal_return_1
+			add_timeline_event = {
+				type = timeline_origin
+				override_id = timeline_event_eternal_routins_01
+				override_tooltip = "TIMELINE_EVENT_ETERNAL_ROUTINS_01_TOOLTIP"
+				override_types = { }
+				override_text = { "text:TIMELINE_EVENT_ETERNAL_ROUTINS_01" }
+				override_texture = { "background:GFX_evt_ship_in_orbit_3" }
+				targets = { }
+			}				
+			kuat_create_toasto_message = { KEY = kuat_find_memory_cluds TARGET = this RECIPIENT = this }
+		} }
+	}
+	after = { destroy_situation = this }
+}
+
+
+
+
+
+#random event hositle battle station-fight
+situation_event = {
+	id = kuat_situation.9
+	title = kuat_situation.9.name
+	desc = kuat_situation.9.desc
+	picture = GFX_evt_ship_in_orbit
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		current_situation_approach = situation_hositile_altitude_station
+		NOR = {
+			has_situation_flag = kuat_random_event_hositle
+			current_stage = stage_1 current_stage = stage_3
+		}
+	}
+
+	immediate = { set_situation_flag = kuat_random_event_hositle }
+
+	option = {
+		name = kuat_situation.9.A
+		add_situation_progress = -10
+	}
+	option = {
+		name = kuat_situation.9.B
+		add_situation_progress = -5
+	}
+}
+
+#random event hositle battle station-passive
+situation_event = {
+	id = kuat_situation.10
+	title = kuat_situation.10.name
+	desc = kuat_situation.10.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_activating_unknown_technology
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		current_situation_approach = situation_netural_altitude_station
+		NOR = {
+			has_situation_flag = kuat_random_event_netural
+			current_stage = stage_1 current_stage = stage_3
+		}
+	}
+
+	immediate = { set_situation_flag = kuat_random_event_netural }
+
+	option = {
+		name = kuat_situation.10.A
+		hidden_effect = { set_situation_flag = kuat_counrsey }
+	}
+	option = {
+		name = kuat_situation.10.B
+		add_situation_progress = -5
+	}
+}
+
+#random event hositle battle station-control
+situation_event = {
+	id = kuat_situation.11
+	title = kuat_situation.11.name
+	desc = kuat_situation.11.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		current_situation_approach = situation_friendly_altitude_station
+		NOR = {
+			has_situation_flag = kuat_random_event_friendly
+			current_stage = stage_1 current_stage = stage_3
+		}
+	}
+
+	immediate = { set_situation_flag = kuat_random_event_friendly }
+
+	option = {
+		name = kuat_situation.11.A
+		#custom_tooltip = kuat_situation.11.A.tooltip
+		hidden_effect = { set_situation_flag = kuat_acception_ai }
+	}
+	option = {
+		name = kuat_situation.11.B
+		add_situation_progress = 10
+		large_artifact_reward = yes
+	}
+}
+
+#50% event find the datebank
+situation_event = {
+	id = kuat_situation.12
+	title = kuat_situation.12.name
+	desc = kuat_situation.12.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.12.A
+		custom_tooltip = kuat_situation.12.A.tooltip
+		set_situation_approach = "situation_friendly_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 15
+	}
+	option = {
+		name = kuat_situation.12.B
+		custom_tooltip = kuat_situation.12.B.tooltip
+		set_situation_approach = "situation_netural_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.12.C
+		custom_tooltip = kuat_situation.12.C.tooltip
+		set_situation_approach = "situation_hositile_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = -15
+	}
+}
+
+#150% event know the eternal clue
+situation_event = {
+	id = kuat_situation.13
+	title = kuat_situation.13.name
+	desc = kuat_situation.13.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+	option = {
+		name = kuat_situation.13.A
+		custom_tooltip = kuat_situation.13.A.tooltip
+		set_situation_approach = "situation_friendly_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 15
+	}
+	option = {
+		name = kuat_situation.13.B
+		custom_tooltip = kuat_situation.13.B.tooltip
+		set_situation_approach = "situation_netural_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.13.C
+		custom_tooltip = kuat_situation.13.C.tooltip
+		set_situation_approach = "situation_hositile_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = -15
+	}
+}
+
+#end events #hositile
+situation_event = {
+	id = kuat_situation.14
+	title = kuat_situation.14.name
+	desc = kuat_situation.14.desc
+	picture = GFX_evt_em_war_4
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.14.A
+		trigger = { owner? = { check_variable = { which = num_vaild_system value = 1 } } }
+		custom_tooltip = kuat_situation.14.A.tooltip
+		hidden_effect = { owner? = { 
+			add_random_research_option = { add_progress = 1 } 
+			hidden_effect = { change_variable = { which = num_finish value = 1 } }
+			add_event_chain_counter = { event_chain = ag_find_invasion_chain counter = ag_legacy_system_amount amount = 1 }
+		} }
+	}
+	option = {
+		name = kuat_situation.14.B
+		trigger = { owner? = { check_variable = { which = num_vaild_system value = 2 } } }
+		custom_tooltip = kuat_situation.14.B.tooltip
+		hidden_effect = { owner? = { 
+			add_random_research_option = { add_progress = 1 } 
+			hidden_effect = { change_variable = { which = num_finish value = 1 } }
+			add_event_chain_counter = { event_chain = ag_find_invasion_chain counter = ag_legacy_system_amount amount = 1 }
+		} }
+	}
+	option = {
+		name = kuat_situation.14.C
+		trigger = { owner? = { check_variable = { which = num_vaild_system value >= 3 } } }
+		custom_tooltip = kuat_situation.14.C.tooltip
+		hidden_effect = { owner? = { 
+			add_random_research_option = { add_progress = 1 } 
+			hidden_effect = { change_variable = { which = num_finish value = 1 } }
+			add_event_chain_counter = { event_chain = ag_find_invasion_chain counter = ag_legacy_system_amount amount = 1 }
+		} }
+	}
+	after = { 
+		destroy_situation = this 
+		event_target:eternal_fleet_country = {
+			if = {
+				limit = { NOT = { any_owned_fleet = { has_fleet_flag = ag_kuat_invasion_fleet } } }
+				random_system_within_border = {
+					limit = { has_star_flag = eternal_starbase_megastructure_in_system }
+					system_star? = { carrier_event = { id = exe_return_invasion.11 } }
+				}
+			}
+		}
+		every_playable_country = { country_event = { id = exe_return_invasion.33 } }
+	}
+}
+
+#end events #neutral
+situation_event = {
+	id = kuat_situation.15
+	title = kuat_situation.15.name
+	desc = kuat_situation.15.desc
+	picture = GFX_evt_em_war_2
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.15.A
+		trigger = { owner? = { check_variable = { which = num_vaild_system value = 1 } } }
+		custom_tooltip = kuat_situation.14.A.tooltip
+		hidden_effect = { owner? = { 
+			add_random_research_option = { add_progress = 1 } 
+			hidden_effect = { change_variable = { which = num_finish value = 1 } }
+			add_event_chain_counter = { event_chain = ag_find_invasion_chain counter = ag_legacy_system_amount amount = 1 }
+		} }
+	}
+	option = {
+		name = kuat_situation.15.B
+		trigger = { owner? = { check_variable = { which = num_vaild_system value = 2 } } }
+		custom_tooltip = kuat_situation.14.B.tooltip
+		hidden_effect = { owner? = { 
+			add_random_research_option = { add_progress = 1 } 
+			hidden_effect = { change_variable = { which = num_finish value = 1 } }
+			add_event_chain_counter = { event_chain = ag_find_invasion_chain counter = ag_legacy_system_amount amount = 1 }
+		} }
+	}
+	option = {
+		name = kuat_situation.15.C
+		trigger = { owner? = { check_variable = { which = num_vaild_system value >= 3 } } }
+		custom_tooltip = kuat_situation.14.C.tooltip
+		hidden_effect = { owner? = { 
+			add_random_research_option = { add_progress = 1 } 
+			hidden_effect = { change_variable = { which = num_finish value = 1 } }
+			add_event_chain_counter = { event_chain = ag_find_invasion_chain counter = ag_legacy_system_amount amount = 1 }
+		} }
+	}
+	after = { 
+		destroy_situation = this 
+		event_target:eternal_fleet_country = {
+			if = {
+				limit = { NOT = { any_owned_fleet = { has_fleet_flag = ag_kuat_invasion_fleet } } }
+				random_system_within_border = {
+					limit = { has_star_flag = eternal_starbase_megastructure_in_system }
+					system_star? = { carrier_event = { id = exe_return_invasion.11 } }
+				}
+			}
+		}
+		every_playable_country = { country_event = { id = exe_return_invasion.33 } }
+	}
+}
+
+#end events #friendly
+situation_event = {
+	id = kuat_situation.16
+	title = kuat_situation.16.name
+	desc = kuat_situation.16.desc
+	picture = GFX_evt_em_war_1
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.16.A
+		trigger = { owner? = { check_variable = { which = num_vaild_system value = 1 } } }
+		custom_tooltip = kuat_situation.14.A.tooltip
+		hidden_effect = { owner? = { 
+			add_random_research_option = { add_progress = 1 } 
+			hidden_effect = { change_variable = { which = num_finish value = 1 } }
+			add_event_chain_counter = { event_chain = ag_find_invasion_chain counter = ag_legacy_system_amount amount = 1 }
+		} }
+	}
+	option = {
+		name = kuat_situation.16.B
+		trigger = { owner? = { check_variable = { which = num_vaild_system value = 2 } } }
+		custom_tooltip = kuat_situation.14.B.tooltip
+		hidden_effect = { owner? = { 
+			add_random_research_option = { add_progress = 1 } 
+			hidden_effect = { change_variable = { which = num_finish value = 1 } }
+			add_event_chain_counter = { event_chain = ag_find_invasion_chain counter = ag_legacy_system_amount amount = 1 }
+		} }
+	}
+	option = {
+		name = kuat_situation.16.C
+		trigger = { owner? = { check_variable = { which = num_vaild_system value >= 3 } } }
+		custom_tooltip = kuat_situation.14.C.tooltip
+		hidden_effect = { owner? = { 
+			add_random_research_option = { add_progress = 1 } 
+			hidden_effect = { change_variable = { which = num_finish value = 1 } }
+			add_event_chain_counter = { event_chain = ag_find_invasion_chain counter = ag_legacy_system_amount amount = 1 }
+		} }
+	}
+	after = { 
+		destroy_situation = this 
+		event_target:eternal_fleet_country = {
+			if = {
+				limit = { NOT = { any_owned_fleet = { has_fleet_flag = ag_kuat_invasion_fleet } } }
+				random_system_within_border = {
+					limit = { has_star_flag = eternal_starbase_megastructure_in_system }
+					system_star? = { carrier_event = { id = exe_return_invasion.11 } }
+				}
+			}
+		}
+		every_playable_country = { country_event = { id = exe_return_invasion.33 } }
+	}
+}
+
+#50% event find the datebank
+situation_event = {
+	id = kuat_situation.17
+	title = kuat_situation.17.name
+	desc = kuat_situation.17.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.12.A
+		custom_tooltip = kuat_situation.12.A.tooltip
+		set_situation_approach = "situation_friendly_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 15
+	}
+	option = {
+		name = kuat_situation.12.B
+		custom_tooltip = kuat_situation.12.B.tooltip
+		set_situation_approach = "situation_netural_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.12.C
+		custom_tooltip = kuat_situation.12.C.tooltip
+		set_situation_approach = "situation_hositile_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = -15
+	}
+}
+
+#150% event know the eternal clue
+situation_event = {
+	id = kuat_situation.18
+	title = kuat_situation.18.name
+	desc = kuat_situation.18.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+	option = {
+		name = kuat_situation.13.A
+		custom_tooltip = kuat_situation.13.A.tooltip
+		set_situation_approach = "situation_friendly_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 15
+	}
+	option = {
+		name = kuat_situation.13.B
+		custom_tooltip = kuat_situation.13.B.tooltip
+		set_situation_approach = "situation_netural_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.13.C
+		custom_tooltip = kuat_situation.13.C.tooltip
+		set_situation_approach = "situation_hositile_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = -15
+	}
+}
+
+#50% event find the datebank
+situation_event = {
+	id = kuat_situation.19
+	title = kuat_situation.19.name
+	desc = kuat_situation.19.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.12.A
+		custom_tooltip = kuat_situation.12.A.tooltip
+		set_situation_approach = "situation_friendly_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 15
+	}
+	option = {
+		name = kuat_situation.12.B
+		custom_tooltip = kuat_situation.12.B.tooltip
+		set_situation_approach = "situation_netural_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.12.C
+		custom_tooltip = kuat_situation.12.C.tooltip
+		set_situation_approach = "situation_hositile_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = -15
+	}
+}
+
+#150% event know the eternal clue
+situation_event = {
+	id = kuat_situation.20
+	title = kuat_situation.20.name
+	desc = kuat_situation.20.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+	option = {
+		name = kuat_situation.13.A
+		custom_tooltip = kuat_situation.13.A.tooltip
+		set_situation_approach = "situation_friendly_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 15
+	}
+	option = {
+		name = kuat_situation.13.B
+		custom_tooltip = kuat_situation.13.B.tooltip
+		set_situation_approach = "situation_netural_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.13.C
+		custom_tooltip = kuat_situation.13.C.tooltip
+		set_situation_approach = "situation_hositile_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = -15
+	}
+}
+
+########
+#A Area#
+########
+#25% event essential discover
+situation_event = {
+	id = kuat_situation.21
+	title = kuat_situation.21.name
+	desc = kuat_situation.21.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.21.A
+		custom_tooltip = kuat_situation.21.A.tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+	option = {
+		name = kuat_situation.21.B
+		custom_tooltip = kuat_situation.21.B.tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+}
+
+#75% event essential discover
+situation_event = {
+	id = kuat_situation.22
+	title = kuat_situation.22.name
+	desc = kuat_situation.22.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.21.A
+		custom_tooltip = kuat_situation.21.A.tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+	option = {
+		name = kuat_situation.21.B
+		custom_tooltip = kuat_situation.21.B.tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+}
+
+#random event research trap
+situation_event = {
+	id = kuat_situation.23
+	title = kuat_situation.23.name
+	desc = kuat_situation.23.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		current_situation_approach = situation_reduce_research
+		NOT = { has_situation_flag = kuat_random_research_event } 
+	}
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.23.A
+		add_situation_progress = -1.6
+	}
+	option = {
+		name = kuat_situation.23.B
+		add_situation_progress = -0.8
+	}
+}
+
+#random event research paradox
+situation_event = {
+	id = kuat_situation.24
+	title = kuat_situation.24.name
+	desc = kuat_situation.24.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { NOT = { has_situation_flag = kuat_random_research_event } }
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.24.A
+		add_situation_progress = 0.8
+	}
+	option = {
+		name = kuat_situation.24.B
+		hidden_effect = { set_situation_flag = kuat_research_slowly }
+	}
+}
+
+#random event research progress
+situation_event = {
+	id = kuat_situation.25
+	title = kuat_situation.25.name
+	desc = kuat_situation.25.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		current_situation_approach = situation_enlarge_research
+		NOT = { has_situation_flag = kuat_random_research_event } 
+	}
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.25.A
+		add_situation_progress = 0.8
+	}
+	option = {
+		name = kuat_situation.25.B
+		hidden_effect = { set_situation_flag = kuat_research_quickly }
+	}
+}
+
+#progress completed(effect of Ancient shadow)
+situation_event = {
+	id = kuat_situation.26
+	title = kuat_situation.26.name
+	desc = kuat_situation.26.desc
+	picture = GFX_evt_black_hole
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.26.A
+		custom_tooltip = kuat_situation.26.A.tooltip
+		hidden_effect = { enable_special_project = {
+			name = exe_return_kuat_eternal_starbase
+			location = event_target:will_be_add_ringworld
+			owner = root.owner
+		} }
+	}
+	after = { destroy_situation = this }
+}
+
+
+########
+#B Area#
+########
+#25% event essential discover
+situation_event = {
+	id = kuat_situation.27
+	title = kuat_situation.27.name
+	desc = kuat_situation.27.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.21.A
+		custom_tooltip = kuat_situation.21.A.tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+	option = {
+		name = kuat_situation.21.B
+		custom_tooltip = kuat_situation.21.B.tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+}
+
+#75% event essential discover
+situation_event = {
+	id = kuat_situation.28
+	title = kuat_situation.28.name
+	desc = kuat_situation.28.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.21.A
+		custom_tooltip = kuat_situation.21.A.tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+	option = {
+		name = kuat_situation.21.B
+		custom_tooltip = kuat_situation.21.B.tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+}
+
+#random event research trap
+situation_event = {
+	id = kuat_situation.29
+	title = kuat_situation.29.name
+	desc = kuat_situation.29.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		current_situation_approach = situation_reduce_research
+		NOT = { has_situation_flag = kuat_random_research_event } 
+	}
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.29.A
+		add_situation_progress = -1.6
+	}
+	option = {
+		name = kuat_situation.29.B
+		add_situation_progress = -0.8
+	}
+}
+
+#random event research paradox
+situation_event = {
+	id = kuat_situation.30
+	title = kuat_situation.30.name
+	desc = kuat_situation.30.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { NOT = { has_situation_flag = kuat_random_research_event } }
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.30.A
+		add_situation_progress = 0.8
+	}
+	option = {
+		name = kuat_situation.30.B
+		hidden_effect = { set_situation_flag = kuat_research_slowly }
+	}
+}
+
+#random event research progress
+situation_event = {
+	id = kuat_situation.31
+	title = kuat_situation.31.name
+	desc = kuat_situation.31.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		current_situation_approach = situation_enlarge_research
+		NOT = { has_situation_flag = kuat_random_research_event } 
+	}
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.31.A
+		add_situation_progress = 0.8
+	}
+	option = {
+		name = kuat_situation.31.B
+		hidden_effect = { set_situation_flag = kuat_research_quickly }
+	}
+}
+
+#progress completed(effect of Ancient shadow)
+situation_event = {
+	id = kuat_situation.32
+	title = kuat_situation.32.name
+	desc = kuat_situation.32.desc
+	picture = GFX_evt_star_pulsar
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.32.A
+		custom_tooltip = kuat_situation.32.A.tooltip
+		hidden_effect = { owner? = {
+			enable_special_project = {
+				name = exe_return_kuat_protector
+				location = event_target:will_be_add_habitable_damaged
+				owner = this
+			}
+			set_country_flag = kuat_unlock_the_flagship_designable
+		} }
+	}
+	after = { destroy_situation = this }
+}
+
+
+
+########
+#C Area#
+########
+#25% event essential discover
+situation_event = {
+	id = kuat_situation.33
+	title = kuat_situation.33.name
+	desc = kuat_situation.33.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.21.A
+		custom_tooltip = kuat_situation.21.A.tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+	option = {
+		name = kuat_situation.21.B
+		custom_tooltip = kuat_situation.21.B.tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+}
+
+#75% event essential discover
+situation_event = {
+	id = kuat_situation.34
+	title = kuat_situation.34.name
+	desc = kuat_situation.34.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.21.A
+		custom_tooltip = kuat_situation.21.A.tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+	option = {
+		name = kuat_situation.21.B
+		custom_tooltip = kuat_situation.21.B.tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+}
+
+#random event research trap
+situation_event = {
+	id = kuat_situation.35
+	title = kuat_situation.35.name
+	desc = kuat_situation.35.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		current_situation_approach = situation_reduce_research
+		NOT = { has_situation_flag = kuat_random_research_event } 
+	}
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.35.A
+		add_situation_progress = -1.6
+	}
+	option = {
+		name = kuat_situation.35.B
+		add_situation_progress = -0.8
+	}
+}
+
+#random event research paradox
+situation_event = {
+	id = kuat_situation.36
+	title = kuat_situation.36.name
+	desc = kuat_situation.36.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { NOT = { has_situation_flag = kuat_random_research_event } }
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.36.A
+		add_situation_progress = 0.8
+	}
+	option = {
+		name = kuat_situation.36.B
+		hidden_effect = { set_situation_flag = kuat_research_slowly }
+	}
+}
+
+#random event research progress
+situation_event = {
+	id = kuat_situation.37
+	title = kuat_situation.37.name
+	desc = kuat_situation.37.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		current_situation_approach = situation_enlarge_research
+		NOT = { has_situation_flag = kuat_random_research_event } 
+	}
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.37.A
+		add_situation_progress = 0.8
+	}
+	option = {
+		name = kuat_situation.37.B
+		hidden_effect = { set_situation_flag = kuat_research_quickly }
+	}
+}
+
+#progress completed(effect of Ancient shadow)
+situation_event = {
+	id = kuat_situation.38
+	title = kuat_situation.38.name
+	desc = kuat_situation.38.desc
+	picture = GFX_evt_star_neutron
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.38.A
+		custom_tooltip = kuat_situation.38.A.tooltip
+		hidden_effect = { enable_special_project = {
+			name = exe_return_kuat_C_facility
+			location = event_target:will_be_add_ringworld_shielded
+			owner = root.owner
+		} }
+	}
+	after = { destroy_situation = this }
+}
+
+
+########
+#D Area#
+########
+#25% event essential discover
+situation_event = {
+	id = kuat_situation.39
+	title = kuat_situation.39.name
+	desc = kuat_situation.39.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.21.A
+		custom_tooltip = kuat_situation.21.A.tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+	option = {
+		name = kuat_situation.21.B
+		custom_tooltip = kuat_situation.21.B.tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+}
+
+#75% event essential discover
+situation_event = {
+	id = kuat_situation.40
+	title = kuat_situation.40.name
+	desc = kuat_situation.40.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.21.A
+		custom_tooltip = kuat_situation.21.A.tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+	option = {
+		name = kuat_situation.21.B
+		custom_tooltip = kuat_situation.21.B.tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+}
+
+#random event research trap
+situation_event = {
+	id = kuat_situation.41
+	title = kuat_situation.41.name
+	desc = kuat_situation.41.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		current_situation_approach = situation_reduce_research
+		NOT = { has_situation_flag = kuat_random_research_event } 
+	}
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.41.A
+		add_situation_progress = -1.6
+	}
+	option = {
+		name = kuat_situation.41.B
+		add_situation_progress = -0.8
+	}
+}
+
+#random event research paradox
+situation_event = {
+	id = kuat_situation.42
+	title = kuat_situation.42.name
+	desc = kuat_situation.42.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { NOT = { has_situation_flag = kuat_random_research_event } }
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.42.A
+		add_situation_progress = 0.8
+	}
+	option = {
+		name = kuat_situation.42.B
+		hidden_effect = { set_situation_flag = kuat_research_slowly }
+	}
+}
+
+#random event research progress
+situation_event = {
+	id = kuat_situation.43
+	title = kuat_situation.43.name
+	desc = kuat_situation.43.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		current_stage = stage_2
+		current_situation_approach = situation_enlarge_research
+		NOT = { has_situation_flag = kuat_random_research_event } 
+	}
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.43.A
+		add_situation_progress = 0.8
+	}
+	option = {
+		name = kuat_situation.43.B
+		hidden_effect = { set_situation_flag = kuat_research_quickly }
+	}
+}
+
+#progress completed(effect of Ancient shadow)
+situation_event = {
+	id = kuat_situation.44
+	title = kuat_situation.44.name
+	desc = kuat_situation.44.desc
+	picture = GFX_evt_black_hole
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.44.A
+		custom_tooltip = kuat_situation.44.A.tooltip
+		hidden_effect = { enable_special_project = {
+			name = exe_return_kuat_starkillerbase
+			location = event_target:mysst_system_star_location
+			owner = root.owner
+		} }
+	}
+	after = { destroy_situation = this }
+}
+
+#################
+#STARKILLER BASE#
+#################
+#mtth trigger
+planet_event = {
+	id = kuat_situation.9998
+	title = kuat_situation.9998.name
+	desc = kuat_situation.9998.desc
+	diplomatic = yes
+	custom_gui = "kuat_event_window"
+	custom_gui_option = "kuat_event_option"
+	picture_event_data = { room = frozen_planet_room }
+	show_sound = event_default
+	fire_only_once = yes
+	location = root
+	mean_time_to_happen = { 
+		years = 2  
+		modifier = { factor = 0.50 years_passed > 125 }
+		modifier = { factor = 0.25 years_passed > 175 }
+		modifier = { factor = 0.50 mid_game_years_passed > 0 }
+		modifier = { factor = 0.25 end_game_years_passed > 0 }
+	}
+
+	pre_triggers = {
+		has_owner = yes
+		is_ai = no
+	}
+
+	trigger = {
+		has_carrier_flag = protection_megastructure_planet
+		owner? = { 
+			has_country_flag = fighting_won_with_facility 
+			kuat_is_enable_post_apocalyptic_origin = no
+		}
+	}
+
+	option = {
+		name = INTERESTING
+		owner? = { start_situation = { type = situation_unlocked_the_I_Area target = this } }
+	}
+}
+
+#25% event essential discover
+situation_event = {
+	id = kuat_situation.45
+	title = kuat_situation.45.name
+	desc = kuat_situation.45.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.21.A
+		custom_tooltip = kuat_situation.21.A.tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+	option = {
+		name = kuat_situation.21.B
+		custom_tooltip = kuat_situation.21.B.tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+}
+
+#75% event essential discover
+situation_event = {
+	id = kuat_situation.46
+	title = kuat_situation.46.name
+	desc = kuat_situation.46.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.21.A
+		custom_tooltip = kuat_situation.21.A.tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+	option = {
+		name = kuat_situation.21.B
+		custom_tooltip = kuat_situation.21.B.tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+		add_situation_progress = 1.6
+	}
+}
+
+#random event research trap
+situation_event = {
+	id = kuat_situation.47
+	title = kuat_situation.47.name
+	desc = kuat_situation.47.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		current_situation_approach = situation_reduce_research
+		NOT = { has_situation_flag = kuat_random_research_event } 
+	}
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.47.A
+		add_situation_progress = -1.6
+	}
+	option = {
+		name = kuat_situation.47.B
+		add_situation_progress = -0.8
+	}
+}
+
+#random event research paradox
+situation_event = {
+	id = kuat_situation.48
+	title = kuat_situation.48.name
+	desc = kuat_situation.48.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { NOT = { has_situation_flag = kuat_random_research_event } }
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.48.A
+		add_situation_progress = 0.8
+	}
+	option = {
+		name = kuat_situation.48.B
+		hidden_effect = { set_situation_flag = kuat_research_slowly }
+	}
+}
+
+#random event research progress
+situation_event = {
+	id = kuat_situation.49
+	title = kuat_situation.49.name
+	desc = kuat_situation.49.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		current_stage = stage_2
+		current_situation_approach = situation_enlarge_research
+		NOT = { has_situation_flag = kuat_random_research_event } 
+	}
+
+	immediate = { set_situation_flag = kuat_random_research_event }
+
+	option = {
+		name = kuat_situation.49.A
+		add_situation_progress = 0.8
+	}
+	option = {
+		name = kuat_situation.49.B
+		hidden_effect = { set_situation_flag = kuat_research_quickly }
+	}
+}
+
+#progress completed(effect of Ancient shadow)
+situation_event = {
+	id = kuat_situation.50
+	title = kuat_situation.50.name
+	desc = kuat_situation.50.desc
+	picture = GFX_evt_black_hole
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.44.A
+		custom_tooltip = kuat_situation.44.A.tooltip
+		hidden_effect = { enable_special_project = {
+			name = exe_return_starkillerbase_Megashipclass
+			location = event_target:starkillerbase_location
+			owner = root.owner
+		} }
+	}
+	after = { destroy_situation = this }
+}
+
+#add megaship class
+country_event = {
+	id = kuat_situation.51
+	title = "kuat_situation.51.title"
+	desc = "kuat_situation.51.desc"
+	diplomatic = yes
+	is_triggered_only = yes
+	picture_event_data = { room = satellite_in_orbit_room }
+	custom_gui = "kuat_event_m_window"
+	custom_gui_option = "kuat_event_option"
+	immediate = { set_country_flag = can_build_supermacy }
+	option = { name = kuat_situation.51.a }
+}
+
+#legacy progress
+situation_event = {
+	id = kuat_situation.53
+	title = kuat_situation.53.name
+	desc = {
+		trigger = {
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = no
+					kuat_is_enable_shadow_origin = yes 
+				}
+				text = kuat_situation.53.desc
+			}
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = yes
+				}
+				text = kuat_situation.53.B.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_eternal_origin = yes }
+				text = kuat_situation.53.A.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_post_apocalyptic_origin = yes }
+				text = kuat_situation.53.C.desc
+			}
+		}
+	}
+	picture = GFX_evt_city_planet
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.53.A
+		trigger = { target = { kuat_is_enable_shadow_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.53.B
+		trigger = { target = { kuat_is_enable_eternal_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.53.C
+		trigger = { target = { kuat_is_enable_post_apocalyptic_origin = yes } }
+		add_situation_progress = 0.25
+	}
+}
+
+situation_event = {
+	id = kuat_situation.54
+	title = kuat_situation.54.name
+	desc = {
+		trigger = {
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = no
+					kuat_is_enable_shadow_origin = yes 
+				}
+				text = kuat_situation.54.desc
+			}
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = yes
+				}
+				text = kuat_situation.54.B.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_eternal_origin = yes }
+				text = kuat_situation.54.A.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_post_apocalyptic_origin = yes }
+				text = kuat_situation.54.C.desc
+			}
+		}
+	}
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.54.A
+		trigger = { target = { kuat_is_enable_shadow_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.54.B
+		trigger = { target = { kuat_is_enable_eternal_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.54.C
+		trigger = { target = { kuat_is_enable_post_apocalyptic_origin = yes } }
+		add_situation_progress = 0.25
+	}
+}
+
+situation_event = {
+	id = kuat_situation.55
+	title = kuat_situation.55.name
+	desc = {
+		trigger = {
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = no
+					kuat_is_enable_shadow_origin = yes 
+				}
+				text = kuat_situation.55.desc
+			}
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = yes
+				}
+				text = kuat_situation.55.B.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_eternal_origin = yes }
+				text = kuat_situation.55.A.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_post_apocalyptic_origin = yes }
+				text = kuat_situation.55.C.desc
+			}			
+		}
+	}
+	picture = GFX_evt_galactic_community
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.55.A
+		trigger = { target = { kuat_is_enable_shadow_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.55.B
+		trigger = { target = { kuat_is_enable_eternal_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.55.C
+		trigger = { target = { kuat_is_enable_post_apocalyptic_origin = yes } }
+		add_situation_progress = 0.25
+	}
+}
+
+situation_event = {
+	id = kuat_situation.56
+	title = kuat_situation.56.name
+	desc = {
+		trigger = {
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = no
+					kuat_is_enable_shadow_origin = yes 
+				}
+				text = kuat_situation.56.desc
+			}
+			success_text = {
+				target = {  
+					kuat_is_enable_apocalyptic_origin = yes
+				}
+				text = kuat_situation.56.B.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_eternal_origin = yes }
+				text = kuat_situation.56.A.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_post_apocalyptic_origin = yes }
+				text = kuat_situation.56.C.desc
+			}			
+		}
+	}
+	picture = GFX_evt_ancient_databank
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.56.A
+		trigger = { target = { kuat_is_enable_shadow_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.56.B
+		trigger = { target = { kuat_is_enable_eternal_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.56.C
+		trigger = { target = { kuat_is_enable_post_apocalyptic_origin = yes } }
+		add_situation_progress = 0.25
+	}
+}
+
+situation_event = {
+	id = kuat_situation.57
+	title = kuat_situation.57.name
+	desc = {
+		trigger = {
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = no
+					kuat_is_enable_shadow_origin = yes 
+				}
+				text = kuat_situation.57.desc
+			}
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = yes
+				}
+				text = kuat_situation.57.B.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_eternal_origin = yes }
+				text = kuat_situation.57.A.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_post_apocalyptic_origin = yes }
+				text = kuat_situation.57.C.desc
+			}			
+		}
+	}
+	picture = GFX_evt_ship_in_orbit_3
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.57.A
+		trigger = { target = { kuat_is_enable_shadow_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.57.B
+		trigger = { target = { kuat_is_enable_eternal_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.57.C
+		trigger = { target = { kuat_is_enable_post_apocalyptic_origin = yes } }
+		add_situation_progress = 0.25
+	}
+}
+
+situation_event = {
+	id = kuat_situation.58
+	title = kuat_situation.58.name
+	desc = {
+		trigger = {
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = no
+					kuat_is_enable_shadow_origin = yes 
+				}
+				text = kuat_situation.58.desc
+			}
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = yes
+				}
+				text = kuat_situation.58.B.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_eternal_origin = yes }
+				text = kuat_situation.58.A.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_post_apocalyptic_origin = yes }
+				text = kuat_situation.58.C.desc
+			}			
+		}
+	}
+	picture = GFX_evt_fallen_empire
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.58.A
+		trigger = { target = { kuat_is_enable_shadow_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.58.B
+		trigger = { target = { kuat_is_enable_eternal_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.58.C
+		trigger = { target = { kuat_is_enable_post_apocalyptic_origin = yes } }
+		add_situation_progress = 0.25
+	}
+}
+
+situation_event = {
+	id = kuat_situation.59
+	title = kuat_situation.59.name
+	desc = {
+		trigger = {
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = no
+					kuat_is_enable_shadow_origin = yes 
+				}
+				text = kuat_situation.59.desc
+			}
+			success_text = {
+				target = { 
+					kuat_is_enable_apocalyptic_origin = yes
+				}
+				text = kuat_situation.59.B.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_eternal_origin = yes }
+				text = kuat_situation.59.A.desc
+			}
+			success_text = {
+				target = { kuat_is_enable_post_apocalyptic_origin = yes }
+				text = kuat_situation.59.C.desc
+			}
+		}
+	}
+	picture = GFX_evt_financial_instruments
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.59.A
+		trigger = { target = { kuat_is_enable_shadow_origin = yes  } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.59.B
+		trigger = { target = { kuat_is_enable_eternal_origin = yes } }
+		add_situation_progress = 0.25
+	}
+	option = {
+		name = kuat_situation.59.C
+		trigger = { target = { kuat_is_enable_post_apocalyptic_origin = yes } }
+		add_situation_progress = 0.25
+	}
+}
+
+situation_event = {
+	id = kuat_situation.60
+	title = kuat_situation.60.name
+	desc = kuat_situation.60.desc
+	picture = GFX_evt_alien_planet
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		target = { kuat_is_enable_post_apocalyptic_origin = no }
+		NOT = { has_situation_flag = fired_kuat_situation.60 }
+		current_situation_approach = situation_friendly_altitude_station
+	}
+
+	immediate = {
+		set_situation_flag = fired_kuat_situation.60
+		situation_event = { id = kuat_situation.61 days = 15 random = 15 }
+	}
+
+	option = {
+		name = kuat_situation.60.A
+		add_situation_progress = 10
+	}
+	option = {
+		name = kuat_situation.60.B
+		add_situation_progress = 10
+	}
+}
+
+situation_event = {
+	id = kuat_situation.61
+	title = kuat_situation.60.name
+	desc = kuat_situation.61.desc
+	picture = GFX_evt_alien_planet
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		target = { kuat_is_enable_post_apocalyptic_origin = no }
+	}
+
+	option = {
+		name = kuat_situation.61.A
+		add_situation_progress = 10
+	}
+	option = {
+		name = kuat_situation.61.B
+		add_situation_progress = 10
+	}
+}
+
+situation_event = {
+	id = kuat_situation.62
+	title = kuat_situation.62.name
+	desc = kuat_situation.62.desc
+	picture = GFX_evt_interior_battle
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		target = { kuat_is_enable_post_apocalyptic_origin = no }
+		NOT = { has_situation_flag = fired_kuat_situation.62 }
+		current_situation_approach = situation_friendly_altitude_station
+	}
+
+	immediate = {
+		set_situation_flag = fired_kuat_situation.62
+	}
+
+	option = {
+		name = kuat_situation.62.A
+		add_situation_progress = 10
+	}
+	option = {
+		name = kuat_situation.62.B
+		add_situation_progress = 10
+	}
+}
+
+situation_event = {
+	id = kuat_situation.63
+	title = kuat_situation.63.name
+	desc = kuat_situation.63.desc
+	picture = GFX_evt_shattered_planet
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		target = { kuat_is_enable_post_apocalyptic_origin = no }
+		NOT = { has_situation_flag = fired_kuat_situation.63 }
+		current_situation_approach = situation_friendly_altitude_station
+	}
+
+	immediate = {
+		set_situation_flag = fired_kuat_situation.63
+		situation_event = { id = kuat_situation.64 days = 15 random = 15 }
+	}
+
+	option = {
+		name = kuat_situation.63.A
+		add_situation_progress = 10
+	}
+}
+
+situation_event = {
+	id = kuat_situation.64
+	title = kuat_situation.63.name
+	desc = kuat_situation.64.desc
+	picture = GFX_evt_medieval_alien_civilization
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		target = { kuat_is_enable_post_apocalyptic_origin = no }
+	}
+
+	option = {
+		name = kuat_situation.64.A
+		add_situation_progress = 10
+	}
+	option = {
+		name = kuat_situation.64.B
+		trigger = { owner? = { kuat_has_swgs_tech = { TRAT = swg_trait_ligth_side } } }
+		add_situation_progress = 10
+		owner? = { add_modifier = { modifier = second_tomb multiplier = 2 } }
+	}
+	option = {
+		name = kuat_situation.64.C
+		trigger = { owner? = { kuat_has_swgs_tech = { TRAT = swg_trait_dark_side } } }
+		add_situation_progress = 10
+		owner? = { add_modifier = { modifier = second_tomb multiplier = 3 } }
+	}
+}
+
+situation_event = {
+	id = kuat_situation.65
+	title = kuat_situation.65.name
+	desc = kuat_situation.65.desc
+	picture = GFX_evt_robot_assembly_plant
+	show_sound = event_robot_encounter
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		exists = owner
+		owner? = { kuat_is_enable_shadow_origin = yes }
+		NOT = { has_situation_flag = fired_kuat_situation.65 }
+		current_situation_approach = situation_friendly_altitude_station
+	}
+
+	immediate = { set_situation_flag = fired_kuat_situation.65 }
+
+	option = {
+		name = kuat_situation.65.A
+		add_situation_progress = 10
+	}
+	option = {
+		name = kuat_situation.65.B
+		add_situation_progress = 10
+	}
+}
+
+situation_event = {
+	id = kuat_situation.66
+	title = kuat_situation.66.name
+	desc = kuat_situation.66.desc
+	picture = GFX_evt_robot_assembly_plant
+	show_sound = event_robot_encounter
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		target = { kuat_is_enable_post_apocalyptic_origin = no }
+		NOT = { has_situation_flag = fired_kuat_situation.66 }
+		current_situation_approach = situation_friendly_altitude_station
+	}
+
+	immediate = { set_situation_flag = fired_kuat_situation.66 }
+
+	option = {
+		name = kuat_situation.66.A
+		add_situation_progress = 10
+	}
+}
+
+situation_event = {
+	id = kuat_situation.67
+	title = kuat_situation.67.name
+	desc = kuat_situation.67.desc
+	picture = GFX_evt_city_ruins
+	show_sound = event_cityscape
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		target = { kuat_is_enable_post_apocalyptic_origin = no }
+		NOT = { has_situation_flag = fired_kuat_situation.67 }
+		current_situation_approach = situation_friendly_altitude_station
+	}
+
+	immediate = { set_situation_flag = fired_kuat_situation.67 }
+
+	option = {
+		name = kuat_situation.67.A
+		add_situation_progress = 10
+	}
+}
+
+situation_event = {
+	id = kuat_situation.68
+	title = kuat_situation.68.name
+	desc = kuat_situation.68.desc
+	picture = GFX_evt_enlightenment_failure
+	show_sound = event_cityscape
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		target = { kuat_is_enable_post_apocalyptic_origin = no }
+		NOT = { has_situation_flag = fired_kuat_situation.68 }
+		current_situation_approach = situation_friendly_altitude_station
+	}
+
+	immediate = { set_situation_flag = fired_kuat_situation.68 }
+
+	option = {
+		name = kuat_situation.68.A
+		add_situation_progress = 10
+	}
+}
+
+situation_event = {
+	id = kuat_situation.69
+	title = kuat_situation.69.name
+	desc = kuat_situation.69.desc
+	picture = GFX_evt_atmospheric_flight
+	show_sound = event_cityscape
+	is_triggered_only = yes
+	location = target
+
+	trigger = { 
+		target = { kuat_is_enable_post_apocalyptic_origin = no }
+		NOT = { has_situation_flag = fired_kuat_situation.69 }
+		current_situation_approach = situation_friendly_altitude_station
+	}
+
+	immediate = { set_situation_flag = fired_kuat_situation.69 }
+
+	option = {
+		name = kuat_situation.69.A
+		add_situation_progress = 10
+	}
+}
+
+#ghost signal（奇特信号）
+situation_event = {
+	id = kuat_situation.70
+	title = kuat_situation.70.name
+	desc = kuat_situation.70.desc
+	picture = GFX_evt_worrying_signal
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+#ghost exist (星球恐慌)
+situation_event = {
+	id = kuat_situation.71
+	title = kuat_situation.71.name
+	desc = kuat_situation.71.desc
+	picture = GFX_evt_disease_outbreak
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+#ghost attack（舰队危机）
+situation_event = {
+	id = kuat_situation.72
+	title = kuat_situation.72.name
+	desc = kuat_situation.72.desc
+	picture = GFX_evt_ship_under_attack
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = kuat_situation.72.A.tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = kuat_situation.72.B.tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+#ghost talk（外空间意志）
+situation_event = {
+	id = kuat_situation.73
+	title = kuat_situation.73.name
+	desc = kuat_situation.73.desc
+	picture = GFX_evt_shrouded_planet
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+#ghost betrayer (被背叛的外空间意志)
+situation_event = {
+	id = kuat_situation.74
+	title = kuat_situation.74.name
+	desc = kuat_situation.74.desc
+	picture = GFX_evt_psionic_battle
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+
+	after = {
+		set_spawn_system_batch = begin
+		random_rim_system = {
+			limit = { NOR = { has_star_flag = kuat_white_hole_star is_capital_system = yes } }
+			spawn_system = { initializer = kuat_white_hole_system_1 min_distance >= 15 max_distance <= 30 }
+		}
+		set_spawn_system_batch = end
+	}
+}
+
+#ghost business (与外空间意志的交易)
+situation_event = {
+	id = kuat_situation.75
+	title = kuat_situation.75.name
+	desc = {
+		trigger = {
+			exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = no }
+		}
+		text = kuat_situation.75.desc
+	}
+  	desc = {
+        trigger = {
+            exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = yes }
+        }
+        text = kuat_situation.75.kuat_post_apocalyptic_legacy.desc
+    } 	
+	picture = GFX_evt_galactic_community
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+#ghost true(流浪者的阴谋，真正的恩多迪亚)
+situation_event = {
+	id = kuat_situation.76
+	title = kuat_situation.76.name
+	desc = {
+		trigger = {
+			exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = no }
+		}
+		text = kuat_situation.76.desc
+	}
+  	desc = {
+        trigger = {
+            exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = yes }
+        }
+        text = kuat_situation.76.kuat_post_apocalyptic_legacy.desc
+    } 	
+	picture = GFX_evt_unknown_ships
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+
+	after = {
+		set_spawn_system_batch = begin
+		random_rim_system = {
+			limit = { NOR = { has_star_flag = kuat_white_hole_star is_capital_system = yes } }
+			spawn_system = { initializer = kuat_white_hole_system_2 min_distance >= 15 max_distance <= 30 }
+		}
+		set_spawn_system_batch = end
+	}
+}
+
+#ghost true(流浪者的阴谋，真正的恩多迪亚)
+situation_event = {
+	id = kuat_situation.77
+	title = kuat_situation.77.name
+	desc = {
+		trigger = {
+			exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = no }
+		}
+		text = kuat_situation.77.desc
+	}
+  	desc = {
+        trigger = {
+            exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = yes }
+        }
+        text = kuat_situation.77.kuat_post_apocalyptic_legacy.desc
+    } 	
+	picture = GFX_evt_ancient_databank
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+
+#ghost true(流浪者的阴谋，真正的恩多迪亚)
+situation_event = {
+	id = kuat_situation.78
+	title = kuat_situation.78.name
+	desc = {
+		trigger = {
+			exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = no }
+		}
+		text = kuat_situation.78.desc
+	}
+  	desc = {
+        trigger = {
+            exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = yes }
+        }
+        text = kuat_situation.78.kuat_post_apocalyptic_legacy.desc
+    } 
+	picture = GFX_evt_ancient_databank
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+
+	after = {
+		set_spawn_system_batch = begin
+		random_rim_system = {
+			limit = { NOR = { has_star_flag = kuat_white_hole_star is_capital_system = yes } }
+			spawn_system = { initializer = kuat_white_hole_system_3 min_distance >= 15 max_distance <= 30 }
+		}
+		set_spawn_system_batch = end
+	}
+}
+
+#ghost true(流浪者的阴谋，真正的恩多迪亚)
+situation_event = {
+	id = kuat_situation.79
+	title = kuat_situation.79.name
+	desc = kuat_situation.79.desc
+	picture = GFX_evt_news_room
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+#ghost true(流浪者的阴谋，真正的恩多迪亚)
+situation_event = {
+	id = kuat_situation.80
+	title = kuat_situation.80.name
+	desc = {
+		trigger = {
+			exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = no }
+		}
+		text = kuat_situation.80.desc
+	}
+  	desc = {
+        trigger = {
+            exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = yes }
+        }
+        text = kuat_situation.80.kuat_post_apocalyptic_legacy.desc
+    } 
+	picture = GFX_evt_astral_rift_riftworld
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+
+	after = {
+		set_spawn_system_batch = begin
+		random_rim_system = {
+			limit = { NOR = { has_star_flag = kuat_white_hole_star is_capital_system = yes } }
+			spawn_system = { initializer = kuat_white_hole_system_4 min_distance >= 15 max_distance <= 30 }
+		}
+		random_rim_system = {
+			limit = { NOR = { has_star_flag = kuat_white_hole_star is_capital_system = yes } }
+			spawn_system = { initializer = kuat_ded_white_hole_system_8  min_distance >= 15 max_distance <= 45 }
+		}
+		set_spawn_system_batch = end
+	}
+}
+
+#ghost true(流浪者的阴谋，真正的恩多迪亚)
+situation_event = {
+	id = kuat_situation.81
+	title = kuat_situation.81.name
+	desc = kuat_situation.81.desc
+	picture = GFX_evt_relic_world
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+#ghost true(流浪者的阴谋，真正的恩多迪亚)
+situation_event = {
+	id = kuat_situation.82
+	title = kuat_situation.82.name
+	desc = kuat_situation.82.desc
+	picture = GFX_evt_ancient_databank
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+
+	after = {
+		set_spawn_system_batch = begin
+		random_rim_system = {
+			limit = { NOR = { has_star_flag = kuat_white_hole_star is_capital_system = yes } }
+			spawn_system = { initializer = kuat_white_hole_system_5 min_distance >= 15 max_distance <= 30 }
+		}
+		random_rim_system = {
+			limit = { NOR = { has_star_flag = kuat_white_hole_star is_capital_system = yes } }
+			spawn_system = { initializer = kuat_ded_white_hole_system_9  min_distance >= 15 max_distance <= 45 }
+		}
+		set_spawn_system_batch = end
+	}
+}
+
+#ghost true(流浪者的阴谋，真正的恩多迪亚)
+situation_event = {
+	id = kuat_situation.83
+	title = kuat_situation.83.name
+	desc = {
+		trigger = {
+			exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = no }
+		}
+		text = kuat_situation.83.desc
+	}
+  	desc = {
+        trigger = {
+            exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = yes }
+        }
+        text = kuat_situation.83.kuat_post_apocalyptic_legacy.desc
+    } 
+	picture = GFX_evt_ancient_records
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.83.A
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	after = { situation_event = { id = kuat_situation.85 } }
+}
+situation_event = {
+	id = kuat_situation.85
+	title = kuat_situation.85.name
+	desc = {
+		trigger = {
+			exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = no }
+		}
+		text = kuat_situation.85.desc
+	}
+  	desc = {
+        trigger = {
+            exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = yes }
+        }
+        text = kuat_situation.85.kuat_post_apocalyptic_legacy.desc
+    }
+	picture = GFX_evt_ancient_records
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.85.A
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	after = { situation_event = { id = kuat_situation.86 } }
+}
+situation_event = {
+	id = kuat_situation.86
+	title = kuat_situation.86.name
+	desc = {
+		trigger = {
+			exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = no }
+		}
+		text = kuat_situation.86.desc
+	}
+  	desc = {
+        trigger = {
+            exists = target
+			target = { kuat_is_enable_post_apocalyptic_origin = yes }
+        }
+        text = kuat_situation.86.kuat_post_apocalyptic_legacy.desc
+    }
+	picture = GFX_evt_ancient_records
+	show_sound = event_yellow_alert
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.70.A
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_siton_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_handon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = kuat_situation.70.C
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_plague_banon_altitude_station"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+#ghost crisis(流浪者的到来)
+country_event = {
+	id = kuat_situation.84
+	title = kuat_situation.84.name
+	desc = {
+		trigger = {
+			kuat_is_enable_post_apocalyptic_origin = no
+		}
+		text = kuat_situation.84.desc
+	}
+  	desc = {
+        trigger = {
+            kuat_is_enable_post_apocalyptic_origin = yes
+        }
+        text = kuat_situation.84.kuat_post_apocalyptic_legacy.desc
+    }
+	picture_event_data = { room = astral_rift_ancient_battlegrounds_room }
+	custom_gui = "kuat_event_window"
+	custom_gui_option = "kuat_event_option"
+	diplomatic = yes
+	show_sound = event_red_alert
+	is_triggered_only = yes
+
+	immediate = { country_event = { id = kuat_extramonster.8 days = 30 random = 30 } }
+
+	option = { name = kuat_situation.84.A }
+
+	after = {
+		set_spawn_system_batch = begin
+		random_rim_system = {
+			limit = { NOR = { has_star_flag = kuat_white_hole_star is_capital_system = yes } }
+			spawn_system = { initializer = kuat_white_hole_system_6 min_distance >= 15 max_distance <= 30 }
+		}
+		random_rim_system = {
+			limit = { NOR = { has_star_flag = kuat_white_hole_star is_capital_system = yes } }
+			spawn_system = { initializer = kuat_ded_white_hole_system_10  min_distance >= 15 max_distance <= 45 }
+		}
+		set_spawn_system_batch = end
+	}
+}
+
+situation_event = {
+	id = kuat_situation.87
+	title = kuat_situation.87.name
+	desc = kuat_situation.87.desc
+	picture = GFX_evt_engineering_cache
+	show_sound = event_celebration
+	is_triggered_only = yes
+	location = target.capital_scope
+
+	immediate = { target = {
+		set_country_flag = kuat_allow_Name_boss_Venator
+		create_ship_design = { design = "Name_boss_Venator" }
+		add_ship_design = last_created_design
+	} }
+
+	option = {
+		name = situation_enlarge_research
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = situation_reduce_research
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+situation_event = {
+	id = kuat_situation.88
+	title = kuat_situation.88.name
+	desc = kuat_situation.88.desc
+	picture = GFX_evt_engineering_cache
+	show_sound = event_celebration
+	is_triggered_only = yes
+	location = target.capital_scope
+
+	immediate = { target = {
+		set_country_flag = kuat_allow_Name_boss_Venator_II
+		create_ship_design = { design = "Name_boss_Venator_II" }
+		add_ship_design = last_created_design
+	} }
+
+	option = {
+		name = situation_enlarge_research
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = situation_reduce_research
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+situation_event = {
+	id = kuat_situation.89
+	title = kuat_situation.89.name
+	desc = kuat_situation.89.desc
+	picture = GFX_evt_engineering_cache
+	show_sound = event_celebration
+	is_triggered_only = yes
+	location = target.capital_scope
+
+	immediate = { target = {
+		create_ship_design = { design = "Name_boss_X308_Balletor" }
+		add_ship_design = last_created_design
+	} }
+
+	option = {
+		name = situation_enlarge_research
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = situation_reduce_research
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+situation_event = {
+	id = kuat_situation.90
+	title = kuat_situation.90.name
+	desc = kuat_situation.90.desc
+	picture = GFX_evt_engineering_cache
+	show_sound = event_celebration
+	is_triggered_only = yes
+	location = target.capital_scope
+
+	immediate = { target = {
+		create_ship_design = { design = "Name_boss_X308_Titan" }
+		add_ship_design = last_created_design
+	} }
+
+	option = {
+		name = situation_enlarge_research
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = situation_reduce_research
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
+
+country_event = {
+	id = kuat_situation.91
+	title = kuat_situation.91.name
+	desc = kuat_situation.91.desc
+	picture_event_data = { room = ancient_knowledge_room }
+	custom_gui = "kuat_event_window"
+	custom_gui_option = "kuat_event_option"
+	diplomatic = yes
+	show_sound = event_celebration
+	is_triggered_only = yes
+
+	immediate = {
+		create_ship_design = { design = "NAME_KUAT_EXECUTOR" }
+		add_ship_design = last_created_design
+	}
+
+	option = { name = kuat_situation.84.A }
+
+	after = {
+		destroy_situation = event_target:situation_research_B_facility_technology_@root
+	}
+}
+
+# ============================================================
+# Zakuul Consciousness Situation Events (100-108)
+# ============================================================
+
+# Stage 1 Entry: First Contact Established
+situation_event = {
+	id = kuat_situation.100
+	title = kuat_situation.100.name
+	desc = kuat_situation.100.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.100.A
+		add_situation_progress = 10
+		hidden_effect = { set_situation_flag = zakuul_contact_established }
+	}
+	option = {
+		name = kuat_situation.100.B
+		add_situation_progress = 10
+		hidden_effect = { set_situation_flag = zakuul_contact_cautious }
+	}
+}
+
+# Stage 2 Entry: Consciousness Communion
+situation_event = {
+	id = kuat_situation.101
+	title = kuat_situation.101.name
+	desc = kuat_situation.101.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.101.A
+		add_situation_progress = 10
+		hidden_effect = {
+			set_situation_flag = zakuul_communion_open
+			owner? = { add_resource = { society_research = 500 } }
+		}
+	}
+	option = {
+		name = kuat_situation.101.B
+		hidden_effect = {
+			set_situation_flag = zakuul_communion_guarded
+			owner? = { add_resource = { unity = 500 } }
+		}
+	}
+}
+
+# Stage 3 Entry: Final Protocol
+situation_event = {
+	id = kuat_situation.102
+	title = kuat_situation.102.name
+	desc = kuat_situation.102.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.102.A
+		hidden_effect = { set_situation_flag = zakuul_accord_ready }
+	}
+}
+
+# Monthly Random: Anomalous Signal
+situation_event = {
+	id = kuat_situation.103
+	title = kuat_situation.103.name
+	desc = kuat_situation.103.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		current_stage = stage_1
+		NOR = {
+			has_situation_flag = zakuul_anomalous_signal_cooldown
+			current_stage = stage_3
+		}
+	}
+
+	immediate = { set_situation_flag = zakuul_anomalous_signal_cooldown }
+
+	option = {
+		name = kuat_situation.103.B
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "sit_zakuul_approach_aggressive"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+		hidden_effect = { set_situation_flag = zakuul_hostile_reaction }
+	}
+	option = {
+		name = kuat_situation.103.A
+		set_situation_approach = "sit_zakuul_approach_cooperative"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		hidden_effect = { set_situation_flag = zakuul_friendly_reaction }
+		small_artifact_reward = yes
+	}
+}
+
+# Monthly Random: Memory Fragment
+situation_event = {
+	id = kuat_situation.104
+	title = kuat_situation.104.name
+	desc = kuat_situation.104.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		NOT = { has_situation_flag = zakuul_memory_fragment_cooldown }
+		current_stage = stage_2
+	}
+
+	immediate = { set_situation_flag = zakuul_memory_fragment_cooldown }
+
+	option = {
+		name = kuat_situation.104.A
+		set_situation_approach = "sit_zakuul_approach_cooperative"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		hidden_effect = {
+			owner? = { add_resource = { society_research = 250 } }
+			set_situation_flag = zakuul_friendly_reaction
+		}
+	}
+	option = {
+		name = kuat_situation.104.B
+		set_situation_approach = "sit_zakuul_approach_cautious"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+		hidden_effect = {
+			owner? = { add_resource = { physics_research = 250 } }
+			set_situation_flag = zakuul_hostile_reaction
+		}
+	}
+}
+
+# Monthly Random: Consciousness Interference
+situation_event = {
+	id = kuat_situation.105
+	title = kuat_situation.105.name
+	desc = kuat_situation.105.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	trigger = {
+		NOT = { has_situation_flag = zakuul_interference_cooldown }
+		current_stage >= stage_2
+	}
+
+	immediate = { set_situation_flag = zakuul_interference_cooldown }
+
+	option = {
+		name = kuat_situation.105.A
+		set_situation_approach = "sit_zakuul_approach_cooperative"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_green
+			text = set_situation_approach_icon_text
+		}
+		hidden_effect = {
+			owner? = { add_resource = { unity = -100 } }
+			set_situation_flag = zakuul_hostile_reaction
+		}
+	}
+	option = {
+		name = kuat_situation.105.B
+		set_situation_approach = "sit_zakuul_approach_aggressive"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+		hidden_effect = { set_situation_flag = zakuul_friendly_reaction }
+	}
+}
+
+# Progress Complete: Aggressive Approach
+situation_event = {
+	id = kuat_situation.106
+	title = kuat_situation.106.name
+	desc = kuat_situation.106.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.106.A
+		hidden_effect = {
+			owner? = {
+				set_country_flag = kuat_non_legacy_path_complete
+				country_event = { id = Kuat_non_legacy.20 }
+			}
+		}
+	}
+	after = { destroy_situation = this }
+}
+
+# Progress Complete: Cautious Approach
+situation_event = {
+	id = kuat_situation.107
+	title = kuat_situation.107.name
+	desc = kuat_situation.107.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_alien_nature
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.107.A
+		hidden_effect = {
+			owner? = {
+				set_country_flag = kuat_non_legacy_path_complete
+				country_event = { id = Kuat_non_legacy.20 }
+			}
+		}
+	}
+	after = { destroy_situation = this }
+}
+
+# Progress Complete: Cooperative Approach
+situation_event = {
+	id = kuat_situation.108
+	title = kuat_situation.108.name
+	desc = kuat_situation.108.desc
+	picture = GFX_evt_sapient_AI
+	show_sound = event_ai_started
+	is_triggered_only = yes
+	location = target
+
+	option = {
+		name = kuat_situation.108.A
+		hidden_effect = {
+			owner? = {
+				set_country_flag = kuat_non_legacy_path_complete
+				country_event = { id = Kuat_non_legacy.20 }
+			}
+		}
+	}
+	after = { destroy_situation = this }
+}
+
+situation_event = {
+	id = kuat_situation.109
+	title = kuat_situation.109.name
+	desc = kuat_situation.109.desc
+	picture = GFX_evt_engineering_cache
+	show_sound = event_celebration
+	is_triggered_only = yes
+	location = target.capital_scope
+
+	immediate = { target = {
+		set_country_flag = kuat_allow_Name_boss_Venator_III
+		create_ship_design = { design = "Name_boss_Venator_III" }
+		add_ship_design = last_created_design
+	} }
+
+	option = {
+		name = situation_enlarge_research
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_enlarge_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_yellow
+			text = set_situation_approach_icon_text
+		}
+	}
+	option = {
+		name = situation_reduce_research
+		custom_tooltip = approach_outcome_tooltip
+		set_situation_approach = "situation_reduce_research"
+		icon = {
+			icon = GFX_situation_approach_research
+			icon_background = GFX_situation_approach_bg_red
+			text = set_situation_approach_icon_text
+		}
+	}
+}
